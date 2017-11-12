@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		CA02AC6F1FB7E44F0017CE37 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02AC6E1FB7E44F0017CE37 /* AppDelegate.swift */; };
-		CA02AC711FB7E44F0017CE37 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02AC701FB7E44F0017CE37 /* ViewController.swift */; };
 		CA02AC741FB7E44F0017CE37 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA02AC721FB7E44F0017CE37 /* Main.storyboard */; };
 		CA02AC761FB7E44F0017CE37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA02AC751FB7E44F0017CE37 /* Assets.xcassets */; };
 		CA02AC791FB7E44F0017CE37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CA02AC771FB7E44F0017CE37 /* LaunchScreen.storyboard */; };
+		CA02AC811FB7EA380017CE37 /* FoldersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02AC801FB7EA380017CE37 /* FoldersTableViewController.swift */; };
+		CA02AC831FB7EA750017CE37 /* FolderCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02AC821FB7EA750017CE37 /* FolderCellTableViewCell.swift */; };
+		CA02AC851FB7EAB80017CE37 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02AC841FB7EAB80017CE37 /* Folder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		CA02AC6B1FB7E44F0017CE37 /* MediaOrganizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaOrganizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA02AC6E1FB7E44F0017CE37 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CA02AC701FB7E44F0017CE37 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CA02AC731FB7E44F0017CE37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CA02AC751FB7E44F0017CE37 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CA02AC781FB7E44F0017CE37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CA02AC7A1FB7E44F0017CE37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA02AC801FB7EA380017CE37 /* FoldersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersTableViewController.swift; sourceTree = "<group>"; };
+		CA02AC821FB7EA750017CE37 /* FolderCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCellTableViewCell.swift; sourceTree = "<group>"; };
+		CA02AC841FB7EAB80017CE37 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,11 +59,13 @@
 			isa = PBXGroup;
 			children = (
 				CA02AC6E1FB7E44F0017CE37 /* AppDelegate.swift */,
-				CA02AC701FB7E44F0017CE37 /* ViewController.swift */,
+				CA02AC801FB7EA380017CE37 /* FoldersTableViewController.swift */,
 				CA02AC721FB7E44F0017CE37 /* Main.storyboard */,
 				CA02AC751FB7E44F0017CE37 /* Assets.xcassets */,
 				CA02AC771FB7E44F0017CE37 /* LaunchScreen.storyboard */,
 				CA02AC7A1FB7E44F0017CE37 /* Info.plist */,
+				CA02AC821FB7EA750017CE37 /* FolderCellTableViewCell.swift */,
+				CA02AC841FB7EAB80017CE37 /* Folder.swift */,
 			);
 			path = MediaOrganizer;
 			sourceTree = "<group>";
@@ -136,8 +142,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA02AC711FB7E44F0017CE37 /* ViewController.swift in Sources */,
+				CA02AC831FB7EA750017CE37 /* FolderCellTableViewCell.swift in Sources */,
+				CA02AC811FB7EA380017CE37 /* FoldersTableViewController.swift in Sources */,
 				CA02AC6F1FB7E44F0017CE37 /* AppDelegate.swift in Sources */,
+				CA02AC851FB7EAB80017CE37 /* Folder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
