@@ -31,8 +31,10 @@ class FoldersTableViewController: UIViewController {
         foldersTableView.delegate = self
         foldersTableView.dataSource = self
         searchBar.delegate = self
+        foldersTableView.allowsSelection = true 
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        gestureRecognizer.numberOfTapsRequired = 2
         view.addGestureRecognizer(gestureRecognizer)
     }
     
@@ -43,6 +45,14 @@ class FoldersTableViewController: UIViewController {
 }
 
 extension FoldersTableViewController: UITableViewDelegate{
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let folder = matchingFolders[indexPath.row]
+        let collectionViewController = storyboard?.instantiateViewController(withIdentifier: "CollectionView") as! CollectionViewController
+        collectionViewController.folder = folder
+        navigationController?.pushViewController(collectionViewController, animated: true)
+    }
     
 }
 

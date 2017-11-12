@@ -104,42 +104,32 @@
                     <connections>
                         <outlet property="foldersTableView" destination="QkH-rk-cdV" id="94b-dR-pA1"/>
                         <outlet property="searchBar" destination="Wbr-ux-1ZX" id="e22-3N-4Id"/>
-                        <outlet property="searchDisplayController" destination="6Jt-yU-8tF" id="ffG-oK-Hpo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dbh-DS-TiY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="6Jt-yU-8tF">
-                    <connections>
-                        <outlet property="delegate" destination="Stu-0F-Yu4" id="AKq-Gm-9EK"/>
-                        <outlet property="searchContentsController" destination="Stu-0F-Yu4" id="IM0-Zi-KbX"/>
-                        <outlet property="searchResultsDataSource" destination="Stu-0F-Yu4" id="qsB-Uz-1PY"/>
-                        <outlet property="searchResultsDelegate" destination="Stu-0F-Yu4" id="gd6-9r-28L"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="-20" y="-85.007496251874073"/>
         </scene>
         <!--Collection View Controller-->
         <scene sceneID="sX3-c1-bAq">
             <objects>
-                <viewController id="JWo-mD-ozs" customClass="CollectionViewController" customModule="MediaOrganizer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CollectionView" id="JWo-mD-ozs" customClass="CollectionViewController" customModule="MediaOrganizer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7yd-pB-rh4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="f6B-PD-TeB">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Notes" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="f6B-PD-TeB">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="200"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="Bri-sZ-Amu"/>
                                 </constraints>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="  " dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="TiR-fM-gt9">
                                 <rect key="frame" x="0.0" y="208" width="375" height="459"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2yT-1N-ek8">
                                     <size key="itemSize" width="105" height="110"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -154,6 +144,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="105" height="110"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </view>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>

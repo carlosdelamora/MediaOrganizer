@@ -12,7 +12,6 @@ class FolderCellTableViewCell: UITableViewCell {
 
     @IBOutlet weak var cellUIImageView: UIImageView!
     @IBOutlet weak var titileLabel: UILabel!
-    
     @IBOutlet weak var descriptionLabel: UILabel!
     
     
@@ -22,11 +21,7 @@ class FolderCellTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-   
     
-    override func prepareForReuse() {
-        
-    }
     
     func configure(for folder: Folder){
         //the first image in the folder
