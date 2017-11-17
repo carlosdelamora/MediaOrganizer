@@ -15,6 +15,10 @@
 		CA02AC831FB7EA750017CE37 /* FolderCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02AC821FB7EA750017CE37 /* FolderCellTableViewCell.swift */; };
 		CA02AC851FB7EAB80017CE37 /* Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02AC841FB7EAB80017CE37 /* Folder.swift */; };
 		CA02AC8B1FB8D4950017CE37 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02AC8A1FB8D4950017CE37 /* CollectionViewController.swift */; };
+		CA02AC8D1FB8EFDE0017CE37 /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA02AC8C1FB8EFDE0017CE37 /* MediaCollectionViewCell.swift */; };
+		CA4322F21FBD0E0B0000970C /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4322F11FBD0E0B0000970C /* CustomLayout.swift */; };
+		CA4322F71FBD489F0000970C /* CustomReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4322F61FBD489F0000970C /* CustomReusableView.swift */; };
+		CA4322F91FBD4A390000970C /* Reusable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA4322F81FBD4A390000970C /* Reusable.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +32,10 @@
 		CA02AC821FB7EA750017CE37 /* FolderCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCellTableViewCell.swift; sourceTree = "<group>"; };
 		CA02AC841FB7EAB80017CE37 /* Folder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Folder.swift; sourceTree = "<group>"; };
 		CA02AC8A1FB8D4950017CE37 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		CA02AC8C1FB8EFDE0017CE37 /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
+		CA4322F11FBD0E0B0000970C /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
+		CA4322F61FBD489F0000970C /* CustomReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomReusableView.swift; sourceTree = "<group>"; };
+		CA4322F81FBD4A390000970C /* Reusable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Reusable.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,17 +68,53 @@
 		CA02AC6D1FB7E44F0017CE37 /* MediaOrganizer */ = {
 			isa = PBXGroup;
 			children = (
+				CA4322F51FBD48600000970C /* ViewControllers */,
+				CA4322F41FBD48370000970C /* Model */,
+				CA4322F31FBD48100000970C /* Views */,
+				CA4322F01FBD0DE20000970C /* layout */,
 				CA02AC6E1FB7E44F0017CE37 /* AppDelegate.swift */,
-				CA02AC801FB7EA380017CE37 /* FoldersTableViewController.swift */,
 				CA02AC721FB7E44F0017CE37 /* Main.storyboard */,
 				CA02AC751FB7E44F0017CE37 /* Assets.xcassets */,
 				CA02AC771FB7E44F0017CE37 /* LaunchScreen.storyboard */,
 				CA02AC7A1FB7E44F0017CE37 /* Info.plist */,
-				CA02AC821FB7EA750017CE37 /* FolderCellTableViewCell.swift */,
-				CA02AC841FB7EAB80017CE37 /* Folder.swift */,
-				CA02AC8A1FB8D4950017CE37 /* CollectionViewController.swift */,
+				CA4322F81FBD4A390000970C /* Reusable.xib */,
 			);
 			path = MediaOrganizer;
+			sourceTree = "<group>";
+		};
+		CA4322F01FBD0DE20000970C /* layout */ = {
+			isa = PBXGroup;
+			children = (
+				CA4322F11FBD0E0B0000970C /* CustomLayout.swift */,
+			);
+			path = layout;
+			sourceTree = "<group>";
+		};
+		CA4322F31FBD48100000970C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CA02AC8C1FB8EFDE0017CE37 /* MediaCollectionViewCell.swift */,
+				CA02AC821FB7EA750017CE37 /* FolderCellTableViewCell.swift */,
+				CA4322F61FBD489F0000970C /* CustomReusableView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		CA4322F41FBD48370000970C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CA02AC841FB7EAB80017CE37 /* Folder.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CA4322F51FBD48600000970C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CA02AC801FB7EA380017CE37 /* FoldersTableViewController.swift */,
+				CA02AC8A1FB8D4950017CE37 /* CollectionViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -132,6 +176,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA4322F91FBD4A390000970C /* Reusable.xib in Resources */,
 				CA02AC791FB7E44F0017CE37 /* LaunchScreen.storyboard in Resources */,
 				CA02AC761FB7E44F0017CE37 /* Assets.xcassets in Resources */,
 				CA02AC741FB7E44F0017CE37 /* Main.storyboard in Resources */,
@@ -146,7 +191,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA02AC831FB7EA750017CE37 /* FolderCellTableViewCell.swift in Sources */,
+				CA4322F21FBD0E0B0000970C /* CustomLayout.swift in Sources */,
+				CA02AC8D1FB8EFDE0017CE37 /* MediaCollectionViewCell.swift in Sources */,
 				CA02AC811FB7EA380017CE37 /* FoldersTableViewController.swift in Sources */,
+				CA4322F71FBD489F0000970C /* CustomReusableView.swift in Sources */,
 				CA02AC6F1FB7E44F0017CE37 /* AppDelegate.swift in Sources */,
 				CA02AC851FB7EAB80017CE37 /* Folder.swift in Sources */,
 				CA02AC8B1FB8D4950017CE37 /* CollectionViewController.swift in Sources */,
