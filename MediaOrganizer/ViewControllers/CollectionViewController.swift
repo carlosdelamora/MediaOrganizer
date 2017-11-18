@@ -71,8 +71,18 @@ class CollectionViewController: UIViewController {
     }
     
     @objc func alertForCameraOrLibrary(){
-        
-        presentImagePicker(source: .camera)
+        let alert = UIAlertController(title: nil, message: "Choose the source of your media", preferredStyle: .alert)
+        let cameraAction = UIAlertAction(title: "Camera", style: .default, handler: { action in
+            self.presentImagePicker(source: .camera)
+        })
+        alert.addAction(cameraAction)
+        let photoLibrary = UIAlertAction(title: "Photo Library", style: .default, handler: { action in
+            self.presentImagePicker(source: .photoLibrary)
+        })
+        alert.addAction(photoLibrary)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func dismissKeyboard(){
@@ -85,6 +95,7 @@ class CollectionViewController: UIViewController {
             guard let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else{
                 break
             }
+            
             collectionView.beginInteractiveMovementForItem(at: indexPath)
         case .changed:
             collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: collectionView))
