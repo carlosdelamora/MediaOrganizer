@@ -16,5 +16,8 @@ class CustomReusableView: UICollectionReusableView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        if label != nil{
+            self.label.text = "Media"
+        }
     }
 }

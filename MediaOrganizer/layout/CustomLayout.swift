@@ -27,7 +27,7 @@ class CustomLayout: UICollectionViewLayout {
     var photoHeaderWidth: CGFloat {
         return collectionView!.frame.width
     }
-    var photoHeaderHeight: CGFloat = 30
+    var photoHeaderHeight: CGFloat = 50
     
     override func prepare() {
         if cached.isEmpty{
@@ -91,6 +91,7 @@ class CustomLayout: UICollectionViewLayout {
             let indexPath = IndexPath(item:0, section:0)
             let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: suplementatryViewKind.header, with: indexPath)
             let frame = CGRect(x: 0, y: 0, width: photoHeaderWidth , height: photoHeaderHeight)
+            
             attributes.frame = frame
             cached.append(attributes)
         }
@@ -108,15 +109,17 @@ class CustomLayout: UICollectionViewLayout {
         return attributesArray
     }
     
-    //this function is now getting called
-    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+    
+    
+    //this function is not getting called
+    /*override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
         //var attributesArray = [UICollectionViewLayoutAttributes]()
         let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: suplementatryViewKind.header, with: indexPath)
         let frame = CGRect(x: 0, y: 0, width: 300 , height: 200)
         attributes.frame = frame
         return attributes
-    }
+    }*/
     
     
 }

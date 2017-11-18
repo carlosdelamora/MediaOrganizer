@@ -36,6 +36,9 @@ class FoldersTableViewController: UIViewController {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         gestureRecognizer.numberOfTapsRequired = 2
         view.addGestureRecognizer(gestureRecognizer)
+        
+        
+        
     }
     
     @objc func dismissKeyboard(){

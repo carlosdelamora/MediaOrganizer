@@ -16,15 +16,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="9zm-na-OAN">
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="9zm-na-OAN" customClass="CustomReusableView" customModule="MediaOrganizer" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" restorationIdentifier="ReusableView" translatesAutoresizingMaskIntoConstraints="NO" id="5Ki-Sa-QtD" userLabel="ContentView" customClass="CustomReusableView" customModule="MediaOrganizer" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="63"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TuQ-gB-GJS">
-                            <rect key="frame" x="168" y="21" width="39" height="21"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TuQ-gB-GJS">
+                            <rect key="frame" x="168" y="27" width="39" height="21"/>
                             <fontDescription key="fontDescription" name="AcademyEngravedLetPlain" family="Academy Engraved LET" pointSize="17"/>
                             <color key="textColor" red="1" green="0.70663731183611111" blue="0.1214905902111111" alpha="0.72236194349315064" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -32,7 +32,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="TuQ-gB-GJS" firstAttribute="centerY" secondItem="5Ki-Sa-QtD" secondAttribute="centerY" id="X1S-Wj-r5m"/>
+                        <constraint firstItem="TuQ-gB-GJS" firstAttribute="centerY" secondItem="5Ki-Sa-QtD" secondAttribute="centerY" constant="6" id="X1S-Wj-r5m"/>
                         <constraint firstItem="TuQ-gB-GJS" firstAttribute="centerX" secondItem="5Ki-Sa-QtD" secondAttribute="centerX" id="h6Q-TV-BGs"/>
                     </constraints>
                     <connections>
