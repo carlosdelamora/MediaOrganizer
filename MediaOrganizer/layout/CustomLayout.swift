@@ -119,9 +119,8 @@ class CustomLayout: UICollectionViewLayout {
     //this function is not getting called
     override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         
-        //var attributesArray = [UICollectionViewLayoutAttributes]()
         let attributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: suplementatryViewKind.header, with: indexPath)
-        let frame = CGRect(x: 0, y: 0, width: 300 , height: 200)
+        let frame = CGRect(x: 0, y: 0, width: photoHeaderWidth , height: photoHeaderHeight)
         attributes.frame = frame
         return attributes
     }
