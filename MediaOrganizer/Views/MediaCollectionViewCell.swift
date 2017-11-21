@@ -10,6 +10,18 @@ import UIKit
 
 class MediaCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var UIImageView: UIImageView!
+    @IBOutlet weak var imageView: UIImageView!
    
+    
+    func configureForMedia(media:Media){
+        if media.stringMediaType == Constants.mediaType.photo{
+            if let photo = media.photo {
+                imageView.image = photo
+            }
+        }else{
+            imageView.backgroundColor = .blue
+        }
+    }
+    
+    
 }

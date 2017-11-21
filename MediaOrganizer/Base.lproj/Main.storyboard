@@ -134,7 +134,7 @@
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="1" maxX="0.0" maxY="1"/>
                                 <collectionViewLayout key="collectionViewLayout" id="KsU-KV-6Pg" customClass="CustomLayout" customModule="MediaOrganizer" customModuleProvider="target"/>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="mediaCell" id="wHm-y9-KC7" customClass="MediaCollectionViewCell" customModule="MediaOrganizer" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="mediaCell" reuseIdentifier="mediaCell" id="wHm-y9-KC7" customClass="MediaCollectionViewCell" customModule="MediaOrganizer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="111" height="108"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -155,7 +155,7 @@
                                         </constraints>
                                         <size key="customSize" width="111" height="108"/>
                                         <connections>
-                                            <outlet property="UIImageView" destination="7XP-Ja-eHW" id="ZZW-za-3eX"/>
+                                            <outlet property="imageView" destination="7XP-Ja-eHW" id="ZZW-za-3eX"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

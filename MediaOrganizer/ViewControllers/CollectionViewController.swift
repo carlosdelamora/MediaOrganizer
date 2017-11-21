@@ -45,7 +45,6 @@ class CollectionViewController: UIViewController {
         //collectionView
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(MediaCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
         
         //register the reusable cell
         let nib = UINib(nibName: "Reusable", bundle: nil)
@@ -148,15 +147,14 @@ extension CollectionViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var number = folder.media.count
-        if number == 0{
-            number = 3
-        }
+        
         return number
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MediaCollectionViewCell
-        cell.backgroundColor = .blue
+        let media = folder.media[indexPath.item]
+        cell.configureForMedia(media: media)
         return cell
     }
     
