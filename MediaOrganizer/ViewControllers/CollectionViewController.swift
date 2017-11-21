@@ -18,7 +18,7 @@ class CollectionViewController: UIViewController {
     @IBOutlet weak var notesTextView: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var folder: Folder?
+    var folder: Folder!
     let placeHolderText = "Notes"
     let cellID = "mediaCell"
     let reusableViewId = "ReusableView"
@@ -58,6 +58,7 @@ class CollectionViewController: UIViewController {
         
     }
     
+    //this function presents the imagePicker Controller to record video or take a photo
     fileprivate func presentImagePicker(source: UIImagePickerControllerSourceType) {
         if UIImagePickerController.isSourceTypeAvailable(source){
             let pickerViewController = UIImagePickerController()
@@ -146,8 +147,8 @@ extension CollectionViewController: UICollectionViewDelegate{
 extension CollectionViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //let number = (folder?.photos.count ?? 0) + (folder?.videos.count ?? 0)
-        return 100//number
+        let number = folder.photos.count + folder.videos.count
+        return number
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -181,6 +182,26 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
+        let mediaType = info[UIImagePickerControllerMediaType] as! CFString
+        
+        //var originalImage:UIImage? // we did not set the allow editions so this is the one we are saving
+        
+        if mediaType == kUTTypeImage{
+            var originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+            
+            //if the image is not nil we save it to the folder
+            if let originalImage = originalImage{
+                folder.photos.append(originalImage)
+            }
+            
+        }
+        
+        
     }
     
 }
+
+
+
+
+

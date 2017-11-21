@@ -19,6 +19,8 @@
 		CA4322F21FBD0E0B0000970C /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4322F11FBD0E0B0000970C /* CustomLayout.swift */; };
 		CA4322F71FBD489F0000970C /* CustomReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4322F61FBD489F0000970C /* CustomReusableView.swift */; };
 		CA4322F91FBD4A390000970C /* Reusable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA4322F81FBD4A390000970C /* Reusable.xib */; };
+		CA6652B71FC3500400D9F723 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652B61FC3500400D9F723 /* Media.swift */; };
+		CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652B81FC39F8100D9F723 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		CA4322F11FBD0E0B0000970C /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 		CA4322F61FBD489F0000970C /* CustomReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomReusableView.swift; sourceTree = "<group>"; };
 		CA4322F81FBD4A390000970C /* Reusable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Reusable.xib; sourceTree = "<group>"; };
+		CA6652B61FC3500400D9F723 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		CA6652B81FC39F8100D9F723 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				CA02AC841FB7EAB80017CE37 /* Folder.swift */,
+				CA6652B61FC3500400D9F723 /* Media.swift */,
+				CA6652B81FC39F8100D9F723 /* Constants.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -195,6 +201,8 @@
 				CA02AC8D1FB8EFDE0017CE37 /* MediaCollectionViewCell.swift in Sources */,
 				CA02AC811FB7EA380017CE37 /* FoldersTableViewController.swift in Sources */,
 				CA4322F71FBD489F0000970C /* CustomReusableView.swift in Sources */,
+				CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */,
+				CA6652B71FC3500400D9F723 /* Media.swift in Sources */,
 				CA02AC6F1FB7E44F0017CE37 /* AppDelegate.swift in Sources */,
 				CA02AC851FB7EAB80017CE37 /* Folder.swift in Sources */,
 				CA02AC8B1FB8D4950017CE37 /* CollectionViewController.swift in Sources */,
