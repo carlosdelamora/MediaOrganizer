@@ -20,8 +20,10 @@ class FoldersTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let folder1 = Folder(title: "first", description: "not good", notes:"some notes" , photos: [], videos: [URL]())
-        let folder2 = Folder(title: "second", description: "not good", notes:"some notes" , photos: [UIImage](), videos: [URL]())
+        let folder1 = Folder(title: "first")
+        folder1.description = "not good"
+        let folder2 = Folder(title: "second")
+        folder2.description = "good"
         arrayOfFolders.insert(folder1, at: 0)
         arrayOfFolders.insert(folder2, at: 1)
         //the matching folders will be the arrayOfFolders initialy

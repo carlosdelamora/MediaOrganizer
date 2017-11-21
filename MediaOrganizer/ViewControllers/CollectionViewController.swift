@@ -147,7 +147,10 @@ extension CollectionViewController: UICollectionViewDelegate{
 extension CollectionViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let number = folder.photos.count + folder.videos.count
+        var number = folder.media.count
+        if number == 0{
+            number = 3
+        }
         return number
     }
     
@@ -179,22 +182,46 @@ extension CollectionViewController: UICollectionViewDataSource{
 
 extension CollectionViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         let mediaType = info[UIImagePickerControllerMediaType] as! CFString
         
-        //var originalImage:UIImage? // we did not set the allow editions so this is the one we are saving
-        
+        // we did not set the allow editions so we are saving the original movie
         if mediaType == kUTTypeImage{
-            var originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+            let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
             
             //if the image is not nil we save it to the folder
             if let originalImage = originalImage{
-                folder.photos.append(originalImage)
+                let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, videoPath: nil)
+                folder.media.append(media)
+            }
+        }
+        
+        if mediaType == kUTTypeVideo{
+            
+            if let videoURL = info[UIImagePickerControllerOriginalImage] as? URL{
+                let media = Media(stringMediaType: Constants.mediaType.video, photo:nil, videoPath: videoURL.path)
+                folder.media.append(media)
             }
             
+            
         }
+        
+        dismiss(animated: true, completion:{
+            DispatchQueue.main.async {
+                //we need to invalidate layout and set the cached to empty to recalculate everything again
+                let layout = self.collectionView.collectionViewLayout as! CustomLayout
+                layout.cached = [UICollectionViewLayoutAttributes]()
+                self.collectionView.reloadData()
+            }
+        })
         
         
     }

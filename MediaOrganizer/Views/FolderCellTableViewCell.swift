@@ -25,8 +25,10 @@ class FolderCellTableViewCell: UITableViewCell {
     
     func configure(for folder: Folder){
         //the first image in the folder
-        if folder.photos.count > 0{
-            cellUIImageView.image = folder.photos.first!
+        if folder.media.count > 0{
+            if let photo = folder.media.first?.photo{
+                cellUIImageView.image = photo
+            }
         }else{
             cellUIImageView.backgroundColor = .red
         }
