@@ -180,7 +180,50 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HMY-6d-CFp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="952.79999999999995" y="-89.505247376311857"/>
+            <point key="canvasLocation" x="902" y="-188"/>
+        </scene>
+        <!--Detail Photo View Controller-->
+        <scene sceneID="JdY-Wy-CB4">
+            <objects>
+                <viewController storyboardIdentifier="DetailPhoto" id="kTc-GR-Spd" customClass="DetailPhotoViewController" customModule="MediaOrganizer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="FkS-IB-Ydb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dxn-p4-4t0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sgW-j5-dkH">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="sgW-j5-dkH" firstAttribute="leading" secondItem="dxn-p4-4t0" secondAttribute="leading" id="4U4-v6-LDW"/>
+                                    <constraint firstItem="sgW-j5-dkH" firstAttribute="centerY" secondItem="dxn-p4-4t0" secondAttribute="centerY" id="cfV-zD-vK8"/>
+                                    <constraint firstAttribute="bottom" secondItem="sgW-j5-dkH" secondAttribute="bottom" id="hmg-eU-CUG"/>
+                                    <constraint firstItem="sgW-j5-dkH" firstAttribute="top" secondItem="dxn-p4-4t0" secondAttribute="top" id="jyi-3j-xoE"/>
+                                    <constraint firstItem="sgW-j5-dkH" firstAttribute="centerX" secondItem="dxn-p4-4t0" secondAttribute="centerX" id="mGU-Ox-JgB"/>
+                                    <constraint firstAttribute="trailing" secondItem="sgW-j5-dkH" secondAttribute="trailing" id="yF8-m9-quh"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dxn-p4-4t0" firstAttribute="bottom" secondItem="wBu-RT-Occ" secondAttribute="bottom" id="9vm-YC-eIy"/>
+                            <constraint firstItem="dxn-p4-4t0" firstAttribute="leading" secondItem="FkS-IB-Ydb" secondAttribute="leading" id="IVe-4F-gTx"/>
+                            <constraint firstItem="dxn-p4-4t0" firstAttribute="top" secondItem="FkS-IB-Ydb" secondAttribute="top" id="Vsh-pV-RGS"/>
+                            <constraint firstAttribute="trailing" secondItem="dxn-p4-4t0" secondAttribute="trailing" id="uwO-Kx-EMq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="wBu-RT-Occ"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="sgW-j5-dkH" id="XBQ-PN-nuC"/>
+                        <outlet property="scrollView" destination="dxn-p4-4t0" id="8sv-JF-fxE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OA9-VE-FyQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1736.8" y="-217.24137931034485"/>
         </scene>
     </scenes>
 </document>
