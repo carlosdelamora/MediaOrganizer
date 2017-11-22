@@ -56,30 +56,39 @@ class Folder: NSObject, NSCoding{
         aCoder.encode(notes, forKey: Constants.FolderKeyProperties.notes)
     }
 
-    
+    //we use this function to save media
     func saveMedia(media:Media)-> Bool{
         var isSuccessfulSave = false
         if let mediaUrl = mediaUrl{
-            //var newMediaArray = mediaArray
-            //newMediaArray.append(media)
+            var newMediaArray = mediaArray
+            newMediaArray.append(media)
             //the mediaArray already contains the media element, because at the return of didfinishedpicking media with info we added the media to the media Array
             isSuccessfulSave = NSKeyedArchiver.archiveRootObject(mediaArray, toFile: mediaUrl.path)
         }
         return isSuccessfulSave
     }
     
+    //we use this function to erase media
+    func eraseMedia(media:Media){
+        if let index = mediaArray.index(of: media), let mediaUrl = mediaUrl{
+            mediaArray.remove(at: index)
+            //we save the mediaArray with the media removed
+            let _ = NSKeyedArchiver.archiveRootObject(mediaArray, toFile: mediaUrl.path)
+        }
+    }
+    
+    //we use this function to save a reorder of the media
+    func saveMediaChange(){
+        if let mediaUrl = mediaUrl{
+            let _ = NSKeyedArchiver.archiveRootObject(mediaArray, toFile: mediaUrl.path)
+        }
+    }
+    
+    
     func saveFolder()-> Bool{
         let foldersURL = documentsDirectory.appendingPathComponent(Constants.urlPaths.foldersPath)
         return NSKeyedArchiver.archiveRootObject(self, toFile: foldersURL.path)
     }
-    
-    /*func loadMedia(){
-        if let mediaUrl = mediaUrl{
-            if let media = NSKeyedUnarchiver.unarchiveObject(withFile: mediaUrl.path) as? [Media]{
-                self.media = media
-            }
-        }
-    }*/
     
 }
 

@@ -202,7 +202,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             //if the image is not nil we save it to the folder
             if let originalImage = originalImage{
                 let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, videoPath: nil)
-                folder.mediaArray.append(media)
+                //we do not need to append the media to the folder the function folder.saveMedia will do that
                 let _ = folder.saveMedia(media: media)
             }
         }
