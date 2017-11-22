@@ -85,7 +85,7 @@ class CustomLayout: UICollectionViewLayout {
                 let insetFrame = frame.insetBy(dx: padding, dy: padding)
                 layoutAttributes.frame = insetFrame
                 cached.append(layoutAttributes)
-                contentHeight = max(yOffset(item:item + 2, yshift: photoHeaderHeight ), contentHeight)
+                contentHeight = max(yOffset(item:item + 3, yshift: photoHeaderHeight ), contentHeight)
             }
             
             let indexPath = IndexPath(item:0, section:0)

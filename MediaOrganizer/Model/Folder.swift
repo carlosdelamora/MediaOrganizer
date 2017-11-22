@@ -60,9 +60,10 @@ class Folder: NSObject, NSCoding{
     func saveMedia(media:Media)-> Bool{
         var isSuccessfulSave = false
         if let mediaUrl = mediaUrl{
-            var newMediaArray = mediaArray
-            newMediaArray.append(media)
-            isSuccessfulSave = NSKeyedArchiver.archiveRootObject(newMediaArray, toFile: mediaUrl.path)
+            //var newMediaArray = mediaArray
+            //newMediaArray.append(media)
+            //the mediaArray already contains the media element, because at the return of didfinishedpicking media with info we added the media to the media Array
+            isSuccessfulSave = NSKeyedArchiver.archiveRootObject(mediaArray, toFile: mediaUrl.path)
         }
         return isSuccessfulSave
     }

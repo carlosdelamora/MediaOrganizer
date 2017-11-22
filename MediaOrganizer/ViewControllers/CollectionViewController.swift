@@ -203,7 +203,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             if let originalImage = originalImage{
                 let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, videoPath: nil)
                 folder.mediaArray.append(media)
-                folder.saveMedia(media: media)
+                let _ = folder.saveMedia(media: media)
             }
         }
         
