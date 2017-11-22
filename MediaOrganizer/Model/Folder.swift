@@ -15,14 +15,14 @@ class Folder: NSObject, NSCoding{
     var title:String //this title is unique and should be no nil
     var folderDescription: String?
     var notes:String?
-    var media: [Media]
+    var mediaArray: [Media]
     let documentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     let mediaUrl: URL?
     
     
     init(title: String, folderDescription: String?, notes: String? ){
         self.title = title
-        self.media = [Media]()
+        self.mediaArray = [Media]()
         if let folderDescription = folderDescription{
             self.folderDescription = folderDescription
         }
@@ -33,7 +33,7 @@ class Folder: NSObject, NSCoding{
         self.mediaUrl = documentsDirectory.appendingPathComponent(title)
         if let mediaUrl = self.mediaUrl{
             if let media = NSKeyedUnarchiver.unarchiveObject(withFile: mediaUrl.path) as? [Media]{
-                self.media = media
+                self.mediaArray = media
             }
         }
     }
@@ -60,13 +60,14 @@ class Folder: NSObject, NSCoding{
     func saveMedia(media:Media)-> Bool{
         var isSuccessfulSave = false
         if let mediaUrl = mediaUrl{
-            isSuccessfulSave = NSKeyedArchiver.archiveRootObject(media, toFile: mediaUrl.path)
+            var newMediaArray = mediaArray
+            newMediaArray.append(media)
+            isSuccessfulSave = NSKeyedArchiver.archiveRootObject(newMediaArray, toFile: mediaUrl.path)
         }
         return isSuccessfulSave
     }
     
     func saveFolder()-> Bool{
-       
         let foldersURL = documentsDirectory.appendingPathComponent(Constants.urlPaths.foldersPath)
         return NSKeyedArchiver.archiveRootObject(self, toFile: foldersURL.path)
     }

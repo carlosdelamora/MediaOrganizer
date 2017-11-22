@@ -26,7 +26,7 @@ class Media: NSObject, NSCoding{
     func encode(with aCoder: NSCoder) {
         aCoder.encode(stringMediaType, forKey: Constants.MediaKeyProperties.stringMediaType)
         aCoder.encode(photo, forKey: Constants.MediaKeyProperties.photo)
-        aCoder.encode(videoPath, forKey: Constants.MediaKeyProperties.photo)
+        aCoder.encode(videoPath, forKey: Constants.MediaKeyProperties.video)
     }
     
     //protocol NSCoding
@@ -36,7 +36,7 @@ class Media: NSObject, NSCoding{
         }
         let photo = aDecoder.decodeObject(forKey: Constants.MediaKeyProperties.photo) as? UIImage
         let videoPath = aDecoder.decodeObject(forKey: Constants.MediaKeyProperties.video) as? String
-        //since this is a convenient init we should call a designed init
+        //since this is a convenient init we should call a designated init
         self.init(stringMediaType:stringMediaType, photo:photo,videoPath: videoPath)
     }
     

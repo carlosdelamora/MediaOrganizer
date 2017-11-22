@@ -25,8 +25,8 @@ class FolderCellTableViewCell: UITableViewCell {
     
     func configure(for folder: Folder){
         //the first image in the folder
-        if folder.media.count > 0{
-            if let photo = folder.media.first?.photo{
+        if folder.mediaArray.count > 0{
+            if let photo = folder.mediaArray.first?.photo{
                 cellUIImageView.image = photo
             }
         }else{

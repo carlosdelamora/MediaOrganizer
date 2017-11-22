@@ -130,10 +130,10 @@ extension CollectionViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         print("source indexPath \(sourceIndexPath)")
         print("destination indeXPath \(destinationIndexPath)")
-        var mediaArray = folder.media
+        var mediaArray = folder.mediaArray
         let mediaToRemove = mediaArray.remove(at: sourceIndexPath.item)
         mediaArray.insert(mediaToRemove, at: destinationIndexPath.item)
-        folder.media = mediaArray
+        folder.mediaArray = mediaArray
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -150,14 +150,14 @@ extension CollectionViewController: UICollectionViewDelegate{
 extension CollectionViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let number = folder.media.count
+        let number = folder.mediaArray.count
         
         return number
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MediaCollectionViewCell
-        let media = folder.media[indexPath.item]
+        let media = folder.mediaArray[indexPath.item]
         cell.configureForMedia(media: media)
         return cell
     }
@@ -202,7 +202,8 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             //if the image is not nil we save it to the folder
             if let originalImage = originalImage{
                 let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, videoPath: nil)
-                folder.media.append(media)
+                folder.mediaArray.append(media)
+                folder.saveMedia(media: media)
             }
         }
         
@@ -210,7 +211,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             
             if let videoURL = info[UIImagePickerControllerOriginalImage] as? URL{
                 let media = Media(stringMediaType: Constants.mediaType.video, photo:nil, videoPath: videoURL.path)
-                folder.media.append(media)
+                folder.mediaArray.append(media)
             }
             
             

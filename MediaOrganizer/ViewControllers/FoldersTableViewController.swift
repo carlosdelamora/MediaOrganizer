@@ -25,10 +25,10 @@ class FoldersTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let folder1 = Folder(title: "first", folderDescription: "good", notes: nil)
-        let saved = folder1.saveFolder()
-        arrayOfFolders.append(folder1)
-        print("saved is \(saved)")
+        //let folder1 = Folder(title: "first", folderDescription: "good", notes: nil)
+        //let saved = folder1.saveFolder()
+        //arrayOfFolders.append(folder1)
+        //print("saved is \(saved)")
         //let folder2 = Folder(title: "second", folderDescription: "not so good", notes: "notas de fotos")
         //arrayOfFolders.append(folder1)
         //arrayOfFolders.append(folder2)
