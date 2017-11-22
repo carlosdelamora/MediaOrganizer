@@ -130,6 +130,10 @@ extension CollectionViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         print("source indexPath \(sourceIndexPath)")
         print("destination indeXPath \(destinationIndexPath)")
+        var mediaArray = folder.media
+        let mediaToRemove = mediaArray.remove(at: sourceIndexPath.item)
+        mediaArray.insert(mediaToRemove, at: destinationIndexPath.item)
+        folder.media = mediaArray
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -146,7 +150,7 @@ extension CollectionViewController: UICollectionViewDelegate{
 extension CollectionViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        var number = folder.media.count
+        let number = folder.media.count
         
         return number
     }

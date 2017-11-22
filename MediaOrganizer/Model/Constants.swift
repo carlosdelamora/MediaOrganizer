@@ -21,4 +21,16 @@ struct Constants {
         static let video = "video"
         static let photo = "photo"
     }
+    
+    struct FolderKeyProperties{
+        static let title = "title" //this title is unique and should be no nil
+        static let folderDescription = "folderDescription"
+        static let notes = "notes"
+        static let media = "media"
+    }
+    
+    struct urlPaths{
+        static let mediaPath = "media"
+        static let foldersPath = "folders"
+    }
 }

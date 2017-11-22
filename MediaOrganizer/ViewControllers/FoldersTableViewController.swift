@@ -11,7 +11,12 @@ import UIKit
 class FoldersTableViewController: UIViewController {
     
     let cellId = "FolderCell"
-    var arrayOfFolders = [Folder]()
+    var arrayOfFolders = [Folder](){
+        didSet{
+            foldersTableView.reloadData()
+        }
+    }
+    let documentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
     var matchingFolders = [Folder]()
     //MARK: IBOultes
     @IBOutlet weak var searchBar: UISearchBar!
@@ -20,13 +25,17 @@ class FoldersTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let folder1 = Folder(title: "first")
-        folder1.description = "not good"
-        let folder2 = Folder(title: "second")
-        folder2.description = "good"
-        arrayOfFolders.insert(folder1, at: 0)
-        arrayOfFolders.insert(folder2, at: 1)
+        let folder1 = Folder(title: "first", folderDescription: "good", notes: nil)
+        let saved = folder1.saveFolder()
+        arrayOfFolders.append(folder1)
+        print("saved is \(saved)")
+        //let folder2 = Folder(title: "second", folderDescription: "not so good", notes: "notas de fotos")
+        //arrayOfFolders.append(folder1)
+        //arrayOfFolders.append(folder2)
+        
         //the matching folders will be the arrayOfFolders initialy
+        //then matching folders only shows the filtered folders
+        loadArrayOfFolders()
         matchingFolders = arrayOfFolders
         
         //we set the delegate of the table view
@@ -38,13 +47,18 @@ class FoldersTableViewController: UIViewController {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         gestureRecognizer.numberOfTapsRequired = 2
         view.addGestureRecognizer(gestureRecognizer)
-        
-        
-        
     }
     
     @objc func dismissKeyboard(){
         view.endEditing(true)
+    }
+    
+    func loadArrayOfFolders(){
+        let foldersURL = documentsDirectory.appendingPathComponent(Constants.urlPaths.foldersPath)
+        let folders = NSKeyedUnarchiver.unarchiveObject(withFile: foldersURL.path) as? Folder
+        if let folders = folders{
+            arrayOfFolders = [folders]
+        }
     }
 
 }

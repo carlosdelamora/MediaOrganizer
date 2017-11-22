@@ -33,7 +33,7 @@ class FolderCellTableViewCell: UITableViewCell {
             cellUIImageView.backgroundColor = .red
         }
         titileLabel.text = folder.title
-        descriptionLabel.text = folder.description
+        descriptionLabel.text = folder.folderDescription
     }
 
 }
