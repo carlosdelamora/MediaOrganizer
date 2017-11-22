@@ -22,6 +22,10 @@ class MediaCollectionViewCell: UICollectionViewCell {
             imageView.backgroundColor = .blue
         }
     }
+    //we made the image nil 
+    override func prepareForReuse() {
+        imageView.image = nil
+    }
     
     func squareImage(image: UIImage) -> UIImage{
         
