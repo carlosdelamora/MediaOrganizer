@@ -24,6 +24,7 @@ class CollectionViewController: UIViewController {
     let cellID = "mediaCell"
     let reusableViewId = "ReusableView"
     var longGesture: UILongPressGestureRecognizer!
+    var navigationItemEdition: UIBarButtonItem!
     enum status:String{
         case show = "Allow Selection"//this is the normal state, when is showing the pictures
         case editingNoSelectedItems = "Select Items to Erase"//when it starts to select elements
@@ -62,6 +63,9 @@ class CollectionViewController: UIViewController {
         let navigationItemPlus = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(alertForCameraOrLibrary))
         navigationItem.rightBarButtonItem = navigationItemPlus
         
+        navigationItemEdition = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(hideShowTheToolbar))
+        let items:[UIBarButtonItem] = [navigationItemPlus,navigationItemEdition]
+        navigationItem.setRightBarButtonItems(items, animated: false)
     }
     
     
@@ -80,6 +84,9 @@ class CollectionViewController: UIViewController {
         
     }
     
+    @objc func hideShowTheToolbar(){
+        
+    }
     
     
     //this function presents the imagePicker Controller to record video or take a photo
