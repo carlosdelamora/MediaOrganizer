@@ -17,6 +17,9 @@ class DetailPhotoViewController: UIViewController{
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var imageView: UIImageView!
+    
+    @IBOutlet weak var contentView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let image = media.photo
@@ -28,14 +31,19 @@ class DetailPhotoViewController: UIViewController{
         scrollView.delegate = self
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 5.0
+        
+        //scrollView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20)
     }
 }
 
 extension DetailPhotoViewController: UIScrollViewDelegate{
     
+    
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return imageView
+        return contentView
     }
+    
+
 }
 
 

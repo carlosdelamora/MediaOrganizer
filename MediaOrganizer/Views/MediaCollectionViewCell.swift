@@ -13,6 +13,12 @@ class MediaCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
    
     
+    var selectedToErase: Bool = false {
+        didSet{
+            imageView.alpha = selectedToErase ? 0.25 : 1
+        }
+    }
+    
     func configureForMedia(media:Media){
         if media.stringMediaType == Constants.mediaType.photo{
             if let photo = media.photo {

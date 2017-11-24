@@ -18,11 +18,18 @@ class CollectionViewController: UIViewController {
     @IBOutlet weak var notesTextView: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var selectItem: UIBarButtonItem!
     var folder: Folder!
     let placeHolderText = "Notes"
     let cellID = "mediaCell"
     let reusableViewId = "ReusableView"
     var longGesture: UILongPressGestureRecognizer!
+    enum status:String{
+        case show = "Allow Selection"//this is the normal state, when is showing the pictures
+        case editingNoSelectedItems = "Select Items to Erase"//when it starts to select elements
+        case editingSelectedItems = "Erase"//when it has elements already selected
+    }
+    var controllerStatus:status = .show
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +63,24 @@ class CollectionViewController: UIViewController {
         navigationItem.rightBarButtonItem = navigationItemPlus
         
     }
+    
+    
+    @IBAction func selectItemAction(_ sender: UIBarButtonItem) {
+        
+        switch controllerStatus{
+        case .show:
+            controllerStatus = .editingNoSelectedItems
+            collectionView.allowsMultipleSelection = true
+            
+        case .editingNoSelectedItems:
+            controllerStatus = .editingSelectedItems
+        case .editingSelectedItems:
+            controllerStatus = .show
+        }
+        
+    }
+    
+    
     
     //this function presents the imagePicker Controller to record video or take a photo
     fileprivate func presentImagePicker(source: UIImagePickerControllerSourceType) {
@@ -137,9 +162,30 @@ extension CollectionViewController: UICollectionViewDelegate{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let controller = storyboard?.instantiateViewController(withIdentifier: "DetailPhoto") as! DetailPhotoViewController
-        controller.media = folder.mediaArray[indexPath.item]
-        navigationController?.pushViewController(controller, animated: true)
+        
+        
+        
+        switch controllerStatus{
+        case .show:
+            let controller = storyboard?.instantiateViewController(withIdentifier: "DetailPhoto") as! DetailPhotoViewController
+            controller.media = folder.mediaArray[indexPath.item]
+            navigationController?.pushViewController(controller, animated: true)
+        case .editingNoSelectedItems:
+            print("item selected")
+            let cell = collectionView.cellForItem(at: indexPath) as! MediaCollectionViewCell
+            cell.selectedToErase = true
+            //we have selected an item so we change the status to editingSelectedItems
+            controllerStatus = .editingSelectedItems
+        case .editingSelectedItems:
+            print("add item to the selected items")
+            let cell = collectionView.cellForItem(at: indexPath) as! MediaCollectionViewCell
+            cell.selectedToErase = true
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! MediaCollectionViewCell
+        cell.selectedToErase = false
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
