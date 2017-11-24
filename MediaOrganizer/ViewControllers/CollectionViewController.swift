@@ -9,12 +9,14 @@
 import UIKit
 import MobileCoreServices
 
+
 struct suplementatryViewKind{
     static let header = "Header"
 }
 
 class CollectionViewController: UIViewController {
 
+    @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var notesTextView: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -25,6 +27,7 @@ class CollectionViewController: UIViewController {
     let reusableViewId = "ReusableView"
     var longGesture: UILongPressGestureRecognizer!
     var navigationItemEdition: UIBarButtonItem!
+    let attributes = [NSAttributedStringKey.font: UIFont(name:"Helvetica", size:20)!]
     enum status:String{
         case show = "Allow Selection"//this is the normal state, when is showing the pictures
         case editingNoSelectedItems = "Select Items to Erase"//when it starts to select elements
@@ -59,13 +62,18 @@ class CollectionViewController: UIViewController {
         //collectionView.register(nib, forCellWithReuseIdentifier: reusableViewId)
         collectionView.register(nib, forSupplementaryViewOfKind: suplementatryViewKind.header, withReuseIdentifier: reusableViewId)
         
-        //add the plus item
+        //create the plus item
         let navigationItemPlus = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(alertForCameraOrLibrary))
         navigationItem.rightBarButtonItem = navigationItemPlus
-        
-        navigationItemEdition = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(hideShowTheToolbar))
+        //create the edit/done item
+        navigationItemEdition = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(hideShowTheToolbar))
+        navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
+        //add the items
         let items:[UIBarButtonItem] = [navigationItemPlus,navigationItemEdition]
         navigationItem.setRightBarButtonItems(items, animated: false)
+        
+        //hide the toolbar
+        toolBar.alpha = 0
     }
     
     
@@ -86,6 +94,24 @@ class CollectionViewController: UIViewController {
     
     @objc func hideShowTheToolbar(){
         
+        if controllerStatus == .show{
+            
+            navigationItemEdition.title = "Done"
+            navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
+            controllerStatus = .editingNoSelectedItems
+            UIView.animate(withDuration: 0.5, animations: {
+               self.toolBar.alpha = 1
+            })
+            
+        }else{
+            //let attributes = [NSFontAttributeName: UIFont(name:"Helvetica", size:20)!]
+            navigationItemEdition.title = "Edit"
+            navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
+            controllerStatus = .show
+            UIView.animate(withDuration: 0.5, animations: {
+                self.toolBar.alpha = 0
+            })
+        }
     }
     
     

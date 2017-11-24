@@ -192,6 +192,7 @@
                         <outlet property="collectionView" destination="TiR-fM-gt9" id="SPH-Op-hUv"/>
                         <outlet property="notesTextView" destination="f6B-PD-TeB" id="IkT-Oj-30h"/>
                         <outlet property="selectItem" destination="xCS-7V-RKZ" id="Ou0-4u-xO3"/>
+                        <outlet property="toolBar" destination="SnV-Sd-UZ7" id="hn6-wZ-D9a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HMY-6d-CFp" userLabel="First Responder" sceneMemberID="firstResponder"/>
