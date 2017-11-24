@@ -81,13 +81,29 @@ class CollectionViewController: UIViewController {
         
         switch controllerStatus{
         case .show:
-            controllerStatus = .editingNoSelectedItems
-            collectionView.allowsMultipleSelection = true
-            
+            //this case should not be available because the toolbar should be hiden
+            print("this should not happen")
         case .editingNoSelectedItems:
-            controllerStatus = .editingSelectedItems
+            //we need to select items no items have been selected
+            print("need to select items")
         case .editingSelectedItems:
-            controllerStatus = .show
+            //here is where we should implement the deletion of the items
+            guard let selectedItemsIndex = collectionView.indexPathsForSelectedItems, selectedItemsIndex.count > 0 else{
+                return
+            }
+            
+            for indexPath in selectedItemsIndex{
+                let media = folder.mediaArray[indexPath.item]
+                //the function eraseMedia is lovley since it already erases the media form media array, so de data source has been updated
+                folder.eraseMedia(media: media)
+            }
+            //we remove all the selected cells
+            
+            //we have to set the cached attrubutes to empty so we can recalculate the layout
+            let layout = collectionView.collectionViewLayout as! CustomLayout
+            layout.cached = [UICollectionViewLayoutAttributes]()
+            collectionView.deleteItems(at: selectedItemsIndex)
+            
         }
         
     }
@@ -99,6 +115,7 @@ class CollectionViewController: UIViewController {
             navigationItemEdition.title = "Done"
             navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
             controllerStatus = .editingNoSelectedItems
+            collectionView.allowsMultipleSelection = true
             UIView.animate(withDuration: 0.5, animations: {
                self.toolBar.alpha = 1
             })
@@ -108,6 +125,7 @@ class CollectionViewController: UIViewController {
             navigationItemEdition.title = "Edit"
             navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
             controllerStatus = .show
+            collectionView.allowsMultipleSelection = false
             UIView.animate(withDuration: 0.5, animations: {
                 self.toolBar.alpha = 0
             })
