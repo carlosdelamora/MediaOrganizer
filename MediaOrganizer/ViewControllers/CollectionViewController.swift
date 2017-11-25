@@ -30,8 +30,7 @@ class CollectionViewController: UIViewController {
     let attributes = [NSAttributedStringKey.font: UIFont(name:"Helvetica", size:20)!]
     enum status:String{
         case show = "Allow Selection"//this is the normal state, when is showing the pictures
-        case editingNoSelectedItems = "Select Items to Erase"//when it starts to select elements
-        case editingSelectedItems = "Erase"//when it has elements already selected
+        case editing = "Erase"//when it has elements already selected
     }
     var controllerStatus:status = .show
     
@@ -83,13 +82,21 @@ class CollectionViewController: UIViewController {
         case .show:
             //this case should not be available because the toolbar should be hiden
             print("this should not happen")
-        case .editingNoSelectedItems:
-            //we need to select items no items have been selected
-            print("need to select items")
-        case .editingSelectedItems:
+        case .editing:
             //here is where we should implement the deletion of the items
-            guard let selectedItemsIndex = collectionView.indexPathsForSelectedItems, selectedItemsIndex.count > 0 else{
+            guard let selectedItemsIndex = collectionView.indexPathsForSelectedItems else{
                 return
+            }
+            
+            if selectedItemsIndex.count == 0 {
+                let alert = UIAlertController(title: nil, message: "No items have been selected", preferredStyle: .alert)
+                let cancel = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(cancel)
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true)
+                }
+                //we do not continue with the rest of the code inside this function
+                break
             }
             
             for indexPath in selectedItemsIndex{
@@ -104,9 +111,10 @@ class CollectionViewController: UIViewController {
             layout.cached = [UICollectionViewLayoutAttributes]()
             DispatchQueue.main.async{
                 self.collectionView.deleteItems(at: selectedItemsIndex)
+                layout.invalidateLayout()
             }
             
-            
+            hideShowTheToolbar()
         }
         
     }
@@ -117,7 +125,7 @@ class CollectionViewController: UIViewController {
             
             navigationItemEdition.title = "Done"
             navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
-            controllerStatus = .editingNoSelectedItems
+            controllerStatus = .editing
             collectionView.allowsMultipleSelection = true
             UIView.animate(withDuration: 0.5, animations: {
                self.toolBar.alpha = 1
@@ -224,13 +232,7 @@ extension CollectionViewController: UICollectionViewDelegate{
             let controller = storyboard?.instantiateViewController(withIdentifier: "DetailPhoto") as! DetailPhotoViewController
             controller.media = folder.mediaArray[indexPath.item]
             navigationController?.pushViewController(controller, animated: true)
-        case .editingNoSelectedItems:
-            print("item selected")
-            let cell = collectionView.cellForItem(at: indexPath) as! MediaCollectionViewCell
-            cell.selectedToErase = true
-            //we have selected an item so we change the status to editingSelectedItems
-            controllerStatus = .editingSelectedItems
-        case .editingSelectedItems:
+        case .editing:
             print("add item to the selected items")
             let cell = collectionView.cellForItem(at: indexPath) as! MediaCollectionViewCell
             cell.selectedToErase = true
@@ -303,9 +305,13 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             
             //if the image is not nil we save it to the folder
             if let originalImage = originalImage{
-                let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, videoPath: nil)
-                //we do not need to append the media to the folder the function folder.saveMedia will do that
-                let _ = folder.saveMedia(media: media)
+                //we use this que to not block main thread
+                DispatchQueue.global().async {
+                    let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, videoPath: nil)
+                    //we do not need to append the media to the folder the function folder.saveMedia will do that
+                    let _ = self.folder.saveMedia(media: media)
+                }
+                
             }
         }
         

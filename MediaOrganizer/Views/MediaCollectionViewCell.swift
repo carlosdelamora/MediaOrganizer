@@ -31,6 +31,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
     //we made the image nil 
     override func prepareForReuse() {
         imageView.image = nil
+        selectedToErase = false
     }
     
     func squareImage(image: UIImage) -> UIImage{
