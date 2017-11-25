@@ -102,7 +102,10 @@ class CollectionViewController: UIViewController {
             //we have to set the cached attrubutes to empty so we can recalculate the layout
             let layout = collectionView.collectionViewLayout as! CustomLayout
             layout.cached = [UICollectionViewLayoutAttributes]()
-            collectionView.deleteItems(at: selectedItemsIndex)
+            DispatchQueue.main.async{
+                self.collectionView.deleteItems(at: selectedItemsIndex)
+            }
+            
             
         }
         
@@ -316,14 +319,16 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             
         }
         
-        dismiss(animated: true, completion:{
-            DispatchQueue.main.async {
-                //we need to invalidate layout and set the cached to empty to recalculate everything again
-                let layout = self.collectionView.collectionViewLayout as! CustomLayout
-                layout.cached = [UICollectionViewLayoutAttributes]()
-                self.collectionView.reloadData()
-            }
-        })
+        
+        DispatchQueue.main.async {
+            self.dismiss(animated: true, completion:{
+            //we need to invalidate layout and set the cached to empty to recalculate everything again
+            let layout = self.collectionView.collectionViewLayout as! CustomLayout
+            layout.cached = [UICollectionViewLayoutAttributes]()
+            self.collectionView.reloadData()
+            })
+        }
+        
         
         
     }
