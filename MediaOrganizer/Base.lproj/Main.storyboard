@@ -28,6 +28,82 @@
             </objects>
             <point key="canvasLocation" x="-813" y="-78"/>
         </scene>
+        <!--Create File View Controller-->
+        <scene sceneID="OIS-4M-41Y">
+            <objects>
+                <viewController storyboardIdentifier="createFolder" id="Gfd-3q-tkt" customClass="CreateFileViewController" customModule="MediaOrganizer" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="96W-M6-qg3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gVm-l9-TPh">
+                                <rect key="frame" x="8" y="120" width="359" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eg8-eW-pHn">
+                                        <rect key="frame" x="0.0" y="0.0" width="33.5" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ejl-14-tLB">
+                                        <rect key="frame" x="41.5" y="0.0" width="317.5" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="h2f-LL-bOw">
+                                <rect key="frame" x="8" y="158" width="359" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q0I-ws-0wY">
+                                        <rect key="frame" x="0.0" y="0.0" width="88" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ht1-QK-AcJ">
+                                        <rect key="frame" x="96" y="0.0" width="263" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZfA-bR-5oe">
+                                <rect key="frame" x="87" y="318" width="200" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="x3t-hK-v9f"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="createFolder:" destination="Gfd-3q-tkt" eventType="touchUpInside" id="ogI-3O-YVv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="gVm-l9-TPh" firstAttribute="leading" secondItem="adX-Kw-JQI" secondAttribute="leading" constant="8" id="87J-Ub-hGY"/>
+                            <constraint firstItem="h2f-LL-bOw" firstAttribute="leading" secondItem="adX-Kw-JQI" secondAttribute="leading" constant="8" id="9BR-qs-c4J"/>
+                            <constraint firstItem="adX-Kw-JQI" firstAttribute="trailing" secondItem="h2f-LL-bOw" secondAttribute="trailing" constant="8" id="9Gx-7Z-d5x"/>
+                            <constraint firstItem="h2f-LL-bOw" firstAttribute="top" secondItem="gVm-l9-TPh" secondAttribute="bottom" constant="8" id="R0v-JF-Nvr"/>
+                            <constraint firstItem="ZfA-bR-5oe" firstAttribute="centerX" secondItem="96W-M6-qg3" secondAttribute="centerX" id="RFx-bS-ZTb"/>
+                            <constraint firstItem="ZfA-bR-5oe" firstAttribute="top" secondItem="h2f-LL-bOw" secondAttribute="bottom" constant="130" id="bSz-dH-8zu"/>
+                            <constraint firstItem="gVm-l9-TPh" firstAttribute="top" secondItem="adX-Kw-JQI" secondAttribute="top" constant="100" id="qYa-vh-mlP"/>
+                            <constraint firstItem="adX-Kw-JQI" firstAttribute="trailing" secondItem="gVm-l9-TPh" secondAttribute="trailing" constant="8" id="tSz-wk-brP"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="adX-Kw-JQI"/>
+                    </view>
+                    <connections>
+                        <outlet property="createFolder" destination="ZfA-bR-5oe" id="KaA-ma-SXz"/>
+                        <outlet property="descriptionTextField" destination="Ht1-QK-AcJ" id="eUO-SC-ckZ"/>
+                        <outlet property="titleTextField" destination="ejl-14-tLB" id="Gtd-Nj-eyp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qU6-ow-u8p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-20" y="-856"/>
+        </scene>
         <!--Folders Table View Controller-->
         <scene sceneID="J63-9k-aPU">
             <objects>
@@ -48,7 +124,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="81.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="200" verticalHuggingPriority="251" horizontalCompressionResistancePriority="600" translatesAutoresizingMaskIntoConstraints="NO" id="XAM-Ig-bhd">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="200" verticalHuggingPriority="251" horizontalCompressionResistancePriority="600" translatesAutoresizingMaskIntoConstraints="NO" id="XAM-Ig-bhd">
                                                     <rect key="frame" x="8" y="2" width="78" height="78"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="78" id="ImF-d2-CtV"/>

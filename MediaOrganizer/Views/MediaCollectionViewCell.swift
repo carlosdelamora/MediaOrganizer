@@ -44,9 +44,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
                     auxiliaryImageView.heightAnchor.constraint(equalTo: self.imageView.heightAnchor, multiplier: 0.25).isActive = true 
                     self.imageView.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
                     self.imageView.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
-                    
                 }
-                
             }
         }
     }

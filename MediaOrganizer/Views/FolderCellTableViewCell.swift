@@ -27,13 +27,27 @@ class FolderCellTableViewCell: UITableViewCell {
         //the first image in the folder
         if folder.mediaArray.count > 0{
             if let photo = folder.mediaArray.first?.photo{
-                cellUIImageView.image = photo
+                cellUIImageView.image = squareImage(image: photo)
             }
         }else{
             cellUIImageView.backgroundColor = .red
         }
         titileLabel.text = folder.title
         descriptionLabel.text = folder.folderDescription
+    }
+    
+    func squareImage(image: UIImage) -> UIImage{
+        
+        let cgImage = image.cgImage!
+        let squareheight:Int = min(cgImage.height, cgImage.width)
+        let x = (cgImage.width - squareheight)/2
+        let y = (cgImage.height - squareheight)/2
+        let rect = CGRect(x: x, y: y, width: squareheight, height: squareheight)
+        //we crop the image and make a new one
+        let imageReferene = (image.cgImage?.cropping(to: rect))!
+        let imageToReturn = UIImage(cgImage: imageReferene, scale: UIScreen.main.scale, orientation: image.imageOrientation)
+        
+        return imageToReturn
     }
 
 }

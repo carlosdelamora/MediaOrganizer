@@ -24,19 +24,10 @@ class FoldersTableViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        //let folder1 = Folder(title: "first", folderDescription: "good", notes: nil)
-        //let saved = folder1.saveFolder()
-        //arrayOfFolders.append(folder1)
-        //print("saved is \(saved)")
-        //let folder2 = Folder(title: "second", folderDescription: "not so good", notes: "notas de fotos")
-        //arrayOfFolders.append(folder1)
-        //arrayOfFolders.append(folder2)
+        // Add a bar button item
+        let createFolderItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToCreateFolder))
+        navigationItem.rightBarButtonItem = createFolderItem
         
-        //the matching folders will be the arrayOfFolders initialy
-        //then matching folders only shows the filtered folders
-        loadArrayOfFolders()
-        matchingFolders = arrayOfFolders
         
         //we set the delegate of the table view
         foldersTableView.delegate = self
@@ -49,6 +40,15 @@ class FoldersTableViewController: UIViewController {
         view.addGestureRecognizer(gestureRecognizer)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //the matching folders will be the arrayOfFolders initialy
+        //then matching folders only shows the filtered folders
+        loadArrayOfFolders()
+        matchingFolders = arrayOfFolders
+    }
+    
+    
     @objc func dismissKeyboard(){
         view.endEditing(true)
     }
@@ -59,6 +59,11 @@ class FoldersTableViewController: UIViewController {
         if let folders = folders{
             arrayOfFolders = [folders]
         }
+    }
+    
+    @objc func goToCreateFolder(){
+        let createFolderController = storyboard?.instantiateViewController(withIdentifier: "createFolder") as! CreateFileViewController
+        navigationController?.pushViewController(createFolderController, animated: true)
     }
 
 }

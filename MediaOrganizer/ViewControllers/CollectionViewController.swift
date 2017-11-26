@@ -217,8 +217,6 @@ extension CollectionViewController: UICollectionViewDelegate{
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        
-        
         switch controllerStatus{
         case .show:
             let controller = storyboard?.instantiateViewController(withIdentifier: "DetailPhoto") as! DetailPhotoViewController
@@ -237,7 +235,6 @@ extension CollectionViewController: UICollectionViewDelegate{
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldDeselectItemAt indexPath: IndexPath) -> Bool {
-       
         return true
     }
     
@@ -247,7 +244,6 @@ extension CollectionViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let number = folder.mediaArray.count
-        
         return number
     }
     
@@ -287,11 +283,9 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         let mediaType = info[UIImagePickerControllerMediaType] as! CFString
-        
         // we did not set the allow editions so we are saving the original movie
         if mediaType == kUTTypeImage{
             let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
-            
             //if the image is not nil we save it to the folder
             if let originalImage = originalImage{
                 //we use this que to not block main thread
@@ -304,14 +298,30 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             }
         }
         
-        //if mediaType == kUTTypeVideo{
-        if let videoURL = info[UIImagePickerControllerMediaURL] as? URL{
-            //let videoURL = URL(fileURLWithPath: path)
-            DispatchQueue.global().async {
+        // this url is temp so it will be erased, we should then use the document for to save the url
+        if let tempURL = info[UIImagePickerControllerMediaURL] as? URL{
+            let documentURL = folder.documentsDirectory
+            let videoURL = documentURL.appendingPathComponent(tempURL.lastPathComponent)
+            //we read the data form our temporarly url and the write it to a permenent url, i.e. videoURL
             
-                let media = Media(stringMediaType: Constants.mediaType.video, photo:nil, videoURL: videoURL)
-                //we do not need to append the media to the folder the function folder.saveMedia will do that
-                let _ = self.folder.saveMedia(media: media)
+            
+            //we do the writing into disk in the background
+            DispatchQueue.global().async {
+                var photoData = Data()
+                do{
+                    photoData = try Data(contentsOf: tempURL)
+                }catch{
+                    print("unable to retrieive the data")
+                }
+                
+                do{
+                    try photoData.write(to: videoURL, options: .atomic)
+                    let media = Media(stringMediaType: Constants.mediaType.video, photo:nil, videoURL: videoURL)
+                    //we do not need to append the media to the folder the function folder.saveMedia will do that
+                    let _ = self.folder.saveMedia(media: media)
+                }catch{
+                    print("unable to write")
+                }
             }
         }
        
