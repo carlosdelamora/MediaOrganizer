@@ -69,12 +69,17 @@ class Folder: NSObject, NSCoding{
     }
     
     //we use this function to erase media
-    func eraseMedia(media:Media){
-        if let index = mediaArray.index(of: media), let mediaUrl = mediaUrl{
-            mediaArray.remove(at: index)
-            //we save the mediaArray with the media removed
-            let _ = NSKeyedArchiver.archiveRootObject(mediaArray, toFile: mediaUrl.path)
+    func eraseMedia(indexesToRemove: Set<Int>){
+        if let mediaUrl = mediaUrl {
+            //we update the media array right away
+            mediaArray = mediaArray.enumerated().filter({!indexesToRemove.contains($0.offset)}).map({$0.element})
+            //we save the media in the background
+            DispatchQueue.global().async {
+                //we save the mediaArray with the media removed
+                let _ = NSKeyedArchiver.archiveRootObject(self.mediaArray, toFile: mediaUrl.path)
+            }
         }
+        
     }
     
     //we use this function to save a reorder of the media

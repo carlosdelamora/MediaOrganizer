@@ -16,6 +16,8 @@ struct suplementatryViewKind{
 
 class CollectionViewController: UIViewController {
 
+    var activity = UIActivityIndicatorView()
+    
     @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var notesTextView: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -99,22 +101,24 @@ class CollectionViewController: UIViewController {
                 break
             }
             
-            for indexPath in selectedItemsIndex{
-                let media = folder.mediaArray[indexPath.item]
-                //the function eraseMedia is lovley since it already erases the media form media array, so de data source has been updated
-                folder.eraseMedia(media: media)
-            }
+            //addActivityIndicator()
+            let indexesToRemove = Set(selectedItemsIndex.map({$0.item}))
+                
+            //the function eraseMedia is lovley since it already erases the media form media array, so de data source has been updated
+            folder.eraseMedia(indexesToRemove: indexesToRemove)
+          
             //we remove all the selected cells
             
             //we have to set the cached attrubutes to empty so we can recalculate the layout
             let layout = collectionView.collectionViewLayout as! CustomLayout
             layout.cached = [UICollectionViewLayoutAttributes]()
-            DispatchQueue.main.async{
-                self.collectionView.deleteItems(at: selectedItemsIndex)
-                layout.invalidateLayout()
-            }
+            
+            collectionView.deleteItems(at: selectedItemsIndex)
+            layout.invalidateLayout()
+           
             
             hideShowTheToolbar()
+            //stopActivityIndicator()
         }
         
     }
@@ -143,6 +147,23 @@ class CollectionViewController: UIViewController {
         }
     }
     
+    
+    func addActivityIndicator(){
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activity)
+        activity.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        activity.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        activity.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        activity.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        activity.backgroundColor = UIColor(red: 255/255, green: 180/255, blue: 31/255, alpha: 0.25)//UIColor(white: 0, alpha: 0.25)
+        activity.startAnimating()
+        
+    }
+    
+    func stopActivityIndicator(){
+        activity.stopAnimating()
+        activity.removeFromSuperview()
+    }
     
     //this function presents the imagePicker Controller to record video or take a photo
     fileprivate func presentImagePicker(source: UIImagePickerControllerSourceType) {
@@ -307,7 +328,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             if let originalImage = originalImage{
                 //we use this que to not block main thread
                 DispatchQueue.global().async {
-                    let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, videoPath: nil)
+                    let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, videoURL: nil)
                     //we do not need to append the media to the folder the function folder.saveMedia will do that
                     let _ = self.folder.saveMedia(media: media)
                 }
@@ -315,15 +336,21 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             }
         }
         
-        if mediaType == kUTTypeVideo{
+        //if mediaType == kUTTypeVideo{
+        if let videoURL = info[UIImagePickerControllerMediaURL] as? URL{
+            //let videoURL = URL(fileURLWithPath: path)
+            DispatchQueue.global().async {
             
-            if let videoURL = info[UIImagePickerControllerOriginalImage] as? URL{
-                let media = Media(stringMediaType: Constants.mediaType.video, photo:nil, videoPath: videoURL.path)
-                folder.mediaArray.append(media)
+                let media = Media(stringMediaType: Constants.mediaType.video, photo:nil, videoURL: videoURL)
+                //we do not need to append the media to the folder the function folder.saveMedia will do that
+                let _ = self.folder.saveMedia(media: media)
             }
-            
-            
         }
+        // }
+            
+            
+            
+        
         
         
         DispatchQueue.main.async {

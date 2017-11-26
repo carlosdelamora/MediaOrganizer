@@ -14,19 +14,19 @@ class Media: NSObject, NSCoding{
 
     var stringMediaType: String //video or photo
     var photo: UIImage?
-    var videoPath: String?
+    var videoURL: URL?
     
-    init(stringMediaType:String, photo:UIImage?,videoPath: String?){
+    init(stringMediaType:String, photo:UIImage?,videoURL: URL?){
         self.stringMediaType = stringMediaType
         self.photo = photo
-        self.videoPath = videoPath
+        self.videoURL = videoURL
     }
     
     //Protocol NSCoding
     func encode(with aCoder: NSCoder) {
         aCoder.encode(stringMediaType, forKey: Constants.MediaKeyProperties.stringMediaType)
         aCoder.encode(photo, forKey: Constants.MediaKeyProperties.photo)
-        aCoder.encode(videoPath, forKey: Constants.MediaKeyProperties.video)
+        aCoder.encode(videoURL, forKey: Constants.MediaKeyProperties.video)
     }
     
     //protocol NSCoding
@@ -35,9 +35,9 @@ class Media: NSObject, NSCoding{
             return nil
         }
         let photo = aDecoder.decodeObject(forKey: Constants.MediaKeyProperties.photo) as? UIImage
-        let videoPath = aDecoder.decodeObject(forKey: Constants.MediaKeyProperties.video) as? String
+        let videoURL = aDecoder.decodeObject(forKey: Constants.MediaKeyProperties.video) as? URL
         //since this is a convenient init we should call a designated init
-        self.init(stringMediaType:stringMediaType, photo:photo,videoPath: videoPath)
+        self.init(stringMediaType:stringMediaType, photo:photo,videoURL: videoURL)
     }
     
     
