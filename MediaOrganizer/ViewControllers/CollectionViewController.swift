@@ -16,7 +16,7 @@ struct suplementatryViewKind{
 
 class CollectionViewController: UIViewController {
 
-    var activity = UIActivityIndicatorView()
+    
     
     @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var notesTextView: UITextView!
@@ -147,23 +147,6 @@ class CollectionViewController: UIViewController {
         }
     }
     
-    
-    func addActivityIndicator(){
-        activity.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(activity)
-        activity.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        activity.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        activity.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        activity.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        activity.backgroundColor = UIColor(red: 255/255, green: 180/255, blue: 31/255, alpha: 0.25)//UIColor(white: 0, alpha: 0.25)
-        activity.startAnimating()
-        
-    }
-    
-    func stopActivityIndicator(){
-        activity.stopAnimating()
-        activity.removeFromSuperview()
-    }
     
     //this function presents the imagePicker Controller to record video or take a photo
     fileprivate func presentImagePicker(source: UIImagePickerControllerSourceType) {
@@ -346,13 +329,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
                 let _ = self.folder.saveMedia(media: media)
             }
         }
-        // }
-            
-            
-            
-        
-        
-        
+       
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion:{
             //we need to invalidate layout and set the cached to empty to recalculate everything again
