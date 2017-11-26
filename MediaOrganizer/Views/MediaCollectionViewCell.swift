@@ -31,23 +31,23 @@ class MediaCollectionViewCell: UICollectionViewCell {
                 return
             }
             
-            DispatchQueue.global().async {
-                if let thumbnail = self.getThumbnailFrom(path: url){
-                    DispatchQueue.main.async {
-                        self.imageView.image = thumbnail
-                        let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-                        let auxiliaryImageView = UIImageView(frame: frame)
-                        auxiliaryImageView.image = UIImage(named: "playCircle")
-                        auxiliaryImageView.tintColor = .white
-                        self.imageView.addSubview(auxiliaryImageView)
-                        auxiliaryImageView.translatesAutoresizingMaskIntoConstraints = false
-                        self.imageView.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
-                        self.imageView.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
-                    }
+            if let thumbnail = self.getThumbnailFrom(path: url){
+                DispatchQueue.main.async {
+                    self.imageView.image = thumbnail
+                    let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+                    let auxiliaryImageView = UIImageView(frame: frame)
+                    auxiliaryImageView.image = UIImage(named: "PlayCircle")
+                    auxiliaryImageView.tintColor = .white
+                    self.imageView.addSubview(auxiliaryImageView)
+                    auxiliaryImageView.translatesAutoresizingMaskIntoConstraints = false
+                    auxiliaryImageView.heightAnchor.constraint(equalTo: auxiliaryImageView.widthAnchor, multiplier: 1).isActive = true
+                    auxiliaryImageView.heightAnchor.constraint(equalTo: self.imageView.heightAnchor, multiplier: 0.25).isActive = true 
+                    self.imageView.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
+                    self.imageView.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
                     
                 }
+                
             }
-            
         }
     }
     //we made the image nil 
@@ -56,8 +56,6 @@ class MediaCollectionViewCell: UICollectionViewCell {
         selectedToErase = false
     }
     
-    
-    
     func squareImage(image: UIImage) -> UIImage{
         
         let cgImage = image.cgImage!
@@ -65,7 +63,6 @@ class MediaCollectionViewCell: UICollectionViewCell {
         let x = (cgImage.width - squareheight)/2
         let y = (cgImage.height - squareheight)/2
         let rect = CGRect(x: x, y: y, width: squareheight, height: squareheight)
-        
         //we crop the image and make a new one
         let imageReferene = (image.cgImage?.cropping(to: rect))!
         let imageToReturn = UIImage(cgImage: imageReferene, scale: UIScreen.main.scale, orientation: image.imageOrientation)
@@ -74,9 +71,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
     }
     
     func getThumbnailFrom(path: URL) -> UIImage? {
-        
         do {
-            
             let asset = AVURLAsset(url: path , options: nil)
             let imgGenerator = AVAssetImageGenerator(asset: asset)
             imgGenerator.appliesPreferredTrackTransform = true
@@ -86,14 +81,9 @@ class MediaCollectionViewCell: UICollectionViewCell {
             return thumbnail
             
         } catch let error {
-            
             print("*** Error generating thumbnail: \(error.localizedDescription)")
             return nil
-            
         }
         
     }
-    
-    
-    
 }

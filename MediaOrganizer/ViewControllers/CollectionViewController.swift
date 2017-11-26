@@ -9,20 +9,13 @@
 import UIKit
 import MobileCoreServices
 
-
 struct suplementatryViewKind{
     static let header = "Header"
 }
 
 class CollectionViewController: UIViewController {
-
     
-    
-    @IBOutlet weak var toolBar: UIToolbar!
-    @IBOutlet weak var notesTextView: UITextView!
-    @IBOutlet weak var collectionView: UICollectionView!
-    
-    @IBOutlet weak var selectItem: UIBarButtonItem!
+    //Properties
     var folder: Folder!
     let placeHolderText = "Notes"
     let cellID = "mediaCell"
@@ -35,6 +28,13 @@ class CollectionViewController: UIViewController {
         case editing = "Erase"//when it has elements already selected
     }
     var controllerStatus:status = .show
+    
+    //Outlets
+    @IBOutlet weak var toolBar: UIToolbar!
+    @IBOutlet weak var notesTextView: UITextView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var selectItem: UIBarButtonItem!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,32 +101,21 @@ class CollectionViewController: UIViewController {
                 break
             }
             
-            //addActivityIndicator()
             let indexesToRemove = Set(selectedItemsIndex.map({$0.item}))
-                
-            //the function eraseMedia is lovley since it already erases the media form media array, so de data source has been updated
+            //the function eraseMedia is loveley since it already erases the media form media array, so de data source has been updated
             folder.eraseMedia(indexesToRemove: indexesToRemove)
           
-            //we remove all the selected cells
-            
             //we have to set the cached attrubutes to empty so we can recalculate the layout
             let layout = collectionView.collectionViewLayout as! CustomLayout
             layout.cached = [UICollectionViewLayoutAttributes]()
-            
             collectionView.deleteItems(at: selectedItemsIndex)
             layout.invalidateLayout()
-           
-            
             hideShowTheToolbar()
-            //stopActivityIndicator()
         }
-        
     }
     
     @objc func hideShowTheToolbar(){
-        
-        if controllerStatus == .show{
-            
+        if controllerStatus == .show {
             navigationItemEdition.title = "Done"
             navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
             controllerStatus = .editing
@@ -136,7 +125,6 @@ class CollectionViewController: UIViewController {
             })
             
         }else{
-            //let attributes = [NSFontAttributeName: UIFont(name:"Helvetica", size:20)!]
             navigationItemEdition.title = "Edit"
             navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
             controllerStatus = .show
@@ -296,9 +284,6 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
         dismiss(animated: true, completion: nil)
     }
     
-    
-    
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         let mediaType = info[UIImagePickerControllerMediaType] as! CFString
@@ -338,8 +323,6 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             self.collectionView.reloadData()
             })
         }
-        
-        
         
     }
     

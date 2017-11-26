@@ -89,7 +89,6 @@ class Folder: NSObject, NSCoding{
         }
     }
     
-    
     func saveFolder()-> Bool{
         let foldersURL = documentsDirectory.appendingPathComponent(Constants.urlPaths.foldersPath)
         return NSKeyedArchiver.archiveRootObject(self, toFile: foldersURL.path)
