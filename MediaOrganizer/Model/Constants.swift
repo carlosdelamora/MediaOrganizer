@@ -20,6 +20,7 @@ struct Constants {
         static let stringMediaType = "stringMediaType"
         static let video = "video"
         static let photo = "photo"
+        static let videoData = "videoData"
     }
     
     struct FolderKeyProperties{

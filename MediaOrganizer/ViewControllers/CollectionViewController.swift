@@ -290,7 +290,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             if let originalImage = originalImage{
                 //we use this que to not block main thread
                 DispatchQueue.global().async {
-                    let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, videoURL: nil)
+                    let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, videoURL: nil, data: nil)
                     //we do not need to append the media to the folder the function folder.saveMedia will do that
                     let _ = self.folder.saveMedia(media: media)
                 }
@@ -301,10 +301,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
         // this url is temp so it will be erased, we should then use the document for to save the url
         if let tempURL = info[UIImagePickerControllerMediaURL] as? URL{
             let documentURL = folder.documentsDirectory
-            let videoURL = documentURL.appendingPathComponent(tempURL.lastPathComponent)
-            //we read the data form our temporarly url and the write it to a permenent url, i.e. videoURL
-            
-            
+            let videoURL = documentURL.appendingPathComponent("personalPath.mov")
             //we do the writing into disk in the background
             DispatchQueue.global().async {
                 var photoData = Data()
@@ -313,15 +310,13 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
                 }catch{
                     print("unable to retrieive the data")
                 }
+            
+                //try photoData.write(to: videoURL, options: .atomic)
+                let media = Media(stringMediaType: Constants.mediaType.video, photo:nil, videoURL: videoURL, data: photoData)
+                //we do not need to append the media to the folder the function folder.saveMedia will do that
+                let _ = self.folder.saveMedia(media: media)
+                //print("file exists at path = \(videoURL.path), \(filemanager.fileExists(atPath: videoURL.path))")
                 
-                do{
-                    try photoData.write(to: videoURL, options: .atomic)
-                    let media = Media(stringMediaType: Constants.mediaType.video, photo:nil, videoURL: videoURL)
-                    //we do not need to append the media to the folder the function folder.saveMedia will do that
-                    let _ = self.folder.saveMedia(media: media)
-                }catch{
-                    print("unable to write")
-                }
             }
         }
        

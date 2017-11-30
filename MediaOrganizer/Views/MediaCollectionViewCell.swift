@@ -26,25 +26,37 @@ class MediaCollectionViewCell: UICollectionViewCell {
                 imageView.image = squareImage(image: photo)
             }
         }else{
-            guard let url = media.videoURL else{
+            /*guard let url = media.videoURL else{
                 imageView.backgroundColor = .blue
                 return
-            }
+            }*/
             
-            if let thumbnail = self.getThumbnailFrom(path: url){
-                DispatchQueue.main.async {
-                    self.imageView.image = thumbnail
-                    let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-                    let auxiliaryImageView = UIImageView(frame: frame)
-                    auxiliaryImageView.image = UIImage(named: "PlayCircle")
-                    auxiliaryImageView.tintColor = .white
-                    self.imageView.addSubview(auxiliaryImageView)
-                    auxiliaryImageView.translatesAutoresizingMaskIntoConstraints = false
-                    auxiliaryImageView.heightAnchor.constraint(equalTo: auxiliaryImageView.widthAnchor, multiplier: 1).isActive = true
-                    auxiliaryImageView.heightAnchor.constraint(equalTo: self.imageView.heightAnchor, multiplier: 0.25).isActive = true 
-                    self.imageView.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
-                    self.imageView.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
+            do{
+                guard let url = URL(dataRepresentation: media.videoData!, relativeTo: media.videoURL) else{
+                    return
                 }
+                
+                let filemanager = FileManager.default
+                let documentsUrl = filemanager.urls(for: .documentDirectory, in: .userDomainMask).first!
+                
+                try media.videoData?.write(to: url, options: .atomic)
+                if let thumbnail = self.getThumbnailFrom(url: url){
+                    DispatchQueue.main.async {
+                        self.imageView.image = thumbnail
+                        let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+                        let auxiliaryImageView = UIImageView(frame: frame)
+                        auxiliaryImageView.image = UIImage(named: "PlayCircle")
+                        auxiliaryImageView.tintColor = .white
+                        self.imageView.addSubview(auxiliaryImageView)
+                        auxiliaryImageView.translatesAutoresizingMaskIntoConstraints = false
+                        auxiliaryImageView.heightAnchor.constraint(equalTo: auxiliaryImageView.widthAnchor, multiplier: 1).isActive = true
+                        auxiliaryImageView.heightAnchor.constraint(equalTo: self.imageView.heightAnchor, multiplier: 0.25).isActive = true
+                        self.imageView.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
+                        self.imageView.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
+                    }
+                }
+            }catch{
+                print("could not write to url \(error.localizedDescription)")
             }
         }
     }
@@ -68,9 +80,11 @@ class MediaCollectionViewCell: UICollectionViewCell {
         return imageToReturn
     }
     
-    func getThumbnailFrom(path: URL) -> UIImage? {
+    func getThumbnailFrom(url: URL) -> UIImage? {
+        let filemanager = FileManager.default
+        print("file exists at path = \(url.path), \(filemanager.fileExists(atPath: url.path))")
         do {
-            let asset = AVURLAsset(url: path , options: nil)
+            let asset = AVURLAsset(url: url , options: nil)
             let imgGenerator = AVAssetImageGenerator(asset: asset)
             imgGenerator.appliesPreferredTrackTransform = true
             let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)

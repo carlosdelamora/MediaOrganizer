@@ -16,7 +16,7 @@ class Folder: NSObject, NSCoding{
     var folderDescription: String?
     var notes:String?
     var mediaArray: [Media]
-    let documentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     let mediaUrl: URL?
     
     

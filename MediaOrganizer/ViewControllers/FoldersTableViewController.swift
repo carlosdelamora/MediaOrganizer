@@ -109,7 +109,7 @@ extension FoldersTableViewController: UISearchBarDelegate{
     
     func folderContainsText(searchText:String,folder: Folder )-> Bool{
         
-        let folderText = folder.title + " " + (folder.description ?? "")
+        let folderText = folder.title + " " + (folder.description )
         
         return folderText.lowercased().range(of: searchText.lowercased()) != nil
     }
