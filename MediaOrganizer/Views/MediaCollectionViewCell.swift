@@ -12,7 +12,7 @@ import AVFoundation
 class MediaCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
-   
+    var auxiliaryImageView: UIImageView?
     
     var selectedToErase: Bool = false {
         didSet{
@@ -26,16 +26,21 @@ class MediaCollectionViewCell: UICollectionViewCell {
                 imageView.image = squareImage(image: photo)
             }
         }else{
-            guard let url = media.videoURL else{
-                imageView.backgroundColor = .blue
+            
+            let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            guard let pathExtension = media.pathExtension else{
                 return
             }
+            let url = documentURL.appendingPathComponent(pathExtension)
             
             if let thumbnail = self.getThumbnailFrom(path: url){
                 DispatchQueue.main.async {
                     self.imageView.image = thumbnail
                     let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-                    let auxiliaryImageView = UIImageView(frame: frame)
+                    self.auxiliaryImageView = UIImageView(frame: frame)
+                    guard let auxiliaryImageView = self.auxiliaryImageView else{
+                        return
+                    }
                     auxiliaryImageView.image = UIImage(named: "PlayCircle")
                     auxiliaryImageView.tintColor = .white
                     self.imageView.addSubview(auxiliaryImageView)
@@ -52,6 +57,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         imageView.image = nil
         selectedToErase = false
+        auxiliaryImageView = nil 
     }
     
     func squareImage(image: UIImage) -> UIImage{

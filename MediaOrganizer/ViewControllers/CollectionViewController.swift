@@ -290,7 +290,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             if let originalImage = originalImage{
                 //we use this que to not block main thread
                 DispatchQueue.global().async {
-                    let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, videoURL: nil)
+                    let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, pathExtension: nil)
                     //we do not need to append the media to the folder the function folder.saveMedia will do that
                     let _ = self.folder.saveMedia(media: media)
                 }
@@ -300,23 +300,23 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
         
         // this url is temp so it will be erased, we should then use the document for to save the url
         if let tempURL = info[UIImagePickerControllerMediaURL] as? URL{
-            let documentURL = folder.documentsDirectory
-            let videoURL = documentURL.appendingPathComponent(tempURL.lastPathComponent)
-            //we read the data form our temporarly url and the write it to a permenent url, i.e. videoURL
-            
-            
+            let documentURL = folder.documentsDirectoryURL            
+            let pathExtension = "\(folder.title + "videos")/video.mov"
+            let videoURL = documentURL.appendingPathComponent(pathExtension)
             //we do the writing into disk in the background
             DispatchQueue.global().async {
                 var photoData = Data()
                 do{
+                    //we read the info from temp data to later write in a permanent data
                     photoData = try Data(contentsOf: tempURL)
                 }catch{
                     print("unable to retrieive the data")
                 }
                 
                 do{
+                    //we write data to the video url
                     try photoData.write(to: videoURL, options: .atomic)
-                    let media = Media(stringMediaType: Constants.mediaType.video, photo:nil, videoURL: videoURL)
+                    let media = Media(stringMediaType: Constants.mediaType.video, photo:nil, pathExtension: pathExtension)
                     //we do not need to append the media to the folder the function folder.saveMedia will do that
                     let _ = self.folder.saveMedia(media: media)
                 }catch{

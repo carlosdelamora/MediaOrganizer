@@ -16,7 +16,7 @@ class FoldersTableViewController: UIViewController {
             foldersTableView.reloadData()
         }
     }
-    let documentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     var matchingFolders = [Folder]()
     //MARK: IBOultes
     @IBOutlet weak var searchBar: UISearchBar!

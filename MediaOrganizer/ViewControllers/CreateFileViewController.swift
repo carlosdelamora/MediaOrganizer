@@ -23,6 +23,7 @@ class CreateFileViewController: UIViewController {
        let folder = Folder(title: titleTextField.text!, folderDescription: descriptionTextField.text, notes: nil)
         if folder.saveFolder(){
             print("folder has been created")
+            folder.createDirectoryInDocuments()
         }
         dismiss(animated: true, completion: nil)
         

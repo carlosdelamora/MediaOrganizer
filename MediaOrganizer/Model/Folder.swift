@@ -16,9 +16,9 @@ class Folder: NSObject, NSCoding{
     var folderDescription: String?
     var notes:String?
     var mediaArray: [Media]
-    let documentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-    let mediaUrl: URL?
-    
+    var documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    let mediaUrl: URL? //documents directory with the title extension
+   // var videosDirectoryURL: URL?// we have the extension title + videos
     
     init(title: String, folderDescription: String?, notes: String? ){
         self.title = title
@@ -29,8 +29,8 @@ class Folder: NSObject, NSCoding{
         if let notes = notes{
             self.notes = notes
         }
-        
-        self.mediaUrl = documentsDirectory.appendingPathComponent(title)
+        //we create media url
+        self.mediaUrl = documentsDirectoryURL.appendingPathComponent(title)
         if let mediaUrl = self.mediaUrl{
             if let media = NSKeyedUnarchiver.unarchiveObject(withFile: mediaUrl.path) as? [Media]{
                 self.mediaArray = media
@@ -90,8 +90,35 @@ class Folder: NSObject, NSCoding{
     }
     
     func saveFolder()-> Bool{
-        let foldersURL = documentsDirectory.appendingPathComponent(Constants.urlPaths.foldersPath)
+        //the Constants.urlPaths.foldersPath = folders
+        //TODO change the extension to depend on the name if the folder
+        let foldersURL = documentsDirectoryURL.appendingPathComponent(Constants.urlPaths.foldersPath)
+        
         return NSKeyedArchiver.archiveRootObject(self, toFile: foldersURL.path)
+    }
+    
+    func createDirectoryInDocuments(){
+        var isDirectory: ObjCBool = false
+        let fileManager = FileManager.default
+        let url = documentsDirectoryURL.appendingPathComponent(title + "videos")
+        let absolutePath = url.absoluteString
+        if fileManager.fileExists(atPath: absolutePath, isDirectory: &isDirectory){
+            if isDirectory.boolValue{
+                //file exists and is directory
+            }else{
+                //file does exits and is not directory
+                print("this should not happen, the file should be a directory")
+            }
+           
+        }else{
+            //file does not exists we create a directory
+            do{
+                try fileManager.createDirectory(at: url, withIntermediateDirectories: false, attributes: nil)
+                
+            }catch{
+                print("could not create a directory \(error.localizedDescription)")
+            }
+        }
     }
     
 }
