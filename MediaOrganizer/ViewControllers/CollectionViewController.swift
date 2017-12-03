@@ -5,7 +5,7 @@
 //  Created by Carlos De la mora on 11/12/17.
 //  Copyright © 2017 carlosdelamora. All rights reserved.
 //
-
+import AVKit
 import UIKit
 import MobileCoreServices
 
@@ -219,9 +219,28 @@ extension CollectionViewController: UICollectionViewDelegate{
         
         switch controllerStatus{
         case .show:
-            let controller = storyboard?.instantiateViewController(withIdentifier: "DetailPhoto") as! DetailPhotoViewController
-            controller.media = folder.mediaArray[indexPath.item]
-            navigationController?.pushViewController(controller, animated: true)
+            let media = folder.mediaArray[indexPath.item]
+            switch media.stringMediaType{
+            case Constants.mediaType.photo:
+                let controller = storyboard?.instantiateViewController(withIdentifier: "DetailPhoto") as! DetailPhotoViewController
+                controller.media = media
+                navigationController?.pushViewController(controller, animated: true)
+            case Constants.mediaType.video:
+                let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                guard let pathExtension = media.pathExtension else{
+                    return
+                }
+                let url = documentURL.appendingPathComponent(pathExtension)
+                let playerViewController = AVPlayerViewController()
+                let player = AVPlayer(url: url)
+                playerViewController.player = player
+                present(playerViewController, animated: true)
+                
+            default:
+                print("this should not happen mediaType unknown")
+                break
+            }
+            
         case .editing:
             print("add item to the selected items")
             let cell = collectionView.cellForItem(at: indexPath) as! MediaCollectionViewCell

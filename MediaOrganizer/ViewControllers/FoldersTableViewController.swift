@@ -97,7 +97,6 @@ extension FoldersTableViewController: UITableViewDataSource{
 
 extension FoldersTableViewController: UISearchBarDelegate{
     
-    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == ""{
             matchingFolders = arrayOfFolders
@@ -109,10 +108,12 @@ extension FoldersTableViewController: UISearchBarDelegate{
     
     
     func folderContainsText(searchText:String,folder: Folder )-> Bool{
-        
         let folderText = folder.title + " " + (folder.folderDescription ?? "")
-        
         return folderText.lowercased().range(of: searchText.lowercased()) != nil
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
     
 }
