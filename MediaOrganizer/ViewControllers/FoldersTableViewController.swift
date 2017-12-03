@@ -11,11 +11,7 @@ import UIKit
 class FoldersTableViewController: UIViewController {
     
     let cellId = "FolderCell"
-    var arrayOfFolders = [Folder](){
-        didSet{
-            foldersTableView.reloadData()
-        }
-    }
+    var arrayOfFolders = [Folder]()
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     var matchingFolders = [Folder]()
     //MARK: IBOultes
@@ -46,6 +42,10 @@ class FoldersTableViewController: UIViewController {
         //then matching folders only shows the filtered folders
         loadArrayOfFolders()
         matchingFolders = arrayOfFolders
+        //since the matching folders is what we use for the arrayOfFolders we should relaod the data after this
+        DispatchQueue.main.async {
+            self.foldersTableView.reloadData()
+        }
     }
     
     
@@ -110,7 +110,7 @@ extension FoldersTableViewController: UISearchBarDelegate{
     
     func folderContainsText(searchText:String,folder: Folder )-> Bool{
         
-        let folderText = folder.title + " " + (folder.description ?? "")
+        let folderText = folder.title + " " + (folder.folderDescription ?? "")
         
         return folderText.lowercased().range(of: searchText.lowercased()) != nil
     }

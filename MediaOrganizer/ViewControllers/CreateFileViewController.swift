@@ -25,21 +25,24 @@ class CreateFileViewController: UIViewController {
     
     @IBAction func createFolder(_ sender: Any){
        let folder = Folder(title: titleTextField.text!, folderDescription: descriptionTextField.text, notes: nil)
-        if saveFolder(folder: folder){
+        if saveFolder(folder: folder, completion:{
+            DispatchQueue.main.async {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }){
             print("folder has been created")
             folder.createDirectoryInDocuments()
         }
-        DispatchQueue.main.async {
-            self.navigationController?.popViewController(animated: true)
-        }
+        
     }
     
     
-    func saveFolder(folder: Folder)-> Bool{
+    func saveFolder(folder: Folder, completion: @escaping ()-> Void)-> Bool{
         //the Constants.urlPaths.foldersPath = folders
         //TODO change the extension to depend on the name if the folder
         let foldersURL = documentsDirectoryURL.appendingPathComponent(Constants.urlPaths.foldersPath)
         arrayOfFolders.append(folder)
+        completion()
         return NSKeyedArchiver.archiveRootObject(arrayOfFolders, toFile: foldersURL.path)
     }
   
