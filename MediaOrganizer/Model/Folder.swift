@@ -101,7 +101,7 @@ class Folder: NSObject, NSCoding{
         var isDirectory: ObjCBool = false
         let fileManager = FileManager.default
         let url = documentsDirectoryURL.appendingPathComponent(title + "videos")
-        let absolutePath = url.absoluteString
+        let absolutePath = url.absoluteString//we should use path?
         if fileManager.fileExists(atPath: absolutePath, isDirectory: &isDirectory){
             if isDirectory.boolValue{
                 //file exists and is directory

@@ -10,9 +10,13 @@ import UIKit
 
 class CreateFileViewController: UIViewController {
     
+    var documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    var arrayOfFolders:[Folder] = [Folder]()
+    
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var descriptionTextField: UITextField!
     @IBOutlet weak var createFolder: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +25,22 @@ class CreateFileViewController: UIViewController {
     
     @IBAction func createFolder(_ sender: Any){
        let folder = Folder(title: titleTextField.text!, folderDescription: descriptionTextField.text, notes: nil)
-        if folder.saveFolder(){
+        if saveFolder(folder: folder){
             print("folder has been created")
             folder.createDirectoryInDocuments()
         }
-        dismiss(animated: true, completion: nil)
-        
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    
+    func saveFolder(folder: Folder)-> Bool{
+        //the Constants.urlPaths.foldersPath = folders
+        //TODO change the extension to depend on the name if the folder
+        let foldersURL = documentsDirectoryURL.appendingPathComponent(Constants.urlPaths.foldersPath)
+        arrayOfFolders.append(folder)
+        return NSKeyedArchiver.archiveRootObject(arrayOfFolders, toFile: foldersURL.path)
     }
   
 }

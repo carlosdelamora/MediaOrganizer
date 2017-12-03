@@ -55,14 +55,15 @@ class FoldersTableViewController: UIViewController {
     
     func loadArrayOfFolders(){
         let foldersURL = documentsDirectory.appendingPathComponent(Constants.urlPaths.foldersPath)
-        let folders = NSKeyedUnarchiver.unarchiveObject(withFile: foldersURL.path) as? Folder
+        let folders = NSKeyedUnarchiver.unarchiveObject(withFile: foldersURL.path) as? [Folder]
         if let folders = folders{
-            arrayOfFolders = [folders]
+            arrayOfFolders = folders
         }
     }
     
     @objc func goToCreateFolder(){
         let createFolderController = storyboard?.instantiateViewController(withIdentifier: "createFolder") as! CreateFileViewController
+        createFolderController.arrayOfFolders = arrayOfFolders
         navigationController?.pushViewController(createFolderController, animated: true)
     }
 
