@@ -10,6 +10,7 @@ import UIKit
 
 class FoldersTableViewController: UIViewController {
     
+    var lockButton:UIButton!
     let cellId = "FolderCell"
     var arrayOfFolders = [Folder]()
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -24,6 +25,15 @@ class FoldersTableViewController: UIViewController {
         let createFolderItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToCreateFolder))
         navigationItem.rightBarButtonItem = createFolderItem
         
+        lockButton = UIButton(type: .custom)
+        lockButton.isSelected = true
+        lockButton.setImage(UIImage(named:"unlock"), for: .selected)
+        lockButton.setImage(UIImage(named:"lock"), for: .normal)
+        lockButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        lockButton.tintColor = lockButton.isSelected ? self.view.tintColor : Constants.colors.gold
+        lockButton.addTarget(self, action: #selector(lockOrUnlock), for: .touchUpInside)
+        let lockButtonItem = UIBarButtonItem(customView: lockButton)
+        navigationItem.leftBarButtonItem = lockButtonItem
         
         //we set the delegate of the table view
         foldersTableView.delegate = self
@@ -51,6 +61,11 @@ class FoldersTableViewController: UIViewController {
     
     @objc func dismissKeyboard(){
         view.endEditing(true)
+    }
+    
+    @objc func lockOrUnlock(){
+        lockButton.isSelected = !lockButton.isSelected
+        lockButton.tintColor = lockButton.isSelected ? self.view.tintColor : Constants.colors.gold
     }
     
     func loadArrayOfFolders(){

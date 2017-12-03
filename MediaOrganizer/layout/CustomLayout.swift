@@ -66,7 +66,7 @@ class CustomLayout: UICollectionViewLayout {
                     shiftModInt = 7
                 }
                 
-                return CGFloat(shiftModInt + integralpart*8)*columnWidth + yshift//we use 8 here because is number of squares above 18. It means that the height of the 17 is above 7 squares
+                return CGFloat(shiftModInt + integralpart*8)*columnWidth + yshift//we use 8 here because is the number of squares above 18. It means that the height of the 17 is above 7 squares
             }
             
             var cellHeight: CGFloat

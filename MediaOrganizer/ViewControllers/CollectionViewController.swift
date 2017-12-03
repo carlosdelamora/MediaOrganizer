@@ -19,7 +19,7 @@ class CollectionViewController: UIViewController {
     var folder: Folder!
     var arrayOfFolders: [Folder]!
     var documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    let placeHolderText = "Notes"
+    let placeHolderText = "Notes..."
     let cellID = "mediaCell"
     let reusableViewId = "ReusableView"
     var longGesture: UILongPressGestureRecognizer!
@@ -78,27 +78,24 @@ class CollectionViewController: UIViewController {
         //hide the toolbar
         toolBar.alpha = 0
     }
-    //we use this function to save the changes in the folder unfortunately we have to save all the folders and this might slow things down a lot
-    func saveFolder(folder: Folder, completion: @escaping ()-> Void)-> Bool{
-        //the Constants.urlPaths.foldersPath = folders
-        //TODO change the extension to depend on the name if the folder
-        let foldersURL = documentsDirectoryURL.appendingPathComponent(Constants.urlPaths.foldersPath)
-        arrayOfFolders = arrayOfFolders.filter({$0.title != folder.title})
-        arrayOfFolders.append(folder)
-        completion()
-        return NSKeyedArchiver.archiveRootObject(arrayOfFolders, toFile: foldersURL.path)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let notes = folder.notes{
+            notesTextView.text = notes
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         DispatchQueue.global().async {
             self.folder.saveMediaChange()
             let _ = self.saveFolder(folder: self.folder, completion: {
                 print("the folder was saved")
             })
         }
-        
-        
     }
+    
     
     @IBAction func selectItemAction(_ sender: UIBarButtonItem) {
         
@@ -155,6 +152,17 @@ class CollectionViewController: UIViewController {
                 self.toolBar.alpha = 0
             })
         }
+    }
+    
+    //we use this function to save the changes in the folder unfortunately we have to save all the folders and this might slow things down a lot
+    func saveFolder(folder: Folder, completion: @escaping ()-> Void)-> Bool{
+        //the Constants.urlPaths.foldersPath = folders
+        //TODO change the extension to depend on the name if the folder
+        let foldersURL = documentsDirectoryURL.appendingPathComponent(Constants.urlPaths.foldersPath)
+        arrayOfFolders = arrayOfFolders.filter({$0.title != folder.title})
+        arrayOfFolders.append(folder)
+        completion()
+        return NSKeyedArchiver.archiveRootObject(arrayOfFolders, toFile: foldersURL.path)
     }
     
     

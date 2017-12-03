@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct Constants {
     
@@ -32,5 +33,9 @@ struct Constants {
     struct urlPaths{
         static let mediaPath = "media"
         static let foldersPath = "folders"
+    }
+    
+    struct colors{
+        static let gold = UIColor(red: 1, green: 215/255, blue: 0/255, alpha: 1)
     }
 }
