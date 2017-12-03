@@ -76,6 +76,7 @@ extension FoldersTableViewController: UITableViewDelegate{
         let folder = matchingFolders[indexPath.row]
         let collectionViewController = storyboard?.instantiateViewController(withIdentifier: "CollectionView") as! CollectionViewController
         collectionViewController.folder = folder
+        collectionViewController.arrayOfFolders = arrayOfFolders
         navigationController?.pushViewController(collectionViewController, animated: true)
     }
     

@@ -21,7 +21,9 @@ class FolderCellTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    
+    override func prepareForReuse() {
+        cellUIImageView.image = nil
+    }
     
     func configure(for folder: Folder){
         //the first image in the folder

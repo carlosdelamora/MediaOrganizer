@@ -89,14 +89,6 @@ class Folder: NSObject, NSCoding{
         }
     }
     
-    func saveFolder()-> Bool{
-        //the Constants.urlPaths.foldersPath = folders
-        //TODO change the extension to depend on the name if the folder
-        let foldersURL = documentsDirectoryURL.appendingPathComponent(Constants.urlPaths.foldersPath)
-        
-        return NSKeyedArchiver.archiveRootObject(self, toFile: foldersURL.path)
-    }
-    
     func createDirectoryInDocuments(){
         var isDirectory: ObjCBool = false
         let fileManager = FileManager.default
