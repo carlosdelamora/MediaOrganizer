@@ -42,6 +42,7 @@ class CollectionViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         notesTextView.delegate = self
+        
         //double tap gesture recognizer
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         gestureRecognizer.numberOfTapsRequired = 2
@@ -51,11 +52,11 @@ class CollectionViewController: UIViewController {
         longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongGesture(gesture:)))
         collectionView.addGestureRecognizer(longGesture)
         
-        
         //set the layout
         let layout = collectionView.collectionViewLayout as! CustomLayout
         layout.numberOfColumns = 3
         layout.padding = 1.0
+        
         //collectionView
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -68,9 +69,11 @@ class CollectionViewController: UIViewController {
         //create the plus item
         let navigationItemPlus = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(alertForCameraOrLibrary))
         navigationItem.rightBarButtonItem = navigationItemPlus
+        
         //create the edit/done item
         navigationItemEdition = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(hideShowTheToolbar))
         navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
+        
         //add the items
         let items:[UIBarButtonItem] = [navigationItemPlus,navigationItemEdition]
         navigationItem.setRightBarButtonItems(items, animated: false)
@@ -86,7 +89,7 @@ class CollectionViewController: UIViewController {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    /*override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //TODO save changes when they occur instead of when the viewWillDisapear
         DispatchQueue.global().async {
@@ -95,7 +98,7 @@ class CollectionViewController: UIViewController {
                 print("the folder was saved")
             })
         }
-    }
+    }*/
     
     
     @IBAction func selectItemAction(_ sender: UIBarButtonItem) {
@@ -158,7 +161,6 @@ class CollectionViewController: UIViewController {
     //we use this function to save the changes in the folder unfortunately we have to save all the folders and this might slow things down a lot
     func saveFolder(folder: Folder, completion: @escaping ()-> Void)-> Bool{
         //the Constants.urlPaths.foldersPath = folders
-        //TODO change the extension to depend on the name if the folder
         let foldersURL = documentsDirectoryURL.appendingPathComponent(Constants.urlPaths.foldersPath)
         arrayOfFolders = arrayOfFolders.filter({$0.title != folder.title})
         arrayOfFolders.append(folder)
@@ -244,6 +246,10 @@ extension CollectionViewController: UICollectionViewDelegate{
         let mediaToRemove = mediaArray.remove(at: sourceIndexPath.item)
         mediaArray.insert(mediaToRemove, at: destinationIndexPath.item)
         folder.mediaArray = mediaArray
+        //we save the changes to the media here
+        DispatchQueue.global().async {
+            self.folder.saveMediaChange()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
