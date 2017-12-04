@@ -19,6 +19,8 @@
 		CA4322F21FBD0E0B0000970C /* CustomLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4322F11FBD0E0B0000970C /* CustomLayout.swift */; };
 		CA4322F71FBD489F0000970C /* CustomReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4322F61FBD489F0000970C /* CustomReusableView.swift */; };
 		CA4322F91FBD4A390000970C /* Reusable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA4322F81FBD4A390000970C /* Reusable.xib */; };
+		CA449A0E1FD5EF6000890E1B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A0D1FD5EF6000890E1B /* CoreDataStack.swift */; };
+		CA449A111FD5F5ED00890E1B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA449A0F1FD5F5ED00890E1B /* Model.xcdatamodeld */; };
 		CA6652B71FC3500400D9F723 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652B61FC3500400D9F723 /* Media.swift */; };
 		CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652B81FC39F8100D9F723 /* Constants.swift */; };
 		CA6652BD1FC5F0AC00D9F723 /* DetailPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652BC1FC5F0AB00D9F723 /* DetailPhotoViewController.swift */; };
@@ -40,6 +42,8 @@
 		CA4322F11FBD0E0B0000970C /* CustomLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLayout.swift; sourceTree = "<group>"; };
 		CA4322F61FBD489F0000970C /* CustomReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomReusableView.swift; sourceTree = "<group>"; };
 		CA4322F81FBD4A390000970C /* Reusable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Reusable.xib; sourceTree = "<group>"; };
+		CA449A0D1FD5EF6000890E1B /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		CA449A101FD5F5ED00890E1B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		CA6652B61FC3500400D9F723 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		CA6652B81FC39F8100D9F723 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CA6652BC1FC5F0AB00D9F723 /* DetailPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPhotoViewController.swift; sourceTree = "<group>"; };
@@ -112,8 +116,10 @@
 			isa = PBXGroup;
 			children = (
 				CA02AC841FB7EAB80017CE37 /* Folder.swift */,
+				CA449A0D1FD5EF6000890E1B /* CoreDataStack.swift */,
 				CA6652B61FC3500400D9F723 /* Media.swift */,
 				CA6652B81FC39F8100D9F723 /* Constants.swift */,
+				CA449A0F1FD5F5ED00890E1B /* Model.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -205,9 +211,11 @@
 				CA7D76D71FCB763C00640AD2 /* CreateFileViewController.swift in Sources */,
 				CA02AC831FB7EA750017CE37 /* FolderCellTableViewCell.swift in Sources */,
 				CA4322F21FBD0E0B0000970C /* CustomLayout.swift in Sources */,
+				CA449A111FD5F5ED00890E1B /* Model.xcdatamodeld in Sources */,
 				CA02AC8D1FB8EFDE0017CE37 /* MediaCollectionViewCell.swift in Sources */,
 				CA02AC811FB7EA380017CE37 /* FoldersTableViewController.swift in Sources */,
 				CA6652BD1FC5F0AC00D9F723 /* DetailPhotoViewController.swift in Sources */,
+				CA449A0E1FD5EF6000890E1B /* CoreDataStack.swift in Sources */,
 				CA4322F71FBD489F0000970C /* CustomReusableView.swift in Sources */,
 				CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */,
 				CA6652B71FC3500400D9F723 /* Media.swift in Sources */,
@@ -400,6 +408,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CA449A0F1FD5F5ED00890E1B /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CA449A101FD5F5ED00890E1B /* Model.xcdatamodel */,
+			);
+			currentVersion = CA449A101FD5F5ED00890E1B /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CA02AC631FB7E44F0017CE37 /* Project object */;
 }

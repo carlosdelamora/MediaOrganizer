@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="16G1036" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CoreFolder" representedClassName="CoreFolder" syncable="YES" codeGenerationType="class">
+        <attribute name="folderDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <relationship name="folderToMedia" toMany="YES" deletionRule="Cascade" destinationEntity="CoreMedia" inverseName="mediaToFolder" inverseEntity="CoreMedia" syncable="YES"/>
+    </entity>
+    <entity name="CoreMedia" representedClassName="CoreMedia" syncable="YES">
+        <attribute name="stringMediaType" attributeType="String" syncable="YES"/>
+        <attribute name="uuidString" attributeType="String" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <relationship name="mediaToFolder" maxCount="1" deletionRule="Nullify" destinationEntity="CoreFolder" inverseName="folderToMedia" inverseEntity="CoreFolder" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CoreMedia" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="CoreFolder" positionX="-54" positionY="9" width="128" height="105"/>
+    </elements>
+</model>
