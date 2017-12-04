@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LocalAuthentication
 
 class FoldersTableViewController: UIViewController {
     
@@ -15,6 +16,7 @@ class FoldersTableViewController: UIViewController {
     var arrayOfFolders = [Folder]()
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     var matchingFolders = [Folder]()
+    var isLocked:Bool = true
     //MARK: IBOultes
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var foldersTableView: UITableView!
@@ -26,7 +28,7 @@ class FoldersTableViewController: UIViewController {
         navigationItem.rightBarButtonItem = createFolderItem
         
         lockButton = UIButton(type: .custom)
-        lockButton.isSelected = true
+        lockButton.isSelected = false
         lockButton.setImage(UIImage(named:"unlock"), for: .selected)
         lockButton.setImage(UIImage(named:"lock"), for: .normal)
         lockButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -66,6 +68,20 @@ class FoldersTableViewController: UIViewController {
     @objc func lockOrUnlock(){
         lockButton.isSelected = !lockButton.isSelected
         lockButton.tintColor = lockButton.isSelected ? self.view.tintColor : Constants.colors.gold
+        let myContext = LAContext()
+        let myLocalizedReasonString = "We need to identify you"
+        
+        var authError: NSError?
+        myContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: myLocalizedReasonString) { success, evaluateError in
+            if success {
+                // User authenticated successfully, take appropriate action
+                print("success in print password")
+            }else{
+                print("fail in print password")
+            }
+        }
+        
+        
     }
     
     func loadArrayOfFolders(){

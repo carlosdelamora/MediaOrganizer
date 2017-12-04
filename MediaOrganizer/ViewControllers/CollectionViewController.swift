@@ -88,6 +88,7 @@ class CollectionViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        //TODO save changes when they occur instead of when the viewWillDisapear
         DispatchQueue.global().async {
             self.folder.saveMediaChange()
             let _ = self.saveFolder(folder: self.folder, completion: {

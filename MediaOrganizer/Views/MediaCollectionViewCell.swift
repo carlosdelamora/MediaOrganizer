@@ -24,6 +24,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
         if media.stringMediaType == Constants.mediaType.photo{
             if let photo = media.photo {
                 imageView.image = squareImage(image: photo)
+                auxiliaryImageView = nil 
             }
         }else{
             
