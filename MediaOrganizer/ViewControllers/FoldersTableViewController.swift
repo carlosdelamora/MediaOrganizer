@@ -46,6 +46,13 @@ class FoldersTableViewController: UIViewController {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         gestureRecognizer.numberOfTapsRequired = 2
         view.addGestureRecognizer(gestureRecognizer)
+        
+        loadArrayOfFolders()
+        matchingFolders = arrayOfFolders.sorted(by: { $0.title < $1.title })
+        //since the matching folders is what we use for the arrayOfFolders we should relaod the data after this
+        DispatchQueue.main.async {
+            self.foldersTableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,12 +60,13 @@ class FoldersTableViewController: UIViewController {
       
     }
     
+    //we use the viewDid appear because it fires after saving the folder, in case we save a folder while changing the notes
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //the matching folders will be the arrayOfFolders initialy
         //then matching folders only shows the filtered folders
         loadArrayOfFolders()
-        matchingFolders = arrayOfFolders
+        matchingFolders = arrayOfFolders.sorted(by: { $0.title < $1.title })
         //since the matching folders is what we use for the arrayOfFolders we should relaod the data after this
         DispatchQueue.main.async {
             self.foldersTableView.reloadData()
