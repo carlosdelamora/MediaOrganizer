@@ -12,7 +12,7 @@ import AVFoundation
 class MediaCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
-    var auxiliaryImageView: UIImageView?
+    var auxiliaryImageView: UIImageView? 
     
     var selectedToErase: Bool = false {
         didSet{
@@ -57,8 +57,9 @@ class MediaCollectionViewCell: UICollectionViewCell {
     //we made the image nil 
     override func prepareForReuse() {
         imageView.image = nil
-        selectedToErase = false
-        auxiliaryImageView = nil 
+        imageView.alpha = 1
+        auxiliaryImageView?.image = nil
+        auxiliaryImageView = nil
     }
     
     func squareImage(image: UIImage) -> UIImage{

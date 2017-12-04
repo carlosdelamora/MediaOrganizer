@@ -50,6 +50,11 @@ class FoldersTableViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+      
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         //the matching folders will be the arrayOfFolders initialy
         //then matching folders only shows the filtered folders
         loadArrayOfFolders()
@@ -59,7 +64,6 @@ class FoldersTableViewController: UIViewController {
             self.foldersTableView.reloadData()
         }
     }
-    
     
     @objc func dismissKeyboard(){
         view.endEditing(true)

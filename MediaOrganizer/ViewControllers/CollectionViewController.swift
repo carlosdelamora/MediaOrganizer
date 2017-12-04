@@ -89,16 +89,12 @@ class CollectionViewController: UIViewController {
         }
     }
     
-    /*override func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        //TODO save changes when they occur instead of when the viewWillDisapear
-        DispatchQueue.global().async {
-            self.folder.saveMediaChange()
-            let _ = self.saveFolder(folder: self.folder, completion: {
-                print("the folder was saved")
-            })
-        }
-    }*/
+        //dismiss if the keyboard is present dismissed so the folder can be saved
+        self.view.endEditing(true)
+        
+    }
     
     
     @IBAction func selectItemAction(_ sender: UIBarButtonItem) {
@@ -159,13 +155,17 @@ class CollectionViewController: UIViewController {
     }
     
     //we use this function to save the changes in the folder unfortunately we have to save all the folders and this might slow things down a lot
-    func saveFolder(folder: Folder, completion: @escaping ()-> Void)-> Bool{
+    func saveFolder(folder: Folder, completion:()-> Void)-> Bool{
         //the Constants.urlPaths.foldersPath = folders
         let foldersURL = documentsDirectoryURL.appendingPathComponent(Constants.urlPaths.foldersPath)
         arrayOfFolders = arrayOfFolders.filter({$0.title != folder.title})
         arrayOfFolders.append(folder)
-        completion()
-        return NSKeyedArchiver.archiveRootObject(arrayOfFolders, toFile: foldersURL.path)
+        let saved = NSKeyedArchiver.archiveRootObject(arrayOfFolders, toFile: foldersURL.path)
+        if saved{
+           completion()
+        }
+        return saved
+        
     }
     
     
@@ -230,6 +230,11 @@ extension CollectionViewController: UITextViewDelegate{
     
     func textViewDidEndEditing(_ textView: UITextView) {
         folder?.notes = textView.text
+        DispatchQueue.main.async {
+            let _ = self.saveFolder(folder: self.folder, completion: {
+                print("the folder was saved")
+            })
+        }
     }
 }
 
@@ -314,18 +319,14 @@ extension CollectionViewController: UICollectionViewDataSource{
         return 1
     }
     
-    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         if kind == suplementatryViewKind.header{
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reusableViewId, for: indexPath) as! CustomReusableView
-            
             return view
         }else{
             return UICollectionReusableView()
         }
-        
-        
     }
     
 }
@@ -356,8 +357,9 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
         
         // this url is temp so it will be erased, we should then use the document for to save the url
         if let tempURL = info[UIImagePickerControllerMediaURL] as? URL{
-            let documentURL = folder.documentsDirectoryURL            
-            let pathExtension = "\(folder.title + "videos")/video.mov"
+            let documentURL = folder.documentsDirectoryURL
+            let uuid = UUID().uuidString //unique video id 
+            let pathExtension = "\(folder.title + "videos")/\(uuid).mov"
             let videoURL = documentURL.appendingPathComponent(pathExtension)
             //we do the writing into disk in the background
             DispatchQueue.global().async {
