@@ -360,11 +360,12 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
             //if the image is not nil we save it to the folder
             if let originalImage = originalImage{
-                
+                print(originalImage.imageOrientation)
                 let uuidString = UUID().uuidString
                 let stringMediaType = Constants.mediaType.photo
                 let index = Int64(folder.folderToMedia.count - 1)
                 let coreMedia = CoreMedia(stringMediaType: stringMediaType, uuidString: uuidString, index: index, folder: folder, context: context)
+                mediaArray.append(coreMedia)
                 let url = coreMedia.getURL()
                 let photoData = UIImagePNGRepresentation(originalImage)
                 
