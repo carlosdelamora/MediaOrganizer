@@ -8,14 +8,16 @@
 
 import UIKit
 import LocalAuthentication
+import CoreData
 
 class FoldersTableViewController: UIViewController {
     
+    var context: NSManagedObjectContext? = nil
     var lockButton:UIButton!
     let cellId = "FolderCell"
-    var arrayOfFolders = [Folder]()
+    var arrayOfFolders = [CoreFolder]()
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    var matchingFolders = [Folder]()
+    var matchingFolders = [CoreFolder]()
     var isLocked:Bool = true
     //MARK: IBOultes
     @IBOutlet weak var searchBar: UISearchBar!
@@ -23,6 +25,11 @@ class FoldersTableViewController: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        //set the context for core data
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        context = stack?.context
+        
         // Add a bar button item
         let createFolderItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToCreateFolder))
         navigationItem.rightBarButtonItem = createFolderItem
@@ -57,7 +64,10 @@ class FoldersTableViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-      
+        loadArrayOfFolders()
+        
+        //since the matching folders is what we use for the arrayOfFolders we should relaod the data after this
+        
     }
     
     //we use the viewDid appear because it fires after saving the folder, in case we save a folder while changing the notes
@@ -65,12 +75,6 @@ class FoldersTableViewController: UIViewController {
         super.viewDidAppear(animated)
         //the matching folders will be the arrayOfFolders initialy
         //then matching folders only shows the filtered folders
-        loadArrayOfFolders()
-        matchingFolders = arrayOfFolders.sorted(by: { $0.title < $1.title })
-        //since the matching folders is what we use for the arrayOfFolders we should relaod the data after this
-        DispatchQueue.main.async {
-            self.foldersTableView.reloadData()
-        }
     }
     
     @objc func dismissKeyboard(){
@@ -97,16 +101,33 @@ class FoldersTableViewController: UIViewController {
     }
     
     func loadArrayOfFolders(){
-        let foldersURL = documentsDirectory.appendingPathComponent(Constants.urlPaths.foldersPath)
+        /*let foldersURL = documentsDirectory.appendingPathComponent(Constants.urlPaths.foldersPath)
         let folders = NSKeyedUnarchiver.unarchiveObject(withFile: foldersURL.path) as? [Folder]
         if let folders = folders{
             arrayOfFolders = folders
+        }*/
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreFolder")
+        let predicate:NSPredicate? = nil
+        fetchRequest.predicate = predicate
+        context?.perform {
+            do{
+                if let results = try self.context?.fetch(fetchRequest) as? [CoreFolder]{
+                    self.arrayOfFolders = results
+                    self.matchingFolders = self.arrayOfFolders.sorted(by: { $0.title < $1.title })
+                    DispatchQueue.main.async {
+                        self.foldersTableView.reloadData()
+                    }
+                }
+            }catch{
+                print("there was an error in fetching the core folders \(error.localizedDescription)")
+            }
         }
     }
     
     @objc func goToCreateFolder(){
         let createFolderController = storyboard?.instantiateViewController(withIdentifier: "createFolder") as! CreateFileViewController
-        createFolderController.arrayOfFolders = arrayOfFolders
+        //createFolderController.arrayOfFolders = arrayOfFolders
         navigationController?.pushViewController(createFolderController, animated: true)
     }
 
@@ -118,9 +139,9 @@ extension FoldersTableViewController: UITableViewDelegate{
         
         let folder = matchingFolders[indexPath.row]
         let collectionViewController = storyboard?.instantiateViewController(withIdentifier: "CollectionView") as! CollectionViewController
-        collectionViewController.folder = folder
+        /*collectionViewController.folder = folder
         collectionViewController.arrayOfFolders = arrayOfFolders
-        navigationController?.pushViewController(collectionViewController, animated: true)
+        navigationController?.pushViewController(collectionViewController, animated: true)*/
     }
     
 }
@@ -151,7 +172,7 @@ extension FoldersTableViewController: UISearchBarDelegate{
     }
     
     
-    func folderContainsText(searchText:String,folder: Folder )-> Bool{
+    func folderContainsText(searchText:String,folder: CoreFolder )-> Bool{
         let folderText = folder.title + " " + (folder.folderDescription ?? "")
         return folderText.lowercased().range(of: searchText.lowercased()) != nil
     }

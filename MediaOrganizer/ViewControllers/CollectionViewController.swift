@@ -122,6 +122,7 @@ class CollectionViewController: UIViewController {
             
             let indexesToRemove = Set(selectedItemsIndex.map({$0.item}))
             //the function eraseMedia is loveley since it already erases the media form media array, so de data source has been updated
+            //TODO: create an eraseMedia function
             folder.eraseMedia(indexesToRemove: indexesToRemove)
           
             //we have to set the cached attrubutes to empty so we can recalculate the layout

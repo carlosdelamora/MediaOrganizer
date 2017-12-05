@@ -34,7 +34,12 @@ class CreateFileViewController: UIViewController {
        guard let context = context else{ return }
             
        let _ = CoreFolder(title: titleTextField.text!, folderDescription: descriptionTextField.text, notes: nil, context: context)
-        
+        do {
+            print("we have saved context")
+            try context.save()
+        } catch {
+            fatalError("Error while saving main context: \(error)")
+        }
        /*let folder = Folder(title: titleTextField.text!, folderDescription: descriptionTextField.text, notes: nil)
         if saveFolder(folder: folder, completion:{
             DispatchQueue.main.async {

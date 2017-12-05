@@ -25,12 +25,13 @@ class FolderCellTableViewCell: UITableViewCell {
         cellUIImageView.image = nil
     }
     
-    func configure(for folder: Folder){
+    func configure(for folder: CoreFolder){
         //the first image in the folder
-        if folder.mediaArray.count > 0{
-            if let photo = folder.mediaArray.first?.photo{
+        if folder.folderToMedia.count > 0{
+            //TODO: place photo for the media
+            /*if let photo = folder.mediaArray.first?.photo{
                 cellUIImageView.image = squareImage(image: photo)
-            }
+            }*/
         }else{
             cellUIImageView.backgroundColor = .red
         }
