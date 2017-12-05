@@ -24,7 +24,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
         if media.stringMediaType == Constants.mediaType.photo{
             if let photoData = try? Data(contentsOf: media.getURL()), let photo = UIImage(data:photoData){
                 
-                imageView.image = photo
+                imageView.image = squareImage(image: photo)
                 auxiliaryImageView = nil 
             }
         }else{

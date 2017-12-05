@@ -367,7 +367,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
                 let coreMedia = CoreMedia(stringMediaType: stringMediaType, uuidString: uuidString, index: index, folder: folder, context: context)
                 mediaArray.append(coreMedia)
                 let url = coreMedia.getURL()
-                let photoData = UIImagePNGRepresentation(originalImage)
+                let photoData = UIImageJPEGRepresentation(originalImage, 1)
                 
                 do{
                     try photoData?.write(to: url, options: .atomic)
