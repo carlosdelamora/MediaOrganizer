@@ -21,9 +21,13 @@ class CreateFileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
     }
     
     @IBAction func createFolder(_ sender: Any){
+        
+        
+        
        let folder = Folder(title: titleTextField.text!, folderDescription: descriptionTextField.text, notes: nil)
         if saveFolder(folder: folder, completion:{
             DispatchQueue.main.async {
