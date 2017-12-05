@@ -12,7 +12,7 @@ import AVFoundation
 class MediaCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
-    var auxiliaryImageView: UIImageView? 
+    
     
     var selectedToErase: Bool = false {
         didSet{
@@ -21,45 +21,67 @@ class MediaCollectionViewCell: UICollectionViewCell {
     }
     
     func configureForMedia(media:CoreMedia){
-        if media.stringMediaType == Constants.mediaType.photo{
-            if let photoData = try? Data(contentsOf: media.getURL()), let photo = UIImage(data:photoData){
-                
-                imageView.image = squareImage(image: photo)
-                auxiliaryImageView = nil 
-            }
-        }else{
-            
-            
-            let url = media.getURL()
-            
-            if let thumbnail = self.getThumbnailFrom(path: url){
-                DispatchQueue.main.async {
-                    self.imageView.image = thumbnail
-                    let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-                    self.auxiliaryImageView = UIImageView(frame: frame)
-                    guard let auxiliaryImageView = self.auxiliaryImageView else{
-                        return
-                    }
-                    auxiliaryImageView.image = UIImage(named: "PlayCircle")
-                    auxiliaryImageView.tintColor = .white
-                    self.imageView.addSubview(auxiliaryImageView)
-                    auxiliaryImageView.translatesAutoresizingMaskIntoConstraints = false
-                    auxiliaryImageView.heightAnchor.constraint(equalTo: auxiliaryImageView.widthAnchor, multiplier: 1).isActive = true
-                    auxiliaryImageView.heightAnchor.constraint(equalTo: self.imageView.heightAnchor, multiplier: 0.25).isActive = true 
-                    self.imageView.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
-                    self.imageView.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
-                }
-            }
-        }
+        imageView.placeSquareImageFromMedia(media: media)
     }
     //we made the image nil 
     override func prepareForReuse() {
         imageView.image = nil
         imageView.alpha = 1
-        auxiliaryImageView?.image = nil
-        auxiliaryImageView = nil
+        if let auxiliaryView = imageView.viewWithTag(100){
+            auxiliaryView.removeFromSuperview()
+        }
     }
     
+    
+    
+    
+}
+
+
+extension UIImageView{
+    
+    func placeSquareImageFromMedia(media: CoreMedia){
+        var auxiliaryImageView: UIImageView? = nil
+        
+        //we can not add an auxiliaryViewMore than once
+        if let anotherAuxiliaryView = self.viewWithTag(100){
+           anotherAuxiliaryView.removeFromSuperview()
+        }
+        let url = media.getURL()
+        switch media.stringMediaType{
+        case Constants.mediaType.photo:
+            if let photoData = try? Data(contentsOf: url), let photo = UIImage(data:photoData){
+                self.image = squareImage(image: photo)
+                auxiliaryImageView?.image = nil
+                auxiliaryImageView = nil
+            }
+        case Constants.mediaType.video:
+            //we place a video image in top of the thumbnail
+            if let thumbnail = self.getThumbnailFrom(path: url){
+                DispatchQueue.main.async {
+                    self.image = thumbnail
+                    let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+                    auxiliaryImageView = UIImageView(frame: frame)
+                    auxiliaryImageView?.tag = 100
+                    guard let auxiliaryImageView = auxiliaryImageView else{
+                        return
+                    }
+                    auxiliaryImageView.image = UIImage(named: "PlayCircle")
+                    auxiliaryImageView.tintColor = .white
+                    self.addSubview(auxiliaryImageView)
+                    auxiliaryImageView.translatesAutoresizingMaskIntoConstraints = false
+                    auxiliaryImageView.heightAnchor.constraint(equalTo: auxiliaryImageView.widthAnchor, multiplier: 1).isActive = true
+                    auxiliaryImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25).isActive = true
+                    self.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
+                    self.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
+                }
+            }
+        default:
+            print("there was an error presenting the image from core Media")
+        }
+    }
+    
+    //return a square image out of an image
     func squareImage(image: UIImage) -> UIImage{
         
         let cgImage = image.cgImage!
@@ -74,6 +96,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
         return imageToReturn
     }
     
+    //we get an image form the video
     func getThumbnailFrom(path: URL) -> UIImage? {
         do {
             let asset = AVURLAsset(url: path , options: nil)
@@ -90,4 +113,6 @@ class MediaCollectionViewCell: UICollectionViewCell {
         }
         
     }
+    
 }
+

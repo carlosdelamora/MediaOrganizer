@@ -373,7 +373,6 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
         
        // this url is temp so it will be erased, we should then use the document for to save the url
         if let tempURL = info[UIImagePickerControllerMediaURL] as? URL{
-            
             var videoData = Data()
             do{
                 //we read the info from temp data to later write in a permanent data

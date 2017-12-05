@@ -10,6 +10,7 @@
 import Foundation
 import CoreData
 
+
 @objc(CoreMedia)
 public class CoreMedia: NSManagedObject {
     
@@ -39,4 +40,8 @@ public class CoreMedia: NSManagedObject {
         let videoURL = documentURL.appendingPathComponent(pathExtension)
         return videoURL
     }
+    
 }
+
+
+
