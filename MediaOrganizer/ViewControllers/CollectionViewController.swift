@@ -133,12 +133,11 @@ class CollectionViewController: UIViewController {
             }
             
             //TODO: Remove index
-           /* let indexesToRemove = selectedItemsIndex.map({$0.item})
-            let fetchRequest =
+            let indicesToRemove = Set(selectedItemsIndex.map({$0.item}))
+            //let fetchRequest =
             //the function eraseMedia is loveley since it already erases the media form media array, so de data source has been updated
             //TODO: create an eraseMedia function
-            coreFolder.eraseMedia(indexesToRemove: indexesToRemove)
-              */
+            mediaArray = folder.updatedMediaArray(mediaArray: mediaArray, indicesToRemove: indicesToRemove)
             //we have to set the cached attrubutes to empty so we can recalculate the layout
             let layout = collectionView.collectionViewLayout as! CustomLayout
             layout.cached = [UICollectionViewLayoutAttributes]()
@@ -318,13 +317,13 @@ extension CollectionViewController: UICollectionViewDelegate{
 extension CollectionViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let number = folder.mediaArray().count
+        let number = mediaArray.count
         return number
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MediaCollectionViewCell
-        let media = folder.mediaArray()[indexPath.item]
+        let media = mediaArray[indexPath.item]
         cell.configureForMedia(media: media)
         return cell
     }
