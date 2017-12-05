@@ -99,6 +99,9 @@ class CollectionViewController: UIViewController {
         if let notes = folder.notes{
             notesTextView.text = notes
         }
+        collectionView.reloadData()
+        collectionView.layoutIfNeeded()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -128,15 +131,10 @@ class CollectionViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.present(alert, animated: true)
                 }
-                //we do not continue with the rest of the code inside this function
-                break
             }
             
-            //TODO: Remove index
+            //we erase the media from dataSource, form core data and then form the collection View
             let indicesToRemove = Set(selectedItemsIndex.map({$0.item}))
-            //let fetchRequest =
-            //the function eraseMedia is loveley since it already erases the media form media array, so de data source has been updated
-            //TODO: create an eraseMedia function
             mediaArray = folder.updatedMediaArray(mediaArray: mediaArray, indicesToRemove: indicesToRemove)
             //we have to set the cached attrubutes to empty so we can recalculate the layout
             let layout = collectionView.collectionViewLayout as! CustomLayout
@@ -168,20 +166,7 @@ class CollectionViewController: UIViewController {
         }
     }
     
-    //we use this function to save the changes in the folder unfortunately we have to save all the folders and this might slow things down a lot
-    /*func saveFolder(folder: Folder, completion:()-> Void)-> Bool{
-        //the Constants.urlPaths.foldersPath = folders
-        let foldersURL = documentsDirectoryURL.appendingPathComponent(Constants.urlPaths.foldersPath)
-        arrayOfFolders = arrayOfFolders.filter({$0.title != folder.title})
-        arrayOfFolders.append(folder)
-        let saved = NSKeyedArchiver.archiveRootObject(arrayOfFolders, toFile: foldersURL.path)
-        if saved{
-           completion()
-        }
-        return saved
-        
-    }*/
-    
+  
     
     //this function presents the imagePicker Controller to record video or take a photo
     fileprivate func presentImagePicker(source: UIImagePickerControllerSourceType) {
@@ -275,11 +260,10 @@ extension CollectionViewController: UICollectionViewDelegate{
         switch controllerStatus{
         case .show:
             let media = folder.mediaArray()[indexPath.item]
-            switch media.stringMediaType{
-            case Constants.mediaType.photo:
-                let controller = storyboard?.instantiateViewController(withIdentifier: "DetailPhoto") as! DetailPhotoViewController
-                controller.media = media
-                navigationController?.pushViewController(controller, animated: true)
+           
+            let controller = storyboard?.instantiateViewController(withIdentifier: "DetailPhoto") as! DetailViewController
+            controller.media = media
+            navigationController?.pushViewController(controller, animated: true)
             /*case Constants.mediaType.video:
                 let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
                 guard let pathExtension = media.pathExtension else{
@@ -291,11 +275,7 @@ extension CollectionViewController: UICollectionViewDelegate{
                 playerViewController.player = player
                 present(playerViewController, animated: true)*/
                 
-            default:
-                print("this should not happen mediaType unknown")
-                break
-            }
-            
+           
         case .editing:
             print("add item to the selected items")
             let cell = collectionView.cellForItem(at: indexPath) as! MediaCollectionViewCell
@@ -410,9 +390,6 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             context.delete(coreMedia)
         }
     }
-    
-    
-    
 }
 
 

@@ -71,7 +71,7 @@ extension UIImageView{
                     self.addSubview(auxiliaryImageView)
                     auxiliaryImageView.translatesAutoresizingMaskIntoConstraints = false
                     auxiliaryImageView.heightAnchor.constraint(equalTo: auxiliaryImageView.widthAnchor, multiplier: 1).isActive = true
-                    auxiliaryImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.25).isActive = true
+                    auxiliaryImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.10, constant: 20).isActive = true
                     self.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
                     self.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
                 }
