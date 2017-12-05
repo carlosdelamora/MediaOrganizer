@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import CoreData
 
 class CreateFileViewController: UIViewController {
     
+    var context: NSManagedObjectContext? = nil
     var documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     var arrayOfFolders:[Folder] = [Folder]()
     
@@ -26,9 +28,14 @@ class CreateFileViewController: UIViewController {
     
     @IBAction func createFolder(_ sender: Any){
         
+       let appDelegate = UIApplication.shared.delegate as! AppDelegate
+       let stack = appDelegate.stack
+       context = stack?.context
+       guard let context = context else{ return }
+            
+       let _ = CoreFolder(title: titleTextField.text!, folderDescription: descriptionTextField.text, notes: nil, context: context)
         
-        
-       let folder = Folder(title: titleTextField.text!, folderDescription: descriptionTextField.text, notes: nil)
+       /*let folder = Folder(title: titleTextField.text!, folderDescription: descriptionTextField.text, notes: nil)
         if saveFolder(folder: folder, completion:{
             DispatchQueue.main.async {
                 self.navigationController?.popViewController(animated: true)
@@ -36,8 +43,10 @@ class CreateFileViewController: UIViewController {
         }){
             print("folder has been created")
             folder.createDirectoryInDocuments()
+        }*/
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
         }
-        
     }
     
     
