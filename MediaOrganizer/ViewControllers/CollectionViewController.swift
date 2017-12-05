@@ -352,66 +352,40 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        guard let context = context else{return}
+        
         let mediaType = info[UIImagePickerControllerMediaType] as! CFString
+        //we get the unique string id for the media
+        let uuidString = UUID().uuidString
+        //we set the index of the media to be the last element
+        let index = Int64(folder.folderToMedia.count - 1)
         // we did not set the allow editions so we are saving the original movie
         if mediaType == kUTTypeImage{
             let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
             //if the image is not nil we save it to the folder
             if let originalImage = originalImage{
                 print(originalImage.imageOrientation)
-                let uuidString = UUID().uuidString
+                guard let photoData = UIImageJPEGRepresentation(originalImage, 1) else { return }
                 let stringMediaType = Constants.mediaType.photo
-                let index = Int64(folder.folderToMedia.count - 1)
-                let coreMedia = CoreMedia(stringMediaType: stringMediaType, uuidString: uuidString, index: index, folder: folder, context: context)
-                mediaArray.append(coreMedia)
-                let url = coreMedia.getURL()
-                let photoData = UIImageJPEGRepresentation(originalImage, 1)
-                
-                do{
-                    try photoData?.write(to: url, options: .atomic)
-                }catch{
-                    print("there was an error to write to the url \(error)")
-                    context.delete(coreMedia)
-                }
-                //we use this que to not block main thread
-                /*DispatchQueue.global().async {
-                    let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, pathExtension: nil)
-                    //we do not need to append the media to the folder the function folder.saveMedia will do that
-                    let _ = self.folder.saveMedia(media: media)
-                }*/
-                
+                createCoreMediaWithData(stringMediaType: stringMediaType, uuidString: uuidString, index: index, data: photoData)
             }
         }
         
-        //TODO: Take care of the videos
-       /* // this url is temp so it will be erased, we should then use the document for to save the url
+        
+       // this url is temp so it will be erased, we should then use the document for to save the url
         if let tempURL = info[UIImagePickerControllerMediaURL] as? URL{
-            let documentURL = folder.documentsDirectoryURL
-            let uuid = UUID().uuidString //unique video id 
-            let pathExtension = "\(folder.title + "videos")/\(uuid).mov"
-            let videoURL = documentURL.appendingPathComponent(pathExtension)
-            //we do the writing into disk in the background
-            DispatchQueue.global().async {
-                var photoData = Data()
-                do{
-                    //we read the info from temp data to later write in a permanent data
-                    photoData = try Data(contentsOf: tempURL)
-                }catch{
-                    print("unable to retrieive the data")
-                }
-                
-                do{
-                    //we write data to the video url
-                    try photoData.write(to: videoURL, options: .atomic)
-                    let media = Media(stringMediaType: Constants.mediaType.video, photo:nil, pathExtension: pathExtension)
-                    //we do not need to append the media to the folder the function folder.saveMedia will do that
-                    let _ = self.folder.saveMedia(media: media)
-                }catch{
-                    print("unable to write")
-                }
+            
+            var videoData = Data()
+            do{
+                //we read the info from temp data to later write in a permanent data
+                videoData = try Data(contentsOf: tempURL)
+            }catch{
+                print("unable to retrieive the data")
+                return
             }
-        }*/
+            let stringMediaType = Constants.mediaType.video
+            createCoreMediaWithData(stringMediaType: stringMediaType, uuidString: uuidString, index: index, data: videoData)
+        }
+       
        
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion:{
@@ -423,6 +397,22 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
         }
         
     }
+    
+    func createCoreMediaWithData(stringMediaType: String, uuidString: String, index: Int64, data: Data){
+        guard let context = context else{return}
+        let coreMedia = CoreMedia(stringMediaType: stringMediaType, uuidString: uuidString, index: index, folder: folder, context: context)
+        mediaArray.append(coreMedia)
+        let url = coreMedia.getURL()
+        do{
+            //we write data to the url
+            try data.write(to: url, options: .atomic)
+        }catch{
+            print("there was an error to write to the url \(error)")
+            context.delete(coreMedia)
+        }
+    }
+    
+    
     
 }
 

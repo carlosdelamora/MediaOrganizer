@@ -29,11 +29,8 @@ class MediaCollectionViewCell: UICollectionViewCell {
             }
         }else{
             
-            /*let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            guard let pathExtension = media.pathExtension else{
-                return
-            }
-            let url = documentURL.appendingPathComponent(pathExtension)
+            
+            let url = media.getURL()
             
             if let thumbnail = self.getThumbnailFrom(path: url){
                 DispatchQueue.main.async {
@@ -52,7 +49,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
                     self.imageView.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
                     self.imageView.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
                 }
-            }*/
+            }
         }
     }
     //we made the image nil 

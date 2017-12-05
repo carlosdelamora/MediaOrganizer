@@ -33,7 +33,7 @@ public class CoreFolder: NSManagedObject {
     
     func mediaArray()->[CoreMedia]{
         let someOrderArray = Array(self.folderToMedia) as! [CoreMedia]
-        var arrayOfMedia = someOrderArray.sorted(by: {$0.index < $1.index})
+        let arrayOfMedia = someOrderArray.sorted(by: {$0.index < $1.index})
         //we reassign all the indecees to make sure we have different consecutive indecees
         for (newIndex, media) in arrayOfMedia.enumerated(){
             media.index = Int64(newIndex)
@@ -59,7 +59,6 @@ public class CoreFolder: NSManagedObject {
                 }catch{
                     print("there was an error deleting \(error.localizedDescription)")
                 }
-                
             }
         }
         
