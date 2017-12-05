@@ -13,7 +13,7 @@ import AVFoundation
 class DetailPhotoViewController: UIViewController{
     
     
-    var media: Media!
+    var media: CoreMedia!
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var imageView: UIImageView!
@@ -22,7 +22,8 @@ class DetailPhotoViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let image = media.photo
+        //TODO display the photo
+        /*let image = media.photo
         if let image = image{
             imageView.image = image
             //placePhoto(image: image)
@@ -32,7 +33,7 @@ class DetailPhotoViewController: UIViewController{
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 5.0
         
-        //scrollView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20)
+        //scrollView.contentInset = UIEdgeInsetsMake(20, 20, 20, 20)*/
     }
 }
 

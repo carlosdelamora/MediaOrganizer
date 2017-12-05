@@ -25,4 +25,11 @@ public class CoreFolder: NSManagedObject {
             fatalError("there was an error with initalization")
         }
     }
+    
+    
+    func mediaArray()->[CoreMedia]{
+        let someOrderArray = Array(self.folderToMedia) as! [CoreMedia]
+        let arrayOfMedia = someOrderArray.sorted(by: {$0.index < $1.index})
+        return arrayOfMedia
+    }
 }

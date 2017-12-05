@@ -8,6 +8,7 @@
 import AVKit
 import UIKit
 import MobileCoreServices
+import CoreData
 
 struct suplementatryViewKind{
     static let header = "Header"
@@ -16,8 +17,8 @@ struct suplementatryViewKind{
 class CollectionViewController: UIViewController {
     
     //Properties
-    var folder: Folder!
-    var arrayOfFolders: [Folder]!
+    var folder: CoreFolder!
+    var mediaArray = [CoreMedia]()
     var documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     let placeHolderText = "Notes..."
     let cellID = "mediaCell"
@@ -31,6 +32,9 @@ class CollectionViewController: UIViewController {
     }
     var controllerStatus:status = .show
     
+    //core data
+    var context: NSManagedObjectContext? = nil
+    
     //Outlets
     @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var notesTextView: UITextView!
@@ -40,6 +44,14 @@ class CollectionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //coreData context
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        context = stack?.context
+        
+        //set the coreMedia
+        mediaArray = folder.mediaArray()
+        
         // Do any additional setup after loading the view.
         notesTextView.delegate = self
         
@@ -120,11 +132,13 @@ class CollectionViewController: UIViewController {
                 break
             }
             
-            let indexesToRemove = Set(selectedItemsIndex.map({$0.item}))
+            //TODO: Remove index
+           /* let indexesToRemove = selectedItemsIndex.map({$0.item})
+            let fetchRequest =
             //the function eraseMedia is loveley since it already erases the media form media array, so de data source has been updated
             //TODO: create an eraseMedia function
-            folder.eraseMedia(indexesToRemove: indexesToRemove)
-          
+            coreFolder.eraseMedia(indexesToRemove: indexesToRemove)
+              */
             //we have to set the cached attrubutes to empty so we can recalculate the layout
             let layout = collectionView.collectionViewLayout as! CustomLayout
             layout.cached = [UICollectionViewLayoutAttributes]()
@@ -156,7 +170,7 @@ class CollectionViewController: UIViewController {
     }
     
     //we use this function to save the changes in the folder unfortunately we have to save all the folders and this might slow things down a lot
-    func saveFolder(folder: Folder, completion:()-> Void)-> Bool{
+    /*func saveFolder(folder: Folder, completion:()-> Void)-> Bool{
         //the Constants.urlPaths.foldersPath = folders
         let foldersURL = documentsDirectoryURL.appendingPathComponent(Constants.urlPaths.foldersPath)
         arrayOfFolders = arrayOfFolders.filter({$0.title != folder.title})
@@ -167,7 +181,7 @@ class CollectionViewController: UIViewController {
         }
         return saved
         
-    }
+    }*/
     
     
     //this function presents the imagePicker Controller to record video or take a photo
@@ -230,12 +244,9 @@ extension CollectionViewController: UITextViewDelegate{
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
+        
+        //TODO: check this gets saved to core data
         folder?.notes = textView.text
-        DispatchQueue.main.async {
-            let _ = self.saveFolder(folder: self.folder, completion: {
-                print("the folder was saved")
-            })
-        }
     }
 }
 
@@ -248,13 +259,15 @@ extension CollectionViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         print("source indexPath \(sourceIndexPath)")
         print("destination indeXPath \(destinationIndexPath)")
-        var mediaArray = folder.mediaArray
+        //we first remove the media
         let mediaToRemove = mediaArray.remove(at: sourceIndexPath.item)
+        //then we change the index of the media
+        mediaToRemove.index = Int64(destinationIndexPath.item)
         mediaArray.insert(mediaToRemove, at: destinationIndexPath.item)
-        folder.mediaArray = mediaArray
-        //we save the changes to the media here
-        DispatchQueue.global().async {
-            self.folder.saveMediaChange()
+        
+        //we reassign all the indecees
+        for (newIndex, media) in mediaArray.enumerated(){
+            media.index = Int64(newIndex)
         }
     }
     
@@ -262,13 +275,13 @@ extension CollectionViewController: UICollectionViewDelegate{
         
         switch controllerStatus{
         case .show:
-            let media = folder.mediaArray[indexPath.item]
+            let media = folder.mediaArray()[indexPath.item]
             switch media.stringMediaType{
             case Constants.mediaType.photo:
                 let controller = storyboard?.instantiateViewController(withIdentifier: "DetailPhoto") as! DetailPhotoViewController
                 controller.media = media
                 navigationController?.pushViewController(controller, animated: true)
-            case Constants.mediaType.video:
+            /*case Constants.mediaType.video:
                 let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
                 guard let pathExtension = media.pathExtension else{
                     return
@@ -277,7 +290,7 @@ extension CollectionViewController: UICollectionViewDelegate{
                 let playerViewController = AVPlayerViewController()
                 let player = AVPlayer(url: url)
                 playerViewController.player = player
-                present(playerViewController, animated: true)
+                present(playerViewController, animated: true)*/
                 
             default:
                 print("this should not happen mediaType unknown")
@@ -305,13 +318,13 @@ extension CollectionViewController: UICollectionViewDelegate{
 extension CollectionViewController: UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let number = folder.mediaArray.count
+        let number = folder.mediaArray().count
         return number
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MediaCollectionViewCell
-        let media = folder.mediaArray[indexPath.item]
+        let media = folder.mediaArray()[indexPath.item]
         cell.configureForMedia(media: media)
         return cell
     }
@@ -340,23 +353,39 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
+        guard let context = context else{return}
         let mediaType = info[UIImagePickerControllerMediaType] as! CFString
         // we did not set the allow editions so we are saving the original movie
         if mediaType == kUTTypeImage{
             let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
             //if the image is not nil we save it to the folder
             if let originalImage = originalImage{
+                
+                let uuidString = UUID().uuidString
+                let stringMediaType = Constants.mediaType.photo
+                let index = Int64(folder.folderToMedia.count - 1)
+                let coreMedia = CoreMedia(stringMediaType: stringMediaType, uuidString: uuidString, index: index, folder: folder, context: context)
+                let url = coreMedia.getURL()
+                let photoData = UIImagePNGRepresentation(originalImage)
+                
+                do{
+                    try photoData?.write(to: url, options: .atomic)
+                }catch{
+                    print("there was an error to write to the url \(error)")
+                    context.delete(coreMedia)
+                }
                 //we use this que to not block main thread
-                DispatchQueue.global().async {
+                /*DispatchQueue.global().async {
                     let media = Media(stringMediaType: Constants.mediaType.photo, photo: originalImage, pathExtension: nil)
                     //we do not need to append the media to the folder the function folder.saveMedia will do that
                     let _ = self.folder.saveMedia(media: media)
-                }
+                }*/
                 
             }
         }
         
-        // this url is temp so it will be erased, we should then use the document for to save the url
+        //TODO: Take care of the videos
+       /* // this url is temp so it will be erased, we should then use the document for to save the url
         if let tempURL = info[UIImagePickerControllerMediaURL] as? URL{
             let documentURL = folder.documentsDirectoryURL
             let uuid = UUID().uuidString //unique video id 
@@ -382,7 +411,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
                     print("unable to write")
                 }
             }
-        }
+        }*/
        
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion:{

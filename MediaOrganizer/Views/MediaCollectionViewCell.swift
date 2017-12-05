@@ -20,15 +20,16 @@ class MediaCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configureForMedia(media:Media){
+    func configureForMedia(media:CoreMedia){
         if media.stringMediaType == Constants.mediaType.photo{
-            if let photo = media.photo {
-                imageView.image = squareImage(image: photo)
+            if let photoData = try? Data(contentsOf: media.getURL()), let photo = UIImage(data:photoData){
+                
+                imageView.image = photo
                 auxiliaryImageView = nil 
             }
         }else{
             
-            let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            /*let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             guard let pathExtension = media.pathExtension else{
                 return
             }
@@ -51,7 +52,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
                     self.imageView.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
                     self.imageView.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
                 }
-            }
+            }*/
         }
     }
     //we made the image nil 

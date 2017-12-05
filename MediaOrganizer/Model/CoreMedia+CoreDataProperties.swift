@@ -19,6 +19,7 @@ extension CoreMedia {
 
     @NSManaged public var stringMediaType: String
     @NSManaged public var uuidString: String
-    @NSManaged public var mediaToFolder: CoreFolder
+    @NSManaged public var index: Int64
+    @NSManaged public var mediaToFolder: CoreFolder?
 
 }

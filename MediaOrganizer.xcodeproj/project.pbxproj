@@ -23,8 +23,8 @@
 		CA449A111FD5F5ED00890E1B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA449A0F1FD5F5ED00890E1B /* Model.xcdatamodeld */; };
 		CA449A1E1FD6090C00890E1B /* CoreFolder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A1A1FD6090C00890E1B /* CoreFolder+CoreDataClass.swift */; };
 		CA449A1F1FD6090C00890E1B /* CoreFolder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A1B1FD6090C00890E1B /* CoreFolder+CoreDataProperties.swift */; };
-		CA449A201FD6090C00890E1B /* CoreMedia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A1C1FD6090C00890E1B /* CoreMedia+CoreDataClass.swift */; };
-		CA449A211FD6090C00890E1B /* CoreMedia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A1D1FD6090C00890E1B /* CoreMedia+CoreDataProperties.swift */; };
+		CA449A291FD63C6A00890E1B /* CoreMedia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A271FD63C6A00890E1B /* CoreMedia+CoreDataClass.swift */; };
+		CA449A2A1FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A281FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift */; };
 		CA6652B71FC3500400D9F723 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652B61FC3500400D9F723 /* Media.swift */; };
 		CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652B81FC39F8100D9F723 /* Constants.swift */; };
 		CA6652BD1FC5F0AC00D9F723 /* DetailPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652BC1FC5F0AB00D9F723 /* DetailPhotoViewController.swift */; };
@@ -50,8 +50,8 @@
 		CA449A101FD5F5ED00890E1B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		CA449A1A1FD6090C00890E1B /* CoreFolder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreFolder+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CA449A1B1FD6090C00890E1B /* CoreFolder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreFolder+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		CA449A1C1FD6090C00890E1B /* CoreMedia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreMedia+CoreDataClass.swift"; sourceTree = "<group>"; };
-		CA449A1D1FD6090C00890E1B /* CoreMedia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreMedia+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CA449A271FD63C6A00890E1B /* CoreMedia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreMedia+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CA449A281FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreMedia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CA6652B61FC3500400D9F723 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		CA6652B81FC39F8100D9F723 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CA6652BC1FC5F0AB00D9F723 /* DetailPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPhotoViewController.swift; sourceTree = "<group>"; };
@@ -123,10 +123,10 @@
 		CA4322F41FBD48370000970C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CA449A271FD63C6A00890E1B /* CoreMedia+CoreDataClass.swift */,
+				CA449A281FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift */,
 				CA449A1A1FD6090C00890E1B /* CoreFolder+CoreDataClass.swift */,
 				CA449A1B1FD6090C00890E1B /* CoreFolder+CoreDataProperties.swift */,
-				CA449A1C1FD6090C00890E1B /* CoreMedia+CoreDataClass.swift */,
-				CA449A1D1FD6090C00890E1B /* CoreMedia+CoreDataProperties.swift */,
 				CA02AC841FB7EAB80017CE37 /* Folder.swift */,
 				CA449A0D1FD5EF6000890E1B /* CoreDataStack.swift */,
 				CA6652B61FC3500400D9F723 /* Media.swift */,
@@ -233,11 +233,11 @@
 				CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */,
 				CA6652B71FC3500400D9F723 /* Media.swift in Sources */,
 				CA02AC6F1FB7E44F0017CE37 /* AppDelegate.swift in Sources */,
-				CA449A211FD6090C00890E1B /* CoreMedia+CoreDataProperties.swift in Sources */,
+				CA449A2A1FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift in Sources */,
 				CA02AC851FB7EAB80017CE37 /* Folder.swift in Sources */,
 				CA449A1F1FD6090C00890E1B /* CoreFolder+CoreDataProperties.swift in Sources */,
 				CA02AC8B1FB8D4950017CE37 /* CollectionViewController.swift in Sources */,
-				CA449A201FD6090C00890E1B /* CoreMedia+CoreDataClass.swift in Sources */,
+				CA449A291FD63C6A00890E1B /* CoreMedia+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
