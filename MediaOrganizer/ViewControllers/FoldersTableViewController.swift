@@ -17,7 +17,14 @@ class FoldersTableViewController: UIViewController {
     let cellId = "FolderCell"
     var arrayOfFolders = [CoreFolder]()
     let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    var matchingFolders = [CoreFolder]()
+    var matchingFolders = [CoreFolder](){
+        didSet{
+            //since the matching folders is what we use for the arrayOfFolders we should relaod the data after this
+            DispatchQueue.main.async {
+                self.foldersTableView.reloadData()
+            }
+        }
+    }
     var isLocked:Bool = true
     //MARK: IBOultes
     @IBOutlet weak var searchBar: UISearchBar!
@@ -54,12 +61,15 @@ class FoldersTableViewController: UIViewController {
         gestureRecognizer.numberOfTapsRequired = 2
         view.addGestureRecognizer(gestureRecognizer)
         
+        //the buton is locked
+        //TODO: get form user defaults the state of the lock
+        //lockbutton has the lock normal and unclock in selected so is the
+        lockButton.isSelected = isLocked
+        
         loadArrayOfFolders()
-        matchingFolders = arrayOfFolders.sorted(by: { $0.title < $1.title })
-        //since the matching folders is what we use for the arrayOfFolders we should relaod the data after this
-        DispatchQueue.main.async {
-            self.foldersTableView.reloadData()
-        }
+        arrayOfFolders = arrayOfFolders.sorted(by: { $0.title < $1.title })
+        matchingFolders = arrayOfFolders.filter({filterSecureFolders(folder: $0)})
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,18 +92,26 @@ class FoldersTableViewController: UIViewController {
     @objc func lockOrUnlock(){
         //if is selected that means that is unlocked and whants to lock it
         if lockButton.isSelected {
+            //we close the lock
+            isLocked = true
             lockButton.isSelected = !lockButton.isSelected
             lockButton.tintColor = lockButton.isSelected ? self.view.tintColor : Constants.colors.gold
+            matchingFolders = arrayOfFolders.filter({filterSecureFolders(folder: $0)})
+            
         }else{
             let myContext = LAContext()
             let myLocalizedReasonString = "We need to identify you"
             myContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: myLocalizedReasonString) { success, evaluateError in
                 if success {
+                    //we open the lock
+                    self.isLocked = false
                     // User authenticated successfully, take appropriate action
                     print("success in print password")
                     DispatchQueue.main.async {
                         self.lockButton.isSelected = !self.lockButton.isSelected
                         self.lockButton.tintColor = self.lockButton.isSelected ? self.view.tintColor : Constants.colors.gold
+                        self.matchingFolders = self.arrayOfFolders.filter({self.filterSecureFolders(folder: $0)})
+                        
                     }
                     
                 }else{
@@ -103,13 +121,16 @@ class FoldersTableViewController: UIViewController {
         }
     }
     
+    func filterSecureFolders(folder:CoreFolder)-> Bool{
+        if isLocked{
+            return !folder.secure
+        }else{
+            return true
+        }
+    }
+    
     func loadArrayOfFolders(){
-        /*let foldersURL = documentsDirectory.appendingPathComponent(Constants.urlPaths.foldersPath)
-        let folders = NSKeyedUnarchiver.unarchiveObject(withFile: foldersURL.path) as? [Folder]
-        if let folders = folders{
-            arrayOfFolders = folders
-        }*/
-        
+      
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreFolder")
         let predicate:NSPredicate? = nil
         fetchRequest.predicate = predicate
@@ -117,10 +138,6 @@ class FoldersTableViewController: UIViewController {
             do{
                 if let results = try self.context?.fetch(fetchRequest) as? [CoreFolder]{
                     self.arrayOfFolders = results
-                    self.matchingFolders = self.arrayOfFolders.sorted(by: { $0.title < $1.title })
-                    DispatchQueue.main.async {
-                        self.foldersTableView.reloadData()
-                    }
                 }
             }catch{
                 print("there was an error in fetching the core folders \(error.localizedDescription)")
@@ -166,11 +183,10 @@ extension FoldersTableViewController: UISearchBarDelegate{
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == ""{
-            matchingFolders = arrayOfFolders
+            matchingFolders = arrayOfFolders.filter({filterSecureFolders(folder: $0)})
         }else{
-        matchingFolders = arrayOfFolders.filter({folderContainsText(searchText: searchText, folder: $0)})
+        matchingFolders = arrayOfFolders.filter({folderContainsText(searchText: searchText, folder: $0)}).filter({filterSecureFolders(folder: $0)})
         }
-        foldersTableView.reloadData()
     }
     
     
