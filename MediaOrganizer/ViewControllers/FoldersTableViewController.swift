@@ -65,9 +65,7 @@ class FoldersTableViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadArrayOfFolders()
-        
         //since the matching folders is what we use for the arrayOfFolders we should relaod the data after this
-        
     }
     
     //we use the viewDid appear because it fires after saving the folder, in case we save a folder while changing the notes
@@ -82,22 +80,27 @@ class FoldersTableViewController: UIViewController {
     }
     
     @objc func lockOrUnlock(){
-        lockButton.isSelected = !lockButton.isSelected
-        lockButton.tintColor = lockButton.isSelected ? self.view.tintColor : Constants.colors.gold
-        let myContext = LAContext()
-        let myLocalizedReasonString = "We need to identify you"
-        
-        var authError: NSError?
-        myContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: myLocalizedReasonString) { success, evaluateError in
-            if success {
-                // User authenticated successfully, take appropriate action
-                print("success in print password")
-            }else{
-                print("fail in print password")
+        //if is selected that means that is unlocked and whants to lock it
+        if lockButton.isSelected {
+            lockButton.isSelected = !lockButton.isSelected
+            lockButton.tintColor = lockButton.isSelected ? self.view.tintColor : Constants.colors.gold
+        }else{
+            let myContext = LAContext()
+            let myLocalizedReasonString = "We need to identify you"
+            myContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: myLocalizedReasonString) { success, evaluateError in
+                if success {
+                    // User authenticated successfully, take appropriate action
+                    print("success in print password")
+                    DispatchQueue.main.async {
+                        self.lockButton.isSelected = !self.lockButton.isSelected
+                        self.lockButton.tintColor = self.lockButton.isSelected ? self.view.tintColor : Constants.colors.gold
+                    }
+                    
+                }else{
+                    print("fail in print password")
+                }
             }
         }
-        
-        
     }
     
     func loadArrayOfFolders(){

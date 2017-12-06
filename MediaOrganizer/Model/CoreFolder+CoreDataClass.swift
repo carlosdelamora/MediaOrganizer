@@ -1,12 +1,3 @@
-//
-//  CoreFolder+CoreDataClass.swift
-//  MediaOrganizer
-//
-//  Created by Carlos De la mora on 12/4/17.
-//  Copyright © 2017 carlosdelamora. All rights reserved.
-//
-//
-
 import Foundation
 import CoreData
 import UIKit
@@ -17,7 +8,7 @@ public class CoreFolder: NSManagedObject {
     var context: NSManagedObjectContext? = nil
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    convenience init( title: String, folderDescription: String?, notes:String?,context: NSManagedObjectContext){
+    convenience init( title: String, folderDescription: String?, notes:String?, secure: Bool,context: NSManagedObjectContext){
         
         if let entity = NSEntityDescription.entity(forEntityName: "CoreFolder", in: context){
             self.init(entity: entity, insertInto: context)
@@ -25,6 +16,7 @@ public class CoreFolder: NSManagedObject {
             self.folderDescription = folderDescription
             self.notes = notes
             self.folderToMedia = NSSet()
+            self.secure = secure
         }else{
             fatalError("there was an error with initalization")
         }
@@ -70,3 +62,4 @@ public class CoreFolder: NSManagedObject {
     }
     
 }
+

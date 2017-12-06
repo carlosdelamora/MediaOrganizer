@@ -2,7 +2,7 @@
 //  CoreFolder+CoreDataProperties.swift
 //  MediaOrganizer
 //
-//  Created by Carlos De la mora on 12/4/17.
+//  Created by Carlos De la mora on 12/5/17.
 //  Copyright © 2017 carlosdelamora. All rights reserved.
 //
 //
@@ -20,6 +20,7 @@ extension CoreFolder {
     @NSManaged public var folderDescription: String?
     @NSManaged public var notes: String?
     @NSManaged public var title: String
+    @NSManaged public var secure: Bool
     @NSManaged public var folderToMedia: NSSet
 
 }

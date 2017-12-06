@@ -80,12 +80,39 @@
                                     <action selector="createFolder:" destination="Gfd-3q-tkt" eventType="touchUpInside" id="ogI-3O-YVv"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="jNk-1O-lPT">
+                                <rect key="frame" x="8" y="196" width="240" height="24"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="270" horizontalCompressionResistancePriority="730" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5uQ-Km-7G2">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="SBn-DJ-M7c"/>
+                                        </constraints>
+                                        <state key="normal" title="Button" image="x"/>
+                                        <state key="selected" image="check"/>
+                                        <connections>
+                                            <action selector="requirePasswordWasPressed:" destination="Gfd-3q-tkt" eventType="touchUpInside" id="9eb-cq-Y7o"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" text="Password required" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1o-C4-k2y" userLabel="Secure">
+                                        <rect key="frame" x="40" y="0.0" width="200" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="HAx-Of-TF9"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="gVm-l9-TPh" firstAttribute="leading" secondItem="adX-Kw-JQI" secondAttribute="leading" constant="8" id="87J-Ub-hGY"/>
                             <constraint firstItem="h2f-LL-bOw" firstAttribute="leading" secondItem="adX-Kw-JQI" secondAttribute="leading" constant="8" id="9BR-qs-c4J"/>
                             <constraint firstItem="adX-Kw-JQI" firstAttribute="trailing" secondItem="h2f-LL-bOw" secondAttribute="trailing" constant="8" id="9Gx-7Z-d5x"/>
+                            <constraint firstItem="jNk-1O-lPT" firstAttribute="top" secondItem="h2f-LL-bOw" secondAttribute="bottom" constant="8" id="EW6-tB-6uS"/>
+                            <constraint firstItem="jNk-1O-lPT" firstAttribute="leading" secondItem="adX-Kw-JQI" secondAttribute="leading" constant="8" id="Etl-Ci-DKY"/>
                             <constraint firstItem="h2f-LL-bOw" firstAttribute="top" secondItem="gVm-l9-TPh" secondAttribute="bottom" constant="8" id="R0v-JF-Nvr"/>
                             <constraint firstItem="ZfA-bR-5oe" firstAttribute="centerX" secondItem="96W-M6-qg3" secondAttribute="centerX" id="RFx-bS-ZTb"/>
                             <constraint firstItem="ZfA-bR-5oe" firstAttribute="top" secondItem="h2f-LL-bOw" secondAttribute="bottom" constant="130" id="bSz-dH-8zu"/>
@@ -97,6 +124,7 @@
                     <connections>
                         <outlet property="createFolder" destination="ZfA-bR-5oe" id="KaA-ma-SXz"/>
                         <outlet property="descriptionTextField" destination="Ht1-QK-AcJ" id="eUO-SC-ckZ"/>
+                        <outlet property="requirePasswordButton" destination="5uQ-Km-7G2" id="pyR-3G-Khn"/>
                         <outlet property="titleTextField" destination="ejl-14-tLB" id="Gtd-Nj-eyp"/>
                     </connections>
                 </viewController>
@@ -334,4 +362,8 @@
             <point key="canvasLocation" x="1736.8" y="-217.24137931034485"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="check" width="24" height="24"/>
+        <image name="x" width="24" height="24"/>
+    </resources>
 </document>

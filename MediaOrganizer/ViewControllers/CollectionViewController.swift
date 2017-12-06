@@ -260,7 +260,6 @@ extension CollectionViewController: UICollectionViewDelegate{
         switch controllerStatus{
         case .show:
             let media = folder.mediaArray()[indexPath.item]
-           
             let controller = storyboard?.instantiateViewController(withIdentifier: "DetailPhoto") as! DetailViewController
             controller.media = media
             navigationController?.pushViewController(controller, animated: true)
