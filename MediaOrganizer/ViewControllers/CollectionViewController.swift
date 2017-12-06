@@ -86,7 +86,7 @@ class CollectionViewController: UIViewController {
         navigationItem.rightBarButtonItem = navigationItemPlus
         
         //create the edit/done item
-        navigationItemEdition = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(hideShowTheToolbar))
+        navigationItemEdition = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(hideShowTheToolbar))
         navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
         
         //add the items
