@@ -39,11 +39,14 @@ class CollectionViewController: UIViewController {
     @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var notesTextView: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var selectItem: UIBarButtonItem!
-    
+    @IBOutlet weak var trashButtonItem: UIBarButtonItem!
+    @IBOutlet weak var notesButtonItem: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //handle constraint animmation
+        collectionView.translatesAutoresizingMaskIntoConstraints = true
+        
         //coreData context
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stack = appDelegate.stack
@@ -90,8 +93,9 @@ class CollectionViewController: UIViewController {
         let items:[UIBarButtonItem] = [navigationItemPlus,navigationItemEdition]
         navigationItem.setRightBarButtonItems(items, animated: false)
         
-        //hide the toolbar
-        toolBar.alpha = 0
+        //hide the trahButton
+        self.trashButtonItem.isEnabled = false
+        self.trashButtonItem.tintColor = .clear
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -109,6 +113,24 @@ class CollectionViewController: UIViewController {
         //dismiss if the keyboard is present dismissed so the folder can be saved
         self.view.endEditing(true)
         
+    }
+    
+    @IBAction func notesBarButtonAction(_ sender: Any) {
+        var newHeight: CGFloat
+        var newY:CGFloat
+        if collectionView.frame.origin.y > 64 {
+            newY = 64
+            newHeight = view.frame.height - 64
+            notesTextView.isHidden = true
+        }else{
+            newY = notesTextView.frame.maxY
+            newHeight = view.frame.height - newY
+            notesTextView.isHidden = false
+        }
+        let rect = CGRect(x: 0, y: newY, width: view.frame.width, height: newHeight)
+        UIView.animate(withDuration: 1, animations: {
+            self.collectionView.frame = rect
+        })
     }
     
     
@@ -146,22 +168,24 @@ class CollectionViewController: UIViewController {
     }
     
     @objc func hideShowTheToolbar(){
+        //we change from .show to editing
         if controllerStatus == .show {
             navigationItemEdition.title = "Done"
             navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
             controllerStatus = .editing
             collectionView.allowsMultipleSelection = true
             UIView.animate(withDuration: 0.5, animations: {
-               self.toolBar.alpha = 1
+               self.trashButtonItem.isEnabled = true
+               self.trashButtonItem.tintColor = Constants.colors.gold
             })
-            
         }else{
             navigationItemEdition.title = "Edit"
             navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
             controllerStatus = .show
             collectionView.allowsMultipleSelection = false
             UIView.animate(withDuration: 0.5, animations: {
-                self.toolBar.alpha = 0
+                self.trashButtonItem.isEnabled = false
+                self.trashButtonItem.tintColor = .clear
             })
         }
     }
@@ -263,18 +287,6 @@ extension CollectionViewController: UICollectionViewDelegate{
             let controller = storyboard?.instantiateViewController(withIdentifier: "DetailPhoto") as! DetailViewController
             controller.media = media
             navigationController?.pushViewController(controller, animated: true)
-            /*case Constants.mediaType.video:
-                let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-                guard let pathExtension = media.pathExtension else{
-                    return
-                }
-                let url = documentURL.appendingPathComponent(pathExtension)
-                let playerViewController = AVPlayerViewController()
-                let player = AVPlayer(url: url)
-                playerViewController.player = player
-                present(playerViewController, animated: true)*/
-                
-           
         case .editing:
             print("add item to the selected items")
             let cell = collectionView.cellForItem(at: indexPath) as! MediaCollectionViewCell

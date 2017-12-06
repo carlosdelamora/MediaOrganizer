@@ -233,7 +233,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="  " keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="TiR-fM-gt9">
-                                <rect key="frame" x="0.0" y="208" width="375" height="459"/>
+                                <rect key="frame" x="0.0" y="200" width="375" height="467"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="1" maxX="0.0" maxY="1"/>
                                 <collectionViewLayout key="collectionViewLayout" id="KsU-KV-6Pg" customClass="CustomLayout" customModule="MediaOrganizer" customModuleProvider="target"/>
@@ -274,7 +274,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Naj-pf-dtn"/>
-                                    <barButtonItem systemItem="compose" id="Vev-Cm-A7z"/>
+                                    <barButtonItem systemItem="compose" id="Vev-Cm-A7z">
+                                        <connections>
+                                            <action selector="notesBarButtonAction:" destination="JWo-mD-ozs" id="5ep-mt-Z98"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                                 <color key="tintColor" red="1" green="0.7066373118" blue="0.1214905902" alpha="0.72236194350000005" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -283,12 +287,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="SnV-Sd-UZ7" firstAttribute="bottom" secondItem="Tvf-qI-NwO" secondAttribute="bottom" id="9IH-g7-YzI"/>
+                            <constraint firstItem="TiR-fM-gt9" firstAttribute="top" secondItem="Tvf-qI-NwO" secondAttribute="top" constant="180" id="BW3-Wv-xRf"/>
                             <constraint firstItem="f6B-PD-TeB" firstAttribute="top" secondItem="7yd-pB-rh4" secondAttribute="top" id="Kxq-gX-FA3"/>
                             <constraint firstItem="f6B-PD-TeB" firstAttribute="leading" secondItem="Tvf-qI-NwO" secondAttribute="leading" id="LXr-rN-fMw"/>
                             <constraint firstItem="SnV-Sd-UZ7" firstAttribute="leading" secondItem="Tvf-qI-NwO" secondAttribute="leading" id="Ltj-QC-U7y"/>
                             <constraint firstItem="TiR-fM-gt9" firstAttribute="bottom" secondItem="Tvf-qI-NwO" secondAttribute="bottom" id="OcE-y8-93H"/>
                             <constraint firstItem="TiR-fM-gt9" firstAttribute="leading" secondItem="Tvf-qI-NwO" secondAttribute="leading" id="UWh-k8-uuz"/>
-                            <constraint firstItem="TiR-fM-gt9" firstAttribute="top" secondItem="f6B-PD-TeB" secondAttribute="bottom" constant="8" id="aS4-7z-oAr"/>
                             <constraint firstItem="SnV-Sd-UZ7" firstAttribute="trailing" secondItem="Tvf-qI-NwO" secondAttribute="trailing" id="cKd-j8-1Hy"/>
                             <constraint firstItem="TiR-fM-gt9" firstAttribute="trailing" secondItem="Tvf-qI-NwO" secondAttribute="trailing" id="mWH-5f-Qxd"/>
                             <constraint firstItem="f6B-PD-TeB" firstAttribute="trailing" secondItem="Tvf-qI-NwO" secondAttribute="trailing" id="s76-JN-KAI"/>
@@ -297,9 +301,10 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="TiR-fM-gt9" id="SPH-Op-hUv"/>
+                        <outlet property="notesButtonItem" destination="Vev-Cm-A7z" id="aQf-1v-GBN"/>
                         <outlet property="notesTextView" destination="f6B-PD-TeB" id="IkT-Oj-30h"/>
-                        <outlet property="selectItem" destination="xCS-7V-RKZ" id="Ou0-4u-xO3"/>
                         <outlet property="toolBar" destination="SnV-Sd-UZ7" id="hn6-wZ-D9a"/>
+                        <outlet property="trashButtonItem" destination="xCS-7V-RKZ" id="Ou0-4u-xO3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HMY-6d-CFp" userLabel="First Responder" sceneMemberID="firstResponder"/>
