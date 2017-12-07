@@ -264,8 +264,6 @@ extension CollectionViewController: UITextViewDelegate{
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        
-        //TODO: check this gets saved to core data
         folder?.notes = textView.text
     }
 }

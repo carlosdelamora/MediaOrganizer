@@ -25,8 +25,9 @@ class MediaCollectionViewCell: UICollectionViewCell {
     }
     //we made the image nil 
     override func prepareForReuse() {
+        self.isSelected = false
         imageView.image = nil
-        imageView.alpha = 1
+        selectedToErase = false
         if let auxiliaryView = imageView.viewWithTag(100){
             auxiliaryView.removeFromSuperview()
         }
