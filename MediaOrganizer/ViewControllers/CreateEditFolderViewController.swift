@@ -12,8 +12,7 @@ import CoreData
 class CreateEditFolderViewController: UIViewController {
     
     var context: NSManagedObjectContext? = nil
-    var documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    var arrayOfFolders:[Folder] = [Folder]()
+   
     
     //MARK - Outlets
     @IBOutlet weak var titleTextField: UITextField!
@@ -43,12 +42,6 @@ class CreateEditFolderViewController: UIViewController {
         sender.isSelected = !sender.isSelected
     }
     
-    func saveFolder(folder: Folder, completion: @escaping ()-> Void)-> Bool{
-        //the Constants urlPaths foldersPath = folders
-        let foldersURL = documentsDirectoryURL.appendingPathComponent(Constants.urlPaths.foldersPath)
-        arrayOfFolders.append(folder)
-        completion()
-        return NSKeyedArchiver.archiveRootObject(arrayOfFolders, toFile: foldersURL.path)
-    }
+ 
   
 }

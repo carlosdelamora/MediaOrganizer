@@ -123,6 +123,7 @@ class CollectionViewController: UIViewController {
         
     }
     
+    //MARK - IBAction
     @IBAction func notesBarButtonAction(_ sender: Any) {
         var newHeight: CGFloat
         var newY:CGFloat
@@ -142,7 +143,7 @@ class CollectionViewController: UIViewController {
     }
     
     
-    @IBAction func selectItemAction(_ sender: UIBarButtonItem) {
+    @IBAction func trashButtonWasPressed(_ sender: UIBarButtonItem) {
         
         switch controllerStatus{
         case .show:
@@ -182,17 +183,20 @@ class CollectionViewController: UIViewController {
             navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
             controllerStatus = .editing
             collectionView.allowsMultipleSelection = true
+            
             UIView.animate(withDuration: 0.5, animations: {
                self.trashButtonItem.isEnabled = true
                self.trashButtonItem.tintColor = Constants.colors.gold
             })
         }else{
+            //we change from editing to show
             navigationItemEdition.title = "Select"
             navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
             controllerStatus = .show
             collectionView.allowsMultipleSelection = false
+            //we need to disable the trashbutton imediatly to prevent double clicks
+            self.trashButtonItem.isEnabled = false
             UIView.animate(withDuration: 0.5, animations: {
-                self.trashButtonItem.isEnabled = false
                 self.trashButtonItem.tintColor = .clear
             })
         }

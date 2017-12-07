@@ -270,7 +270,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="6uf-IK-ATG"/>
                                     <barButtonItem systemItem="trash" id="xCS-7V-RKZ">
                                         <connections>
-                                            <action selector="selectItemAction:" destination="JWo-mD-ozs" id="GYL-T4-lSk"/>
+                                            <action selector="trashButtonWasPressed:" destination="JWo-mD-ozs" id="GYL-T4-lSk"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Naj-pf-dtn"/>
