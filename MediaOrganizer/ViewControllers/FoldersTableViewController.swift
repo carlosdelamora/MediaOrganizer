@@ -25,6 +25,13 @@ class FoldersTableViewController: UIViewController {
             }
         }
     }
+    enum responsability{
+        case create
+        case edit
+    }
+    var typeOfResponsability: responsability = .create 
+    var editFolderItem: UIBarButtonItem!
+    
     var isLocked:Bool = true
     //MARK: IBOultes
     @IBOutlet weak var searchBar: UISearchBar!
@@ -37,10 +44,15 @@ class FoldersTableViewController: UIViewController {
         let stack = appDelegate.stack
         context = stack?.context
         
-        // Add a bar button item
+        // left bar button items
         let createFolderItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToCreateFolder))
-        navigationItem.rightBarButtonItem = createFolderItem
+        editFolderItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(goToEditFolder))
+        editFolderItem.setTitleTextAttributes(Constants.fontAttributes.navigationItem, for: .normal)
         
+        let rightItems:[UIBarButtonItem] = [ createFolderItem,editFolderItem]
+        navigationItem.setRightBarButtonItems(rightItems , animated: true)
+        
+        //right items
         lockButton = UIButton(type: .custom)
         lockButton.isSelected = false
         lockButton.setImage(UIImage(named:"unlock"), for: .selected)
@@ -146,7 +158,22 @@ class FoldersTableViewController: UIViewController {
     @objc func goToCreateFolder(){
         let createFolderController = storyboard?.instantiateViewController(withIdentifier: "createFolder") as! CreateEditFolderViewController
         //createFolderController.arrayOfFolders = arrayOfFolders
+        createFolderController.typeOfResponsability = .create
         navigationController?.pushViewController(createFolderController, animated: true)
+    }
+    
+    @objc func goToEditFolder(){
+        
+        switch typeOfResponsability{
+        case .create:
+            typeOfResponsability = .edit
+            editFolderItem.title = "Done"
+            editFolderItem.setTitleTextAttributes(Constants.fontAttributes.navigationItem, for: .normal)
+        case .edit:
+            typeOfResponsability = .create
+            editFolderItem.title = "Edit"
+            editFolderItem.setTitleTextAttributes(Constants.fontAttributes.navigationItem, for: .normal)
+        }
     }
 
 }
@@ -154,10 +181,22 @@ class FoldersTableViewController: UIViewController {
 extension FoldersTableViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let folder = matchingFolders[indexPath.row]
-        let collectionViewController = storyboard?.instantiateViewController(withIdentifier: "CollectionView") as! CollectionViewController
-        collectionViewController.folder = folder
-        navigationController?.pushViewController(collectionViewController, animated: true)
+        
+        switch typeOfResponsability{
+        case .create:
+            let folder = matchingFolders[indexPath.row]
+            let collectionViewController = storyboard?.instantiateViewController(withIdentifier: "CollectionView") as! CollectionViewController
+            collectionViewController.folder = folder
+            navigationController?.pushViewController(collectionViewController, animated: true)
+        case .edit:
+             //we choose the folder to edit 
+             let folder = matchingFolders[indexPath.row]
+             let createFolderController = storyboard?.instantiateViewController(withIdentifier: "createFolder") as! CreateEditFolderViewController
+             createFolderController.typeOfResponsability = .edit
+             createFolderController.folder = folder
+             navigationController?.pushViewController(createFolderController, animated: true)
+        }
+        
     }
     
 }

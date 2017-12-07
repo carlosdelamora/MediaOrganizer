@@ -122,7 +122,7 @@
                         <viewLayoutGuide key="safeArea" id="adX-Kw-JQI"/>
                     </view>
                     <connections>
-                        <outlet property="createFolder" destination="ZfA-bR-5oe" id="KaA-ma-SXz"/>
+                        <outlet property="createFolderButton" destination="ZfA-bR-5oe" id="KaA-ma-SXz"/>
                         <outlet property="descriptionTextField" destination="Ht1-QK-AcJ" id="eUO-SC-ckZ"/>
                         <outlet property="requirePasswordButton" destination="5uQ-Km-7G2" id="pyR-3G-Khn"/>
                         <outlet property="titleTextField" destination="ejl-14-tLB" id="Gtd-Nj-eyp"/>

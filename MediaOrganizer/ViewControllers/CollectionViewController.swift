@@ -25,7 +25,7 @@ class CollectionViewController: UIViewController {
     let reusableViewId = "ReusableView"
     var longGesture: UILongPressGestureRecognizer!
     var navigationItemEdition: UIBarButtonItem!
-    let attributes = [NSAttributedStringKey.font: UIFont(name:"Helvetica", size:20)!]
+    
     enum status:String{
         case show = "Allow Selection"//this is the normal state, when is showing the pictures
         case editing = "Erase"//when it has elements already selected
@@ -87,7 +87,7 @@ class CollectionViewController: UIViewController {
         
         //create the edit/done item
         navigationItemEdition = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(hideShowTheToolbar))
-        navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
+        navigationItemEdition.setTitleTextAttributes(Constants.fontAttributes.navigationItem, for: .normal)
         
         //add the items
         let items:[UIBarButtonItem] = [navigationItemPlus,navigationItemEdition]
@@ -180,7 +180,7 @@ class CollectionViewController: UIViewController {
         //we change from .show to editing
         if controllerStatus == .show {
             navigationItemEdition.title = "Done"
-            navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
+            navigationItemEdition.setTitleTextAttributes(Constants.fontAttributes.navigationItem, for: .normal)
             controllerStatus = .editing
             collectionView.allowsMultipleSelection = true
             
@@ -191,7 +191,7 @@ class CollectionViewController: UIViewController {
         }else{
             //we change from editing to show
             navigationItemEdition.title = "Select"
-            navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
+            navigationItemEdition.setTitleTextAttributes(Constants.fontAttributes.navigationItem, for: .normal)
             controllerStatus = .show
             collectionView.allowsMultipleSelection = false
             //we need to disable the trashbutton imediatly to prevent double clicks

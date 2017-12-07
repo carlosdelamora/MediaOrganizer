@@ -38,4 +38,9 @@ struct Constants {
     struct colors{
         static let gold = UIColor(red: 1, green: 215/255, blue: 0/255, alpha: 1)
     }
+    
+    struct fontAttributes{
+        static let navigationItem = [NSAttributedStringKey.font: UIFont(name:"Helvetica", size:20)!]
+    }
+    
 }
