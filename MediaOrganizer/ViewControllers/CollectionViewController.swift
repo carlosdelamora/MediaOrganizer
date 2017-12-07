@@ -96,6 +96,14 @@ class CollectionViewController: UIViewController {
         //hide the trahButton
         self.trashButtonItem.isEnabled = false
         self.trashButtonItem.tintColor = .clear
+        
+        //set the collection view to cover the notes
+        let newY:CGFloat = 64
+        let newHeight = view.frame.height - 64
+        notesTextView.isHidden = true
+        let rect = CGRect(x: 0, y: newY, width: view.frame.width, height: newHeight)
+        collectionView.frame = rect
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -179,7 +187,7 @@ class CollectionViewController: UIViewController {
                self.trashButtonItem.tintColor = Constants.colors.gold
             })
         }else{
-            navigationItemEdition.title = "Edit"
+            navigationItemEdition.title = "Select"
             navigationItemEdition.setTitleTextAttributes(attributes, for: .normal)
             controllerStatus = .show
             collectionView.allowsMultipleSelection = false

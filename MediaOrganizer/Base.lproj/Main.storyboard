@@ -28,10 +28,10 @@
             </objects>
             <point key="canvasLocation" x="-813" y="-78"/>
         </scene>
-        <!--Create File View Controller-->
+        <!--Create Edit Folder View Controller-->
         <scene sceneID="OIS-4M-41Y">
             <objects>
-                <viewController storyboardIdentifier="createFolder" id="Gfd-3q-tkt" customClass="CreateFileViewController" customModule="MediaOrganizer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="createFolder" id="Gfd-3q-tkt" customClass="CreateEditFolderViewController" customModule="MediaOrganizer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="96W-M6-qg3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

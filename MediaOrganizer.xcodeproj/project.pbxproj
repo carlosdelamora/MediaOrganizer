@@ -28,7 +28,7 @@
 		CA6652B71FC3500400D9F723 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652B61FC3500400D9F723 /* Media.swift */; };
 		CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652B81FC39F8100D9F723 /* Constants.swift */; };
 		CA6652BD1FC5F0AC00D9F723 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652BC1FC5F0AB00D9F723 /* DetailViewController.swift */; };
-		CA7D76D71FCB763C00640AD2 /* CreateFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D76D61FCB763C00640AD2 /* CreateFileViewController.swift */; };
+		CA7D76D71FCB763C00640AD2 /* CreateEditFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D76D61FCB763C00640AD2 /* CreateEditFolderViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,7 +55,7 @@
 		CA6652B61FC3500400D9F723 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		CA6652B81FC39F8100D9F723 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CA6652BC1FC5F0AB00D9F723 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		CA7D76D61FCB763C00640AD2 /* CreateFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFileViewController.swift; sourceTree = "<group>"; };
+		CA7D76D61FCB763C00640AD2 /* CreateEditFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditFolderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,7 +142,7 @@
 				CA02AC801FB7EA380017CE37 /* FoldersTableViewController.swift */,
 				CA02AC8A1FB8D4950017CE37 /* CollectionViewController.swift */,
 				CA6652BC1FC5F0AB00D9F723 /* DetailViewController.swift */,
-				CA7D76D61FCB763C00640AD2 /* CreateFileViewController.swift */,
+				CA7D76D61FCB763C00640AD2 /* CreateEditFolderViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -220,7 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA7D76D71FCB763C00640AD2 /* CreateFileViewController.swift in Sources */,
+				CA7D76D71FCB763C00640AD2 /* CreateEditFolderViewController.swift in Sources */,
 				CA02AC831FB7EA750017CE37 /* FolderCellTableViewCell.swift in Sources */,
 				CA4322F21FBD0E0B0000970C /* CustomLayout.swift in Sources */,
 				CA449A111FD5F5ED00890E1B /* Model.xcdatamodeld in Sources */,

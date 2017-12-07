@@ -111,9 +111,7 @@ class FoldersTableViewController: UIViewController {
                         self.lockButton.isSelected = !self.lockButton.isSelected
                         self.lockButton.tintColor = self.lockButton.isSelected ? self.view.tintColor : Constants.colors.gold
                         self.matchingFolders = self.arrayOfFolders.filter({self.filterSecureFolders(folder: $0)})
-                        
                     }
-                    
                 }else{
                     print("fail in print password")
                 }
@@ -130,7 +128,6 @@ class FoldersTableViewController: UIViewController {
     }
     
     func loadArrayOfFolders(){
-      
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreFolder")
         let predicate:NSPredicate? = nil
         fetchRequest.predicate = predicate
@@ -138,6 +135,7 @@ class FoldersTableViewController: UIViewController {
             do{
                 if let results = try self.context?.fetch(fetchRequest) as? [CoreFolder]{
                     self.arrayOfFolders = results
+                    self.matchingFolders = self.arrayOfFolders.filter({self.filterSecureFolders(folder: $0)})
                 }
             }catch{
                 print("there was an error in fetching the core folders \(error.localizedDescription)")
@@ -146,7 +144,7 @@ class FoldersTableViewController: UIViewController {
     }
     
     @objc func goToCreateFolder(){
-        let createFolderController = storyboard?.instantiateViewController(withIdentifier: "createFolder") as! CreateFileViewController
+        let createFolderController = storyboard?.instantiateViewController(withIdentifier: "createFolder") as! CreateEditFolderViewController
         //createFolderController.arrayOfFolders = arrayOfFolders
         navigationController?.pushViewController(createFolderController, animated: true)
     }
@@ -156,7 +154,6 @@ class FoldersTableViewController: UIViewController {
 extension FoldersTableViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let folder = matchingFolders[indexPath.row]
         let collectionViewController = storyboard?.instantiateViewController(withIdentifier: "CollectionView") as! CollectionViewController
         collectionViewController.folder = folder

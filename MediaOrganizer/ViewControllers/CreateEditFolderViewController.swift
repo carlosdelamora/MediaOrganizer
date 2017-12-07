@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class CreateFileViewController: UIViewController {
+class CreateEditFolderViewController: UIViewController {
     
     var context: NSManagedObjectContext? = nil
     var documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
