@@ -83,6 +83,9 @@ class CreateEditFolderViewController: UIViewController {
             }
         case .importAssetCollection:
             importMediaFromAssetCollection(title: titleTextField.text!, folderDescription: descriptionTextField.text, notes: nil, secure:secure , context: context)
+            DispatchQueue.main.async{
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
     
@@ -94,7 +97,7 @@ class CreateEditFolderViewController: UIViewController {
         guard let assetCollection = assetCollection else {return}
         
         //We create a folder and then create the media in this folder
-        //let folder = CoreFolder(title: title, folderDescription: folderDescription, notes: notes, secure: secure, context: context)
+        let folder = CoreFolder(title: title, folderDescription: folderDescription, notes: notes, secure: secure, context: context)
         //we fetch all the PHAssets from collection that are video of photo
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate",
@@ -103,15 +106,37 @@ class CreateEditFolderViewController: UIViewController {
         let phAssets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
         //we get the for each phAsset object a medaia
         for index in 0..<phAssets.count{
-            let url = phAssets[index].getURL(completionHandler: { url in
-               
+            let phAsset = phAssets[index]
+            let url = phAsset.getURL(completionHandler: { url in
                 if let url = url{
                     let urlAbsoluteString = url.absoluteString
+                    switch phAsset.mediaType{
+                    case .image:
+                        let _ = CoreMedia(stringMediaType: Constants.mediaType.photo, uuidString: urlAbsoluteString, index: Int64(index), folder: folder, context: context)
+                    case .video:
+                        let _ = CoreMedia(stringMediaType: Constants.mediaType.video, uuidString: urlAbsoluteString, index: Int64(index), folder: folder, context: context)
+                    default:
+                        break
+                    }
                 }
-                
             })
         }
     }
+    
+    
+    /*func createCoreMediaWithData(stringMediaType: String, uuidString: String, index: Int64, data: Data){
+        guard let context = context else{return}
+        let coreMedia = CoreMedia(stringMediaType: stringMediaType, uuidString: uuidString, index: index, folder: folder, context: context)
+        mediaArray.append(coreMedia)
+        let url = coreMedia.getURL()
+        do{
+            //we write data to the url
+            try data.write(to: url, options: .atomic)
+        }catch{
+            print("there was an error to write to the url \(error)")
+            context.delete(coreMedia)
+        }
+    }*/
     
 }
 
@@ -124,7 +149,7 @@ extension PHAsset {
                 return true
             }
             self.requestContentEditingInput(with: options, completionHandler: {(contentEditingInput: PHContentEditingInput?, info: [AnyHashable : Any]) -> Void in
-                completionHandler(contentEditingInput!.fullSizeImageURL as URL?)
+                completionHandler(contentEditingInput?.fullSizeImageURL as URL?)
             })
         } else if self.mediaType == .video {
             let options: PHVideoRequestOptions = PHVideoRequestOptions()

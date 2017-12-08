@@ -112,7 +112,6 @@ extension UIImageView{
             print("*** Error generating thumbnail: \(error.localizedDescription)")
             return nil
         }
-        
     }
     
 }
