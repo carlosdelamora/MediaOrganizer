@@ -24,6 +24,7 @@
 		CA449A2A1FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A281FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift */; };
 		CA449A2D1FD7740100890E1B /* CoreFolder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A2B1FD7740100890E1B /* CoreFolder+CoreDataClass.swift */; };
 		CA449A2E1FD7740100890E1B /* CoreFolder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A2C1FD7740100890E1B /* CoreFolder+CoreDataProperties.swift */; };
+		CA449A301FD9FEF900890E1B /* ImportAlbumsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A2F1FD9FEF900890E1B /* ImportAlbumsTableViewController.swift */; };
 		CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652B81FC39F8100D9F723 /* Constants.swift */; };
 		CA6652BD1FC5F0AC00D9F723 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652BC1FC5F0AB00D9F723 /* DetailViewController.swift */; };
 		CA7D76D71FCB763C00640AD2 /* CreateEditFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D76D61FCB763C00640AD2 /* CreateEditFolderViewController.swift */; };
@@ -49,6 +50,7 @@
 		CA449A281FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreMedia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CA449A2B1FD7740100890E1B /* CoreFolder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreFolder+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CA449A2C1FD7740100890E1B /* CoreFolder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreFolder+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CA449A2F1FD9FEF900890E1B /* ImportAlbumsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAlbumsTableViewController.swift; sourceTree = "<group>"; };
 		CA6652B81FC39F8100D9F723 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CA6652BC1FC5F0AB00D9F723 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		CA7D76D61FCB763C00640AD2 /* CreateEditFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditFolderViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		CA4322F51FBD48600000970C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				CA449A2F1FD9FEF900890E1B /* ImportAlbumsTableViewController.swift */,
 				CA02AC801FB7EA380017CE37 /* FoldersTableViewController.swift */,
 				CA02AC8A1FB8D4950017CE37 /* CollectionViewController.swift */,
 				CA6652BC1FC5F0AB00D9F723 /* DetailViewController.swift */,
@@ -214,6 +217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA449A301FD9FEF900890E1B /* ImportAlbumsTableViewController.swift in Sources */,
 				CA7D76D71FCB763C00640AD2 /* CreateEditFolderViewController.swift in Sources */,
 				CA02AC831FB7EA750017CE37 /* FolderCellTableViewCell.swift in Sources */,
 				CA4322F21FBD0E0B0000970C /* CustomLayout.swift in Sources */,

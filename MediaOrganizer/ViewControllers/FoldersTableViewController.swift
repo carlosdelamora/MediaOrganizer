@@ -37,6 +37,8 @@ class FoldersTableViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var foldersTableView: UITableView!
    
+    @IBOutlet weak var importAlbum: UIToolbar!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //set the context for core data
@@ -96,6 +98,12 @@ class FoldersTableViewController: UIViewController {
         //the matching folders will be the arrayOfFolders initialy
         //then matching folders only shows the filtered folders
     }
+    
+    @IBAction func importAlbumAction(_ sender: Any) {
+        let importTableViewController = storyboard?.instantiateViewController(withIdentifier: "importAlbumTable") as! ImportAlbumsTableViewController
+        navigationController?.pushViewController(importTableViewController, animated: true)
+    }
+    
     
     @objc func dismissKeyboard(){
         view.endEditing(true)
