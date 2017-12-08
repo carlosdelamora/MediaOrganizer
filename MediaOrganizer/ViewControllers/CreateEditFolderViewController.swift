@@ -112,9 +112,9 @@ class CreateEditFolderViewController: UIViewController {
                     let urlAbsoluteString = url.absoluteString
                     switch phAsset.mediaType{
                     case .image:
-                        let _ = CoreMedia(stringMediaType: Constants.mediaType.photo, uuidString: urlAbsoluteString, index: Int64(index), folder: folder, context: context)
+                        let _ = CoreMedia(stringMediaType: Constants.mediaType.photo, uuidString: urlAbsoluteString, index: Int64(index), folder: folder,isPhAsset: true, context: context)
                     case .video:
-                        let _ = CoreMedia(stringMediaType: Constants.mediaType.video, uuidString: urlAbsoluteString, index: Int64(index), folder: folder, context: context)
+                        let _ = CoreMedia(stringMediaType: Constants.mediaType.video, uuidString: urlAbsoluteString, index: Int64(index), folder: folder, isPhAsset: true, context: context)
                     default:
                         break
                     }

@@ -20,11 +20,11 @@
 		CA4322F91FBD4A390000970C /* Reusable.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA4322F81FBD4A390000970C /* Reusable.xib */; };
 		CA449A0E1FD5EF6000890E1B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A0D1FD5EF6000890E1B /* CoreDataStack.swift */; };
 		CA449A111FD5F5ED00890E1B /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CA449A0F1FD5F5ED00890E1B /* Model.xcdatamodeld */; };
-		CA449A291FD63C6A00890E1B /* CoreMedia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A271FD63C6A00890E1B /* CoreMedia+CoreDataClass.swift */; };
-		CA449A2A1FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A281FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift */; };
 		CA449A2D1FD7740100890E1B /* CoreFolder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A2B1FD7740100890E1B /* CoreFolder+CoreDataClass.swift */; };
 		CA449A2E1FD7740100890E1B /* CoreFolder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A2C1FD7740100890E1B /* CoreFolder+CoreDataProperties.swift */; };
 		CA449A301FD9FEF900890E1B /* ImportAlbumsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A2F1FD9FEF900890E1B /* ImportAlbumsTableViewController.swift */; };
+		CA449A371FDB4A2800890E1B /* CoreMedia+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A351FDB4A2800890E1B /* CoreMedia+CoreDataClass.swift */; };
+		CA449A381FDB4A2800890E1B /* CoreMedia+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA449A361FDB4A2800890E1B /* CoreMedia+CoreDataProperties.swift */; };
 		CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652B81FC39F8100D9F723 /* Constants.swift */; };
 		CA6652BD1FC5F0AC00D9F723 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652BC1FC5F0AB00D9F723 /* DetailViewController.swift */; };
 		CA7D76D71FCB763C00640AD2 /* CreateEditFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D76D61FCB763C00640AD2 /* CreateEditFolderViewController.swift */; };
@@ -46,11 +46,11 @@
 		CA4322F81FBD4A390000970C /* Reusable.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Reusable.xib; sourceTree = "<group>"; };
 		CA449A0D1FD5EF6000890E1B /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		CA449A101FD5F5ED00890E1B /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		CA449A271FD63C6A00890E1B /* CoreMedia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreMedia+CoreDataClass.swift"; sourceTree = "<group>"; };
-		CA449A281FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreMedia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CA449A2B1FD7740100890E1B /* CoreFolder+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreFolder+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CA449A2C1FD7740100890E1B /* CoreFolder+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreFolder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CA449A2F1FD9FEF900890E1B /* ImportAlbumsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportAlbumsTableViewController.swift; sourceTree = "<group>"; };
+		CA449A351FDB4A2800890E1B /* CoreMedia+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreMedia+CoreDataClass.swift"; sourceTree = "<group>"; };
+		CA449A361FDB4A2800890E1B /* CoreMedia+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreMedia+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CA6652B81FC39F8100D9F723 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CA6652BC1FC5F0AB00D9F723 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		CA7D76D61FCB763C00640AD2 /* CreateEditFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditFolderViewController.swift; sourceTree = "<group>"; };
@@ -121,10 +121,10 @@
 		CA4322F41FBD48370000970C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CA449A351FDB4A2800890E1B /* CoreMedia+CoreDataClass.swift */,
+				CA449A361FDB4A2800890E1B /* CoreMedia+CoreDataProperties.swift */,
 				CA449A2B1FD7740100890E1B /* CoreFolder+CoreDataClass.swift */,
 				CA449A2C1FD7740100890E1B /* CoreFolder+CoreDataProperties.swift */,
-				CA449A271FD63C6A00890E1B /* CoreMedia+CoreDataClass.swift */,
-				CA449A281FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift */,
 				CA449A0D1FD5EF6000890E1B /* CoreDataStack.swift */,
 				CA6652B81FC39F8100D9F723 /* Constants.swift */,
 				CA449A0F1FD5F5ED00890E1B /* Model.xcdatamodeld */,
@@ -222,6 +222,8 @@
 				CA02AC831FB7EA750017CE37 /* FolderCellTableViewCell.swift in Sources */,
 				CA4322F21FBD0E0B0000970C /* CustomLayout.swift in Sources */,
 				CA449A111FD5F5ED00890E1B /* Model.xcdatamodeld in Sources */,
+				CA449A371FDB4A2800890E1B /* CoreMedia+CoreDataClass.swift in Sources */,
+				CA449A381FDB4A2800890E1B /* CoreMedia+CoreDataProperties.swift in Sources */,
 				CA449A2E1FD7740100890E1B /* CoreFolder+CoreDataProperties.swift in Sources */,
 				CA02AC8D1FB8EFDE0017CE37 /* MediaCollectionViewCell.swift in Sources */,
 				CA02AC811FB7EA380017CE37 /* FoldersTableViewController.swift in Sources */,
@@ -231,9 +233,7 @@
 				CA449A2D1FD7740100890E1B /* CoreFolder+CoreDataClass.swift in Sources */,
 				CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */,
 				CA02AC6F1FB7E44F0017CE37 /* AppDelegate.swift in Sources */,
-				CA449A2A1FD63C6A00890E1B /* CoreMedia+CoreDataProperties.swift in Sources */,
 				CA02AC8B1FB8D4950017CE37 /* CollectionViewController.swift in Sources */,
-				CA449A291FD63C6A00890E1B /* CoreMedia+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

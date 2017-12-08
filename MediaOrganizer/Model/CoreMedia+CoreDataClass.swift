@@ -2,7 +2,7 @@
 //  CoreMedia+CoreDataClass.swift
 //  MediaOrganizer
 //
-//  Created by Carlos De la mora on 12/4/17.
+//  Created by Carlos De la mora on 12/8/17.
 //  Copyright © 2017 carlosdelamora. All rights reserved.
 //
 //
@@ -16,7 +16,7 @@ public class CoreMedia: NSManagedObject {
     
     var documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     
-    convenience init(stringMediaType:String, uuidString: String, index: Int64, folder: CoreFolder, context: NSManagedObjectContext){
+    convenience init(stringMediaType:String, uuidString: String, index: Int64, folder: CoreFolder,isPhAsset:Bool, context: NSManagedObjectContext){
         
         if let entity = NSEntityDescription.entity(forEntityName: "CoreMedia", in: context){
             self.init(entity: entity, insertInto: context)
@@ -24,6 +24,7 @@ public class CoreMedia: NSManagedObject {
             self.uuidString = uuidString
             self.mediaToFolder = folder
             self.index = index
+            self.isPhAsset = isPhAsset
         }else{
             fatalError("there was an error in initalization")
         }
@@ -49,6 +50,4 @@ public class CoreMedia: NSManagedObject {
     }
     
 }
-
-
 

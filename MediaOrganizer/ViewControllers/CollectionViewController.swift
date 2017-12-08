@@ -400,7 +400,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func createCoreMediaWithData(stringMediaType: String, uuidString: String, index: Int64, data: Data){
         guard let context = context else{return}
-        let coreMedia = CoreMedia(stringMediaType: stringMediaType, uuidString: uuidString, index: index, folder: folder, context: context)
+        let coreMedia = CoreMedia(stringMediaType: stringMediaType, uuidString: uuidString, index: index, folder: folder,isPhAsset:false, context: context)
         mediaArray.append(coreMedia)
         let url = coreMedia.getURL()
         do{

@@ -2,7 +2,7 @@
 //  CoreMedia+CoreDataProperties.swift
 //  MediaOrganizer
 //
-//  Created by Carlos De la mora on 12/4/17.
+//  Created by Carlos De la mora on 12/8/17.
 //  Copyright © 2017 carlosdelamora. All rights reserved.
 //
 //
@@ -17,9 +17,10 @@ extension CoreMedia {
         return NSFetchRequest<CoreMedia>(entityName: "CoreMedia")
     }
 
+    @NSManaged public var index: Int64
     @NSManaged public var stringMediaType: String
     @NSManaged public var uuidString: String
-    @NSManaged public var index: Int64
-    @NSManaged public var mediaToFolder: CoreFolder?
+    @NSManaged public var isPhAsset: Bool
+    @NSManaged public var mediaToFolder: CoreFolder
 
 }
