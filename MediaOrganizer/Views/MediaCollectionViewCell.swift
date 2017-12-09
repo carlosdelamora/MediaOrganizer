@@ -67,20 +67,23 @@ extension UIImageView{
                                                          ascending: false)]
         fetchOptions.predicate = NSPredicate(format: "mediaType == %d || mediaType == %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
         let phAssets = PHAsset.fetchAssets(withLocalIdentifiers: [media.uuidString], options: fetchOptions)
+        
         //TODO: there should be only one such asset if there is none we ought to delete the core media for this
         if phAssets.count > 0{
-            PHImageManager.default().requestImage(for: phAssets[0], targetSize: self.frame.size, contentMode: .aspectFit, options: nil, resultHandler:{ [weak self ] thumbnail, info in
+            let requestOptions = PHImageRequestOptions()
+            requestOptions.version = .original
+            requestOptions.deliveryMode = .highQualityFormat
+            let cachingManager = PHCachingImageManager()
+            cachingManager.allowsCachingHighQualityImages = true
+            cachingManager.requestImage(for: phAssets[0], targetSize: self.frame.size, contentMode: .aspectFit, options: requestOptions, resultHandler:{ [weak self ] thumbnail, info in
                 
                 if let photo = thumbnail{
                     switch media.stringMediaType{
                     case Constants.mediaType.photo:
-                        DispatchQueue.main.async {
-                            if let strongSelf = self {
-                                strongSelf.image = strongSelf.squareImage(image: photo)
-                                auxiliaryImageView?.image = nil
-                            }
+                        if let strongSelf = self {
+                            strongSelf.image = strongSelf.squareImage(image: photo)
+                            auxiliaryImageView?.image = nil
                         }
-                    
                     case Constants.mediaType.video:
                         //we place a video image in top of the thumbnail
                         if let strongSelf = self {
