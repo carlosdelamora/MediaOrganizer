@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import Photos
 
 class MediaCollectionViewCell: UICollectionViewCell {
     
@@ -43,42 +44,91 @@ extension UIImageView{
     
     func placeSquareImageFromMedia(media: CoreMedia){
         var auxiliaryImageView: UIImageView? = nil
-        
+        let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+        auxiliaryImageView = UIImageView(frame: frame)
         //we can not add an auxiliaryViewMore than once
         if let anotherAuxiliaryView = self.viewWithTag(100){
            anotherAuxiliaryView.removeFromSuperview()
         }
+        
+        if !media.isPhAsset{
+            placeImageForNotPhAssetMedia(media: media, auxiliaryImageView: auxiliaryImageView)
+        }else{
+            placeImageForPhAssetMedia(media: media, auxiliaryImageView: auxiliaryImageView)
+        }
+        
+    }
+    
+    
+    func placeImageForPhAssetMedia(media: CoreMedia, auxiliaryImageView: UIImageView?){
+        //we first fetch the phAsset
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate",
+                                                         ascending: false)]
+        fetchOptions.predicate = NSPredicate(format: "mediaType == %d || mediaType == %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
+        let phAssets = PHAsset.fetchAssets(withLocalIdentifiers: [media.uuidString], options: fetchOptions)
+        //TODO: there should be only one such asset if there is none we ought to delete the core media for this
+        if phAssets.count > 0{
+            PHImageManager.default().requestImage(for: phAssets[0], targetSize: self.frame.size, contentMode: .aspectFit, options: nil, resultHandler:{ thumbnail, info in
+                
+                if let photo = thumbnail{
+                    switch media.stringMediaType{
+                    case Constants.mediaType.photo:
+                        DispatchQueue.main.async {
+                            self.image = self.squareImage(image: photo)
+                            auxiliaryImageView?.image = nil
+                        }
+                    
+                    case Constants.mediaType.video:
+                        //we place a video image in top of the thumbnail
+                        let squarePhoto = self.squareImage(image: photo)
+                        self.placeAuxiliaryImageInThumbnail(auxiliaryImageView: auxiliaryImageView, thumbnail: squarePhoto)
+                       
+                    default:
+                        print("there was an error presenting the image from core Media")
+                    }
+                }else{
+                    print("there was an error with the phAsset image")
+                }
+            })
+        }
+    }
+    
+    func placeImageForNotPhAssetMedia(media: CoreMedia, auxiliaryImageView: UIImageView?){
         let url = media.getURL()
         switch media.stringMediaType{
         case Constants.mediaType.photo:
             if let photoData = try? Data(contentsOf: url), let photo = UIImage(data:photoData){
                 self.image = squareImage(image: photo)
                 auxiliaryImageView?.image = nil
-                auxiliaryImageView = nil
             }
         case Constants.mediaType.video:
             //we place a video image in top of the thumbnail
             if let thumbnail = self.getThumbnailFrom(path: url){
-                DispatchQueue.main.async {
-                    self.image = thumbnail
-                    let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-                    auxiliaryImageView = UIImageView(frame: frame)
-                    auxiliaryImageView?.tag = 100
-                    guard let auxiliaryImageView = auxiliaryImageView else{
-                        return
-                    }
-                    auxiliaryImageView.image = UIImage(named: "PlayCircle")
-                    auxiliaryImageView.tintColor = .white
-                    self.addSubview(auxiliaryImageView)
-                    auxiliaryImageView.translatesAutoresizingMaskIntoConstraints = false
-                    auxiliaryImageView.heightAnchor.constraint(equalTo: auxiliaryImageView.widthAnchor, multiplier: 1).isActive = true
-                    auxiliaryImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.10, constant: 20).isActive = true
-                    self.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
-                    self.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
-                }
+                placeAuxiliaryImageInThumbnail(auxiliaryImageView: auxiliaryImageView, thumbnail: thumbnail)
             }
         default:
             print("there was an error presenting the image from core Media")
+        }
+    }
+    
+    //TODO: Add a self weak to avoid retention of cycles
+    func placeAuxiliaryImageInThumbnail(auxiliaryImageView: UIImageView?, thumbnail: UIImage){
+        DispatchQueue.main.async {
+            self.image = thumbnail
+            
+            auxiliaryImageView?.tag = 100
+            guard let auxiliaryImageView = auxiliaryImageView else{
+                return
+            }
+            auxiliaryImageView.image = UIImage(named: "PlayCircle")
+            auxiliaryImageView.tintColor = .white
+            self.addSubview(auxiliaryImageView)
+            auxiliaryImageView.translatesAutoresizingMaskIntoConstraints = false
+            auxiliaryImageView.heightAnchor.constraint(equalTo: auxiliaryImageView.widthAnchor, multiplier: 1).isActive = true
+            auxiliaryImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.10, constant: 20).isActive = true
+            self.centerXAnchor.constraint(equalTo: auxiliaryImageView.centerXAnchor).isActive = true
+            self.centerYAnchor.constraint(equalTo: auxiliaryImageView.centerYAnchor).isActive = true
         }
     }
     
