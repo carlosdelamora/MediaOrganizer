@@ -34,20 +34,17 @@ public class CoreMedia: NSManagedObject {
     func getURL() -> URL{
         let pathExtension: String
         let mediaUrl:URL
-        //if the uuidstring contains file it should be media importet from library in form of a phAsset
-        if uuidString.range(of: "file") != nil{
-            mediaUrl = URL(fileURLWithPath: uuidString)
+        if stringMediaType == Constants.mediaType.photo{
+            pathExtension = "\(self.uuidString).jpg"
         }else{
-            if stringMediaType == Constants.mediaType.photo{
-                pathExtension = "\(self.uuidString).jpg"
-            }else{
-                pathExtension = "\(self.uuidString).mov"
-            }
-            mediaUrl = documentURL.appendingPathComponent(pathExtension)
+            pathExtension = "\(self.uuidString).mov"
         }
-        
+        mediaUrl = documentURL.appendingPathComponent(pathExtension)
         return mediaUrl
     }
+    
+    
+    
     
 }
 
