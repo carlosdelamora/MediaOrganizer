@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AVFoundation
 import AVKit
+import Photos
 
 class DetailViewController: UIViewController{
     
@@ -22,7 +23,6 @@ class DetailViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         imageView.placeSquareImageFromMedia(media: media)
         switch media.stringMediaType{
         case Constants.mediaType.photo:
@@ -39,10 +39,23 @@ class DetailViewController: UIViewController{
     }
     
     @objc func playMovie(){
-        let url = media.getURL()
         let playerViewController = AVPlayerViewController()
-        let player = AVPlayer(url: url)
-        playerViewController.player = player
+        var player: AVPlayer
+        if media.isPhAsset{
+           guard let phAsset = media.getPhAsset() else{ return }
+           PHImageManager.default().requestPlayerItem(forVideo: phAsset, options: nil, resultHandler: { playerItem, info in
+               let player = AVPlayer(playerItem: playerItem)
+               playerViewController.player = player
+            
+           })
+          
+            
+        }else{
+            let url = media.getURL()
+            player = AVPlayer(url: url)
+            playerViewController.player = player
+        }
+        
         present(playerViewController, animated: true)
     }
     

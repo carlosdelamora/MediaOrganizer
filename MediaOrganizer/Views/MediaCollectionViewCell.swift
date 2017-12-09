@@ -62,20 +62,16 @@ extension UIImageView{
     
     func placeImageForPhAssetMedia(media: CoreMedia, auxiliaryImageView: UIImageView?){
         //we first fetch the phAsset
-        let fetchOptions = PHFetchOptions()
-        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate",
-                                                         ascending: false)]
-        fetchOptions.predicate = NSPredicate(format: "mediaType == %d || mediaType == %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
-        let phAssets = PHAsset.fetchAssets(withLocalIdentifiers: [media.uuidString], options: fetchOptions)
+        let phAsset = media.getPhAsset()
         
         //TODO: there should be only one such asset if there is none we ought to delete the core media for this
-        if phAssets.count > 0{
+        if let phAsset = phAsset{
             let requestOptions = PHImageRequestOptions()
             requestOptions.version = .original
             requestOptions.deliveryMode = .highQualityFormat
             let cachingManager = PHCachingImageManager()
             cachingManager.allowsCachingHighQualityImages = true
-            cachingManager.requestImage(for: phAssets[0], targetSize: self.frame.size, contentMode: .aspectFit, options: requestOptions, resultHandler:{ [weak self ] thumbnail, info in
+            cachingManager.requestImage(for: phAsset, targetSize: self.frame.size, contentMode: .aspectFit, options: requestOptions, resultHandler:{ [weak self ] thumbnail, info in
                 
                 if let photo = thumbnail{
                     switch media.stringMediaType{

@@ -28,18 +28,30 @@ class CreateEditFolderViewController: UIViewController {
     @IBOutlet weak var descriptionTextField: UITextField!
     @IBOutlet weak var createFolderButton: UIButton!
     @IBOutlet weak var requirePasswordButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
     
+    //MARK- ViewController Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
+     
+    
+        //set the delegates of the text fields
+        titleTextField.delegate = self
+        descriptionTextField.delegate = self
+        
         var buttonTitle: String
         switch typeOfResponsability{
         case .create:
             buttonTitle = "Create"
+            deleteButton.isHidden = true
         case .edit:
             buttonTitle = "Save Edit"
+            deleteButton.isHidden = false
         case .importAssetCollection:
             buttonTitle = "Import Media"
+            deleteButton.isHidden = true
         }
+        
         createFolderButton.setTitle(buttonTitle, for: .normal)
         //if we are in edit folder we set the values for textFields to the current folder
         if let folder = folder {
@@ -51,9 +63,45 @@ class CreateEditFolderViewController: UIViewController {
         if let assetCollection = assetCollection, let localizedTitle =  assetCollection.localizedTitle{
             titleTextField.text = localizedTitle
         }
+    }
+    
+    @IBAction func deleteAction(_ sender: Any) {
+        
+        //get the context to save in core data
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stack = appDelegate.stack
+        context = stack?.context
+        //we see if the folder is no nil
+        if let folder = folder {
+            //we first erase the data save in the url in documents directory they we erase the folder
+            DispatchQueue.global().async {
+                let fileManager = FileManager.default
+                folder.mediaArray().forEach{ media in
+                    if !media.isPhAsset{
+                        do{
+                            try fileManager.removeItem(at: media.getURL())
+                        }catch{
+                            print("there was an error deleting \(error.localizedDescription)")
+                        }
+                    }
+                }
+                
+                self.context?.perform {
+                    self.context?.delete(folder)
+                }
+                
+                //we dispatch main to return
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
         
         
     }
+        
+    
+    
     
     @IBAction func createFolder(_ sender: Any){
         
@@ -115,27 +163,19 @@ class CreateEditFolderViewController: UIViewController {
             default:
                 break
             }
-                
-            
         }
     }
+}
+
+extension CreateEditFolderViewController: UITextFieldDelegate{
     
-    
-    /*func createCoreMediaWithData(stringMediaType: String, uuidString: String, index: Int64, data: Data){
-        guard let context = context else{return}
-        let coreMedia = CoreMedia(stringMediaType: stringMediaType, uuidString: uuidString, index: index, folder: folder, context: context)
-        mediaArray.append(coreMedia)
-        let url = coreMedia.getURL()
-        do{
-            //we write data to the url
-            try data.write(to: url, options: .atomic)
-        }catch{
-            print("there was an error to write to the url \(error)")
-            context.delete(coreMedia)
-        }
-    }*/
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     
 }
+
 
 extension PHAsset {
     

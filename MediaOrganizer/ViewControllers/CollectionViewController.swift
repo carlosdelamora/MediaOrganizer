@@ -408,7 +408,10 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             try data.write(to: url, options: .atomic)
         }catch{
             print("there was an error to write to the url \(error)")
-            context.delete(coreMedia)
+            context.perform { 
+                self.context?.delete(coreMedia)
+            }
+           
         }
     }
 }

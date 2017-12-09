@@ -72,6 +72,7 @@
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZfA-bR-5oe">
                                 <rect key="frame" x="87.5" y="318" width="200" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="x3t-hK-v9f"/>
                                 </constraints>
@@ -105,6 +106,14 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neX-Lz-dmW">
+                                <rect key="frame" x="87" y="358" width="200" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.074743433489999997" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="deleteAction:" destination="Gfd-3q-tkt" eventType="touchUpInside" id="CXh-3w-RDy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -116,13 +125,18 @@
                             <constraint firstItem="h2f-LL-bOw" firstAttribute="top" secondItem="gVm-l9-TPh" secondAttribute="bottom" constant="8" id="R0v-JF-Nvr"/>
                             <constraint firstItem="ZfA-bR-5oe" firstAttribute="centerX" secondItem="96W-M6-qg3" secondAttribute="centerX" id="RFx-bS-ZTb"/>
                             <constraint firstItem="ZfA-bR-5oe" firstAttribute="top" secondItem="h2f-LL-bOw" secondAttribute="bottom" constant="130" id="bSz-dH-8zu"/>
+                            <constraint firstItem="neX-Lz-dmW" firstAttribute="centerX" secondItem="96W-M6-qg3" secondAttribute="centerX" id="lVC-zs-b7b"/>
                             <constraint firstItem="gVm-l9-TPh" firstAttribute="top" secondItem="adX-Kw-JQI" secondAttribute="top" constant="100" id="qYa-vh-mlP"/>
+                            <constraint firstItem="neX-Lz-dmW" firstAttribute="top" secondItem="ZfA-bR-5oe" secondAttribute="bottom" constant="10" id="qsa-l6-mL6"/>
                             <constraint firstItem="adX-Kw-JQI" firstAttribute="trailing" secondItem="gVm-l9-TPh" secondAttribute="trailing" constant="8" id="tSz-wk-brP"/>
+                            <constraint firstItem="neX-Lz-dmW" firstAttribute="width" secondItem="ZfA-bR-5oe" secondAttribute="width" id="vx1-sb-Jge"/>
+                            <constraint firstItem="neX-Lz-dmW" firstAttribute="height" secondItem="ZfA-bR-5oe" secondAttribute="height" id="xJk-HQ-6vB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="adX-Kw-JQI"/>
                     </view>
                     <connections>
                         <outlet property="createFolderButton" destination="ZfA-bR-5oe" id="KaA-ma-SXz"/>
+                        <outlet property="deleteButton" destination="neX-Lz-dmW" id="ArM-19-KN5"/>
                         <outlet property="descriptionTextField" destination="Ht1-QK-AcJ" id="eUO-SC-ckZ"/>
                         <outlet property="requirePasswordButton" destination="5uQ-Km-7G2" id="pyR-3G-Khn"/>
                         <outlet property="titleTextField" destination="ejl-14-tLB" id="Gtd-Nj-eyp"/>

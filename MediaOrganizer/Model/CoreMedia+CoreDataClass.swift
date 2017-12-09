@@ -9,7 +9,7 @@
 
 import Foundation
 import CoreData
-
+import Photos
 
 @objc(CoreMedia)
 public class CoreMedia: NSManagedObject {
@@ -43,7 +43,18 @@ public class CoreMedia: NSManagedObject {
         return mediaUrl
     }
     
-    
+    func getPhAsset()-> PHAsset?{
+        guard isPhAsset else{
+            return nil
+        }
+        
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        fetchOptions.predicate = NSPredicate(format: "mediaType == %d || mediaType == %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
+        let phAssets = PHAsset.fetchAssets(withLocalIdentifiers: [uuidString], options: fetchOptions)
+        return phAssets[0]
+        
+    }
     
     
 }

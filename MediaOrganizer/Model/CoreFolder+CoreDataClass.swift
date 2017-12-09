@@ -45,7 +45,9 @@ public class CoreFolder: NSManagedObject {
             for media in mediaToErase{
                 //the context should not be nil, otherwise we do not erase anything
                 guard let context = self.context else {return}
-                context.delete(media)
+                context.perform {
+                    self.context?.delete(media)
+                }
                 do{
                     try fileManager.removeItem(at: media.getURL())
                 }catch{
