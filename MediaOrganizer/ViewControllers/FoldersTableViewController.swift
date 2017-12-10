@@ -56,7 +56,6 @@ class FoldersTableViewController: UIViewController {
         
         //right items
         lockButton = UIButton(type: .custom)
-        lockButton.isSelected = false
         lockButton.setImage(UIImage(named:"unlock"), for: .selected)
         lockButton.setImage(UIImage(named:"lock"), for: .normal)
         lockButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
@@ -78,7 +77,7 @@ class FoldersTableViewController: UIViewController {
         //the buton is locked
         //TODO: get form user defaults the state of the lock
         //lockbutton has the lock normal and unclock in selected so is the
-        lockButton.isSelected = isLocked
+        lockButton.isSelected = !isLocked
         
         loadArrayOfFolders()
         arrayOfFolders = arrayOfFolders.sorted(by: { $0.title < $1.title })
