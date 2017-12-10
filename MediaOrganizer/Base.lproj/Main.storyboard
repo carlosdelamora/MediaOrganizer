@@ -76,7 +76,9 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="x3t-hK-v9f"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="1" green="0.7066373118" blue="0.1214905902" alpha="0.72236194350000005" colorSpace="calibratedRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="createFolder:" destination="Gfd-3q-tkt" eventType="touchUpInside" id="ogI-3O-YVv"/>
                                 </connections>
@@ -109,7 +111,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neX-Lz-dmW">
                                 <rect key="frame" x="87" y="358" width="200" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.074743433489999997" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Delete">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="deleteAction:" destination="Gfd-3q-tkt" eventType="touchUpInside" id="CXh-3w-RDy"/>
                                 </connections>
@@ -216,7 +220,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ur1-At-ZsM">
-                                <rect key="frame" x="-7" y="623" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="wVO-s8-mSE"/>
