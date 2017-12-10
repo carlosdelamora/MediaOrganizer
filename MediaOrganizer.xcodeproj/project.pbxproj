@@ -28,6 +28,8 @@
 		CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652B81FC39F8100D9F723 /* Constants.swift */; };
 		CA6652BD1FC5F0AC00D9F723 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6652BC1FC5F0AB00D9F723 /* DetailViewController.swift */; };
 		CA7D76D71FCB763C00640AD2 /* CreateEditFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D76D61FCB763C00640AD2 /* CreateEditFolderViewController.swift */; };
+		CA901B581FDD061F00034035 /* ResuableCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA901B571FDD061F00034035 /* ResuableCollectionViewCell.xib */; };
+		CA901B5A1FDD07C800034035 /* ReusableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA901B591FDD07C800034035 /* ReusableCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		CA6652B81FC39F8100D9F723 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CA6652BC1FC5F0AB00D9F723 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		CA7D76D61FCB763C00640AD2 /* CreateEditFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditFolderViewController.swift; sourceTree = "<group>"; };
+		CA901B571FDD061F00034035 /* ResuableCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResuableCollectionViewCell.xib; sourceTree = "<group>"; };
+		CA901B591FDD07C800034035 /* ReusableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,7 @@
 				CA02AC771FB7E44F0017CE37 /* LaunchScreen.storyboard */,
 				CA02AC7A1FB7E44F0017CE37 /* Info.plist */,
 				CA4322F81FBD4A390000970C /* Reusable.xib */,
+				CA901B571FDD061F00034035 /* ResuableCollectionViewCell.xib */,
 			);
 			path = MediaOrganizer;
 			sourceTree = "<group>";
@@ -114,6 +119,7 @@
 				CA02AC8C1FB8EFDE0017CE37 /* MediaCollectionViewCell.swift */,
 				CA02AC821FB7EA750017CE37 /* FolderCellTableViewCell.swift */,
 				CA4322F61FBD489F0000970C /* CustomReusableView.swift */,
+				CA901B591FDD07C800034035 /* ReusableCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -205,6 +211,7 @@
 			files = (
 				CA4322F91FBD4A390000970C /* Reusable.xib in Resources */,
 				CA02AC791FB7E44F0017CE37 /* LaunchScreen.storyboard in Resources */,
+				CA901B581FDD061F00034035 /* ResuableCollectionViewCell.xib in Resources */,
 				CA02AC761FB7E44F0017CE37 /* Assets.xcassets in Resources */,
 				CA02AC741FB7E44F0017CE37 /* Main.storyboard in Resources */,
 			);
@@ -229,6 +236,7 @@
 				CA02AC811FB7EA380017CE37 /* FoldersTableViewController.swift in Sources */,
 				CA6652BD1FC5F0AC00D9F723 /* DetailViewController.swift in Sources */,
 				CA449A0E1FD5EF6000890E1B /* CoreDataStack.swift in Sources */,
+				CA901B5A1FDD07C800034035 /* ReusableCollectionViewCell.swift in Sources */,
 				CA4322F71FBD489F0000970C /* CustomReusableView.swift in Sources */,
 				CA449A2D1FD7740100890E1B /* CoreFolder+CoreDataClass.swift in Sources */,
 				CA6652B91FC39F8100D9F723 /* Constants.swift in Sources */,

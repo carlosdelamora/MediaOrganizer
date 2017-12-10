@@ -27,7 +27,7 @@ class CustomLayout: UICollectionViewLayout {
     var photoHeaderWidth: CGFloat {
         return collectionView!.frame.width
     }
-    var photoHeaderHeight: CGFloat = 50
+    var photoHeaderHeight: CGFloat = 100
     
     override func prepare() {
         if cached.isEmpty{

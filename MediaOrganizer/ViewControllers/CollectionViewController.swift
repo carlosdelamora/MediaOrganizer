@@ -25,6 +25,7 @@ class CollectionViewController: UIViewController {
     let reusableViewId = "ReusableView"
     var longGesture: UILongPressGestureRecognizer!
     var navigationItemEdition: UIBarButtonItem!
+    var initalIndexPath = IndexPath()//the indexPath when we initate interactive movement
     
     enum status:String{
         case show = "Allow Selection"//this is the normal state, when is showing the pictures
@@ -237,6 +238,7 @@ class CollectionViewController: UIViewController {
     }
     
     @objc func handleLongGesture(gesture: UILongPressGestureRecognizer){
+        
         switch gesture.state{
         case .began:
             guard let indexPath = collectionView.indexPathForItem(at: gesture.location(in: collectionView)) else{
@@ -244,10 +246,24 @@ class CollectionViewController: UIViewController {
             }
             
             collectionView.beginInteractiveMovementForItem(at: indexPath)
+            initalIndexPath = indexPath
         case .changed:
             collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: collectionView))
         case .ended:
             collectionView.endInteractiveMovement()
+            
+            print("cellframe \(gesture.location(in: collectionView))")
+            
+            let firstIndex = IndexPath(item: 0, section: 0)
+            let reusableCell = collectionView.supplementaryView(forElementKind: suplementatryViewKind.header, at: firstIndex) as! CustomReusableView
+            let endPointInResuableCollectionView = gesture.location(in: reusableCell.collectionView)
+            let endGesturePointInCollectionView = gesture.location(in: collectionView)
+            //we form a new point form the x value of endGesturePointInCollectionView and a y value form endPointInResuableCollectionView so that it gives us right parameters to find the attributes in reusable cell collectionView
+            let point = CGPoint(x:endGesturePointInCollectionView.x, y:endPointInResuableCollectionView.y)
+            if let indexPath = reusableCell.indexPathForCellCloseToPoint(point: point){
+                print("the nice index path \(indexPath)")
+            }
+            
         default:
             collectionView.cancelInteractiveMovement()
         }
@@ -288,6 +304,8 @@ extension CollectionViewController: UICollectionViewDelegate{
             media.index = Int64(newIndex)
         }
     }
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         

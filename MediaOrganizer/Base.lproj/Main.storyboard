@@ -224,7 +224,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="wVO-s8-mSE"/>
-                                    <barButtonItem title="Item" id="Wzm-1o-yvE" userLabel="ImportAlbum">
+                                    <barButtonItem title="Import" id="Wzm-1o-yvE" userLabel="ImportAlbum">
                                         <connections>
                                             <action selector="importAlbumAction:" destination="Stu-0F-Yu4" id="i6d-u2-EnY"/>
                                         </connections>
@@ -293,7 +293,8 @@
                             </textView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" restorationIdentifier="  " keyboardDismissMode="onDrag" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="TiR-fM-gt9">
                                 <rect key="frame" x="0.0" y="200" width="375" height="467"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" red="1" green="0.7066373118" blue="0.1214905902" alpha="0.72236194350000005" colorSpace="calibratedRGB"/>
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="1" maxX="0.0" maxY="1"/>
                                 <collectionViewLayout key="collectionViewLayout" id="KsU-KV-6Pg" customClass="CustomLayout" customModule="MediaOrganizer" customModuleProvider="target"/>
                                 <cells>
