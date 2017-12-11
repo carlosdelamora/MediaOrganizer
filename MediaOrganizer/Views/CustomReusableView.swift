@@ -7,12 +7,16 @@
 //
 
 import UIKit
+import CoreData
 
 class CustomReusableView: UICollectionReusableView {
     
     @IBOutlet weak var label:UILabel!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    var arrayOfCoreFolder = [CoreFolder]()
+    var context: NSManagedObjectContext? = nil
     let cellID = "reusableCollectionViewCell"
     var layout: UICollectionViewFlowLayout!
     override func awakeFromNib() {
@@ -33,28 +37,61 @@ class CustomReusableView: UICollectionReusableView {
             layout.itemSize = CGSize(width:width,height:height)
             layout.minimumInteritemSpacing = 1
             layout.minimumLineSpacing = 1
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stack = appDelegate.stack
+            context = stack?.context
+            
+            let fetchReuqest = NSFetchRequest<NSFetchRequestResult>(entityName: "CoreFolder")
+            let predicate: NSPredicate? = nil
+            fetchReuqest.predicate = predicate
+            context?.perform {
+                do{
+                    if let results = try self.context?.fetch(fetchReuqest) as? [CoreFolder]{
+                        self.arrayOfCoreFolder = results
+                        DispatchQueue.main.async {
+                            self.collectionView.reloadData()
+                        }
+                    }
+                }catch{
+                    print("error with the fetch")
+                }
+            }
         }
     }
     
-    func indexPathForCellCloseToPoint(point:CGPoint)-> [IndexPath]?{
-        //this should be all visible attributes
-        let attributes = layout.layoutAttributesForElements(in: self.frame)
-        let attributesContainOrigin = attributes?.filter({ $0.frame.contains(point) })
-        let indices = attributesContainOrigin?.map({$0.indexPath})
-        return indices
+    func indexPathForCellCloseToPoint(point:CGPoint)-> IndexPath?{
+        let indexPath = collectionView.indexPathForItem(at: point)
+        return indexPath
     }
+    
+    /*func getFolder(at indexPath: IndexPath)-> CoreFolder?{
+        let folder = arrayOfCoreFolder[indexPath]
+        return folder
+    }*/
+    
+    func getFolderForPoint(point: CGPoint)-> CoreFolder?{
+        guard let indexPath = collectionView.indexPathForItem(at: point) else{
+            return nil
+        }
+        let folder = arrayOfCoreFolder[indexPath.row]
+        return folder
+    }
+    
 }
 
 extension CustomReusableView: UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 30
+        return arrayOfCoreFolder.count
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ReusableCollectionViewCell
         
-        cell.folderNameLabel.text = "random"
+        let folder = arrayOfCoreFolder[indexPath.row]
+        cell.folderNameLabel.text = folder.title
         return cell
     }
     

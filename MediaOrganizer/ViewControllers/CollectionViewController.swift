@@ -257,11 +257,8 @@ class CollectionViewController: UIViewController {
             let firstIndex = IndexPath(item: 0, section: 0)
             let reusableCell = collectionView.supplementaryView(forElementKind: suplementatryViewKind.header, at: firstIndex) as! CustomReusableView
             let endPointInResuableCollectionView = gesture.location(in: reusableCell.collectionView)
-            let endGesturePointInCollectionView = gesture.location(in: collectionView)
-            //we form a new point form the x value of endGesturePointInCollectionView and a y value form endPointInResuableCollectionView so that it gives us right parameters to find the attributes in reusable cell collectionView
-            let point = CGPoint(x:endGesturePointInCollectionView.x, y:endPointInResuableCollectionView.y)
-            if let indexPath = reusableCell.indexPathForCellCloseToPoint(point: point){
-                print("the nice index path \(indexPath)")
+            if let folder = reusableCell.getFolderForPoint(point:endPointInResuableCollectionView){
+                print("folder \(folder.title)")
             }
             
         default:
