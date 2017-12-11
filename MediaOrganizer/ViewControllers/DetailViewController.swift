@@ -16,6 +16,7 @@ class DetailViewController: UIViewController{
     
     
     var media: CoreMedia!
+    var shareMedia = UIBarButtonItem()
     //MARK: -Outlets
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
@@ -25,7 +26,7 @@ class DetailViewController: UIViewController{
         super.viewDidLoad()
         
         //create an item to share the media
-        let shareMedia = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(presentActionController))
+        shareMedia = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(presentActionController))
         navigationItem.rightBarButtonItem = shareMedia
         
         imageView.placeSquareImageFromMedia(media: media)
@@ -48,8 +49,7 @@ class DetailViewController: UIViewController{
         switch media.stringMediaType{
         case Constants.mediaType.photo:
             guard let image = imageView.image else{return}
-            let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-            present(activityController, animated: true)
+            presentActivityController(items: [image])
         case Constants.mediaType.video:
             if media.isPhAsset{
                 guard let phAsset = media.getPhAsset() else{ return }
@@ -72,20 +72,25 @@ class DetailViewController: UIViewController{
                             print("could not write to tempURL\(error)")
                         }
 
-                        let activityController = UIActivityViewController(activityItems: [tempURL], applicationActivities: nil)
-                        DispatchQueue.main.async {
-                            self.present(activityController, animated: true)
-                        }
+                        self.presentActivityController(items: [tempURL])
                     }
                 })
             }else{
                 let mediaUrl = media.getURL()
-                let activityController = UIActivityViewController(activityItems: [mediaUrl], applicationActivities: nil)
-                present(activityController, animated: true)
+                presentActivityController(items: [mediaUrl])
             }
         default:
             print("this should not happen ")
             break
+        }
+    }
+    
+    func presentActivityController(items: [Any]){
+        let activityController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        activityController.popoverPresentationController?.sourceView = view
+        activityController.popoverPresentationController?.barButtonItem = shareMedia
+        DispatchQueue.main.async {
+            self.present(activityController, animated: true)
         }
     }
     
