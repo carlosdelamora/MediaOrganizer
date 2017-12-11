@@ -152,16 +152,23 @@ class CreateEditFolderViewController: UIViewController {
                                                          ascending: false)]
         fetchOptions.predicate = NSPredicate(format: "mediaType == %d || mediaType == %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
         let phAssets = PHAsset.fetchAssets(in: assetCollection, options: fetchOptions)
+       
+       
         //we get the for each phAsset object a medaia
         for index in 0..<phAssets.count{
             let phAsset = phAssets[index]
-            switch phAsset.mediaType{
-            case .image:
-                let _ = CoreMedia(stringMediaType: Constants.mediaType.photo, uuidString: phAsset.localIdentifier, index: Int64(index), folder: folder,isPhAsset: true, context: context)
-            case .video:
-                let _ = CoreMedia(stringMediaType: Constants.mediaType.video, uuidString: phAsset.localIdentifier, index: Int64(index), folder: folder, isPhAsset: true, context: context)
-            default:
-                break
+            phAsset.containsThumbnail{ containsTumbnail in
+                
+                if containsTumbnail{
+                    switch phAsset.mediaType{
+                    case .image:
+                        let _ = CoreMedia(stringMediaType: Constants.mediaType.photo, uuidString: phAsset.localIdentifier, index: Int64(index), folder: folder,isPhAsset: true, context: context)
+                    case .video:
+                        let _ = CoreMedia(stringMediaType: Constants.mediaType.video, uuidString: phAsset.localIdentifier, index: Int64(index), folder: folder, isPhAsset: true, context: context)
+                    default:
+                        break
+                    }
+                }
             }
         }
     }
@@ -201,4 +208,29 @@ extension PHAsset {
             })
         }
     }
+    
+    func containsThumbnail(completion:@escaping (Bool) -> Void){
+        //we first fetch the phAsset
+        
+    
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.version = .original
+        requestOptions.deliveryMode = .highQualityFormat
+        let cachingManager = PHCachingImageManager()
+        cachingManager.allowsCachingHighQualityImages = true
+        cachingManager.requestImage(for: self, targetSize: CGSize(width:100,height:100), contentMode: .aspectFit, options: requestOptions, resultHandler:{ thumbnail, info in
+            
+            if let _ = thumbnail{
+                
+                completion(true)
+            }else{
+                print("there was an error with the phAsset image erase media)")
+                completion(false)
+            }
+        })
+        
+    }
+    
+    
+    
 }

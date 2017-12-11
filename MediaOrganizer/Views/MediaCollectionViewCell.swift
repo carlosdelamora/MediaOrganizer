@@ -90,11 +90,14 @@ extension UIImageView{
                         print("there was an error presenting the image from core Media")
                     }
                 }else{
-                    print("there was an error with the phAsset image")
+                    print("there was an error with the phAsset image \(info?.description)")
+                    
                 }
             })
         }
     }
+    
+    
     
     func placeImageForNotPhAssetMedia(media: CoreMedia, auxiliaryImageView: UIImageView?){
         let url = media.getURL()
