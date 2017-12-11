@@ -60,16 +60,6 @@ class CustomReusableView: UICollectionReusableView {
         }
     }
     
-    func indexPathForCellCloseToPoint(point:CGPoint)-> IndexPath?{
-        let indexPath = collectionView.indexPathForItem(at: point)
-        return indexPath
-    }
-    
-    /*func getFolder(at indexPath: IndexPath)-> CoreFolder?{
-        let folder = arrayOfCoreFolder[indexPath]
-        return folder
-    }*/
-    
     func getFolderForPoint(point: CGPoint)-> CoreFolder?{
         guard let indexPath = collectionView.indexPathForItem(at: point) else{
             return nil

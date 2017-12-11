@@ -62,6 +62,5 @@ public class CoreFolder: NSManagedObject {
         }
         return filteredArray
     }
-    
 }
 

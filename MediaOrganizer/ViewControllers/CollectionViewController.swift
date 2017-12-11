@@ -26,6 +26,7 @@ class CollectionViewController: UIViewController {
     var longGesture: UILongPressGestureRecognizer!
     var navigationItemEdition: UIBarButtonItem!
     var initalIndexPath = IndexPath()//the indexPath when we initate interactive movement
+    var layout:CustomLayout!
     
     enum status:String{
         case show = "Allow Selection"//this is the normal state, when is showing the pictures
@@ -69,7 +70,7 @@ class CollectionViewController: UIViewController {
         collectionView.addGestureRecognizer(longGesture)
         
         //set the layout
-        let layout = collectionView.collectionViewLayout as! CustomLayout
+        layout = collectionView.collectionViewLayout as! CustomLayout
         layout.numberOfColumns = 3
         layout.padding = 1.0
         
@@ -169,7 +170,6 @@ class CollectionViewController: UIViewController {
             let indicesToRemove = Set(selectedItemsIndex.map({$0.item}))
             mediaArray = folder.updatedMediaArray(mediaArray: mediaArray, indicesToRemove: indicesToRemove)
             //we have to set the cached attrubutes to empty so we can recalculate the layout
-            let layout = collectionView.collectionViewLayout as! CustomLayout
             layout.cached = [UICollectionViewLayoutAttributes]()
             collectionView.deleteItems(at: selectedItemsIndex)
             layout.invalidateLayout()
@@ -257,8 +257,20 @@ class CollectionViewController: UIViewController {
             let firstIndex = IndexPath(item: 0, section: 0)
             let reusableCell = collectionView.supplementaryView(forElementKind: suplementatryViewKind.header, at: firstIndex) as! CustomReusableView
             let endPointInResuableCollectionView = gesture.location(in: reusableCell.collectionView)
-            if let folder = reusableCell.getFolderForPoint(point:endPointInResuableCollectionView){
-                print("folder \(folder.title)")
+            if let folderToBeSent = reusableCell.getFolderForPoint(point:endPointInResuableCollectionView){
+                //we need to save it to a different folder
+                if folder != folderToBeSent{
+                    let media = mediaArray[initalIndexPath.row]
+                    //we save media to the new folder
+                    folderToBeSent.addToFolderToMedia(media)
+                    folder.removeFromFolderToMedia(media)
+                    mediaArray.remove(at: initalIndexPath.row)
+                    reassignIndices()
+                    //we make the change in source Data and remove it from collection view
+                    layout.cached = [UICollectionViewLayoutAttributes]()
+                    collectionView.deleteItems(at: [initalIndexPath])
+                    layout.invalidateLayout()
+                }
             }
             
         default:
@@ -297,12 +309,15 @@ extension CollectionViewController: UICollectionViewDelegate{
         mediaArray.insert(mediaToRemove, at: destinationIndexPath.item)
         
         //we reassign all the indecees
+        reassignIndices()
+    }
+    
+    //we reassign all the indecees after a change in the mediaArray
+    func reassignIndices(){
         for (newIndex, media) in mediaArray.enumerated(){
             media.index = Int64(newIndex)
         }
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
@@ -405,8 +420,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion:{
             //we need to invalidate layout and set the cached to empty to recalculate everything again
-            let layout = self.collectionView.collectionViewLayout as! CustomLayout
-            layout.cached = [UICollectionViewLayoutAttributes]()
+            self.layout.cached = [UICollectionViewLayoutAttributes]()
             self.collectionView.reloadData()
             })
         }
