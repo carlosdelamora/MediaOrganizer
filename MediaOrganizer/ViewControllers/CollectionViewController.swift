@@ -77,6 +77,8 @@ class CollectionViewController: UIViewController {
         //collectionView
         collectionView.delegate = self
         collectionView.dataSource = self
+        //set the autoriesize of the collectionView
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
         
         //register the reusable cell
         let nib = UINib(nibName: "Reusable", bundle: nil)
@@ -129,6 +131,7 @@ class CollectionViewController: UIViewController {
     @IBAction func notesBarButtonAction(_ sender: Any) {
         var newHeight: CGFloat
         var newY:CGFloat
+        
         if collectionView.frame.origin.y > 64 {
             newY = 64
             newHeight = view.frame.height - 64
@@ -277,6 +280,27 @@ class CollectionViewController: UIViewController {
             collectionView.cancelInteractiveMovement()
         }
     }
+    
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        if UIDevice.current.orientation.isLandscape{
+            print("landsacpe \(size)")
+            navigationController?.navigationBar.isHidden = true
+            collectionView.frame.origin.y = 0
+            layout.cached = [UICollectionViewLayoutAttributes]()
+            collectionView.reloadData()
+        }else{
+            print("portrait\(size)")
+            navigationController?.navigationBar.isHidden = false
+            collectionView.frame.origin.y = 64
+            layout.cached = [UICollectionViewLayoutAttributes]()
+            collectionView.reloadData()
+        }
+        
+    }
+    
 }
 
 

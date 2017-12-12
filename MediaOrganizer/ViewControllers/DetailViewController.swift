@@ -117,7 +117,6 @@ class DetailViewController: UIViewController{
 
 extension DetailViewController: UIScrollViewDelegate{
     
-    
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return contentView
     }
