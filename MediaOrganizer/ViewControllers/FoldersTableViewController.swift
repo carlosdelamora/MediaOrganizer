@@ -39,6 +39,8 @@ class FoldersTableViewController: UIViewController {
    
     @IBOutlet weak var importAlbum: UIToolbar!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //set the context for core data
@@ -48,12 +50,14 @@ class FoldersTableViewController: UIViewController {
         
         // left bar button items
         let createFolderItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToCreateFolder))
+        createFolderItem.tintColor = Constants.colors.gold
         editFolderItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(goToEditFolder))
-        editFolderItem.setTitleTextAttributes(Constants.fontAttributes.navigationItem, for: .normal)
+        editFolderItem.setTitleTextAttributes(Constants.fontAttributes.academyEngraved, for: .normal)
+        editFolderItem.tintColor = Constants.colors.gold
         
         let rightItems:[UIBarButtonItem] = [ createFolderItem,editFolderItem]
         navigationItem.setRightBarButtonItems(rightItems , animated: true)
-        
+
         //right items
         lockButton = UIButton(type: .custom)
         lockButton.setImage(UIImage(named:"unlock"), for: .selected)
@@ -74,15 +78,12 @@ class FoldersTableViewController: UIViewController {
         gestureRecognizer.numberOfTapsRequired = 2
         view.addGestureRecognizer(gestureRecognizer)
         
-        //the buton is locked
-        //TODO: get form user defaults the state of the lock
         //lockbutton has the lock normal and unclock in selected so is the
         lockButton.isSelected = !isLocked
-        
+        //get the data source
         loadArrayOfFolders()
         arrayOfFolders = arrayOfFolders.sorted(by: { $0.title < $1.title })
         matchingFolders = arrayOfFolders.filter({filterSecureFolders(folder: $0)})
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -175,14 +176,13 @@ class FoldersTableViewController: UIViewController {
         case .create:
             typeOfResponsability = .edit
             editFolderItem.title = "Done"
-            editFolderItem.setTitleTextAttributes(Constants.fontAttributes.navigationItem, for: .normal)
+            editFolderItem.setTitleTextAttributes(Constants.fontAttributes.academyEngraved, for: .normal)
         case .edit:
             typeOfResponsability = .create
             editFolderItem.title = "Edit"
-            editFolderItem.setTitleTextAttributes(Constants.fontAttributes.navigationItem, for: .normal)
+            editFolderItem.setTitleTextAttributes(Constants.fontAttributes.academyEngraved, for: .normal)
         }
     }
-
 }
 
 extension FoldersTableViewController: UITableViewDelegate{
@@ -204,6 +204,11 @@ extension FoldersTableViewController: UITableViewDelegate{
              navigationController?.pushViewController(createFolderController, animated: true)
         }
         
+    }
+    
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
     
 }
@@ -242,8 +247,12 @@ extension FoldersTableViewController: UISearchBarDelegate{
         searchBar.resignFirstResponder()
     }
     
+    //close the white gap from the search bar to the
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached
+    }
+    
 }
-
 
 
 
