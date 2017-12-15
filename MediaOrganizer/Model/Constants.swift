@@ -42,7 +42,7 @@ struct Constants {
     
     struct fontAttributes{
         static let navigationItem = [NSAttributedStringKey.font: UIFont(name:"Helvetica", size:20)!]
-        static let academyEngraved = [NSAttributedStringKey.font: UIFont(name:"AcademyEngravedLetPlain", size: 20)!]
+        static let americanTypewriter = [NSAttributedStringKey.font: UIFont(name:"AmericanTypewriter", size: 20)!]
     }
     
 }

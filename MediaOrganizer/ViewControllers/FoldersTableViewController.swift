@@ -33,12 +33,11 @@ class FoldersTableViewController: UIViewController {
     var editFolderItem: UIBarButtonItem!
     
     var isLocked:Bool = true
-    //MARK: IBOultes
+    //MARK: -IBOultes
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var foldersTableView: UITableView!
-   
     @IBOutlet weak var importAlbum: UIToolbar!
-    
+    @IBOutlet weak var importButton: UIBarButtonItem!
     
     
     override func viewDidLoad() {
@@ -52,12 +51,12 @@ class FoldersTableViewController: UIViewController {
         let createFolderItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goToCreateFolder))
         createFolderItem.tintColor = Constants.colors.gold
         editFolderItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(goToEditFolder))
-        editFolderItem.setTitleTextAttributes(Constants.fontAttributes.academyEngraved, for: .normal)
-        editFolderItem.tintColor = Constants.colors.gold
+        editFolderItem.setAttributesForApp()
+       
         
         let rightItems:[UIBarButtonItem] = [ createFolderItem,editFolderItem]
         navigationItem.setRightBarButtonItems(rightItems , animated: true)
-
+       
         //right items
         lockButton = UIButton(type: .custom)
         lockButton.setImage(UIImage(named:"unlock"), for: .selected)
@@ -67,6 +66,10 @@ class FoldersTableViewController: UIViewController {
         lockButton.addTarget(self, action: #selector(lockOrUnlock), for: .touchUpInside)
         let lockButtonItem = UIBarButtonItem(customView: lockButton)
         navigationItem.leftBarButtonItem = lockButtonItem
+        
+        //import bar button item
+        importButton.setAttributesForApp()
+        
         
         //we set the delegate of the table view
         foldersTableView.delegate = self
@@ -90,13 +93,6 @@ class FoldersTableViewController: UIViewController {
         super.viewWillAppear(animated)
         loadArrayOfFolders()
         //since the matching folders is what we use for the arrayOfFolders we should relaod the data after this
-    }
-    
-    //we use the viewDid appear because it fires after saving the folder, in case we save a folder while changing the notes
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //the matching folders will be the arrayOfFolders initialy
-        //then matching folders only shows the filtered folders
     }
     
     @IBAction func importAlbumAction(_ sender: Any) {
@@ -176,11 +172,11 @@ class FoldersTableViewController: UIViewController {
         case .create:
             typeOfResponsability = .edit
             editFolderItem.title = "Done"
-            editFolderItem.setTitleTextAttributes(Constants.fontAttributes.academyEngraved, for: .normal)
+            editFolderItem.setAttributesForApp()
         case .edit:
             typeOfResponsability = .create
             editFolderItem.title = "Edit"
-            editFolderItem.setTitleTextAttributes(Constants.fontAttributes.academyEngraved, for: .normal)
+            editFolderItem.setAttributesForApp()
         }
     }
 }
@@ -194,6 +190,10 @@ extension FoldersTableViewController: UITableViewDelegate{
             let folder = matchingFolders[indexPath.row]
             let collectionViewController = storyboard?.instantiateViewController(withIdentifier: "CollectionView") as! CollectionViewController
             collectionViewController.folder = folder
+            collectionViewController.title = folder.title
+            var attriubutesDictionary:[NSAttributedStringKey: Any] = Constants.fontAttributes.americanTypewriter
+            attriubutesDictionary[NSAttributedStringKey.foregroundColor] = Constants.colors.gold
+            navigationController?.navigationBar.titleTextAttributes = attriubutesDictionary
             navigationController?.pushViewController(collectionViewController, animated: true)
         case .edit:
              //we choose the folder to edit 
@@ -255,10 +255,24 @@ extension FoldersTableViewController: UISearchBarDelegate{
 }
 
 
+extension UIBarButtonItem{
+    
+    func setAttributesForApp(){
+        self.setTitleTextAttributes(Constants.fontAttributes.americanTypewriter, for: .normal)
+        self.tintColor = Constants.colors.gold
+    }
+}
 
 
-
-
+extension UILabel{
+    
+    func setGoldAttributedTitle(title: String){
+        //self.setTitleTextAttributes(Constants.fontAttributes.academyEngraved, for: .normal)
+        var attributes: [NSAttributedStringKey:Any] = Constants.fontAttributes.americanTypewriter
+        attributes[NSAttributedStringKey.foregroundColor] = Constants.colors.gold
+        self.attributedText = NSAttributedString(string: title, attributes: attributes)
+    }
+}
 
 
 

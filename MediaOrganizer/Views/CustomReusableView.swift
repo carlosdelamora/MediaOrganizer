@@ -22,7 +22,7 @@ class CustomReusableView: UICollectionReusableView {
     override func awakeFromNib() {
         super.awakeFromNib()
         if label != nil{
-            self.label.text = "Media"
+            self.label.setGoldAttributedTitle(title: "Media")
         }
         
         if collectionView != nil{
@@ -81,7 +81,7 @@ extension CustomReusableView: UICollectionViewDelegate, UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! ReusableCollectionViewCell
         
         let folder = arrayOfCoreFolder[indexPath.row]
-        cell.folderNameLabel.text = folder.title
+        cell.folderNameLabel.setGoldAttributedTitle(title:folder.title)
         return cell
     }
     

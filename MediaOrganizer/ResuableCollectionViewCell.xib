@@ -10,8 +10,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="AcademyEngraved.ttf">
-            <string>AcademyEngravedLetPlain</string>
+        <array key="AmericanTypewriter.ttc">
+            <string>AmericanTypewriter</string>
         </array>
     </customFonts>
     <objects>
@@ -26,7 +26,7 @@
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RfT-Ng-YHQ">
                         <rect key="frame" x="0.0" y="0.0" width="218" height="50"/>
-                        <fontDescription key="fontDescription" name="AcademyEngravedLetPlain" family="Academy Engraved LET" pointSize="17"/>
+                        <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="17"/>
                         <color key="textColor" red="1" green="0.7066373118" blue="0.1214905902" alpha="0.72236194350000005" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>

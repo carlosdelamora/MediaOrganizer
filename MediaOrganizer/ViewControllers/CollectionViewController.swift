@@ -258,7 +258,7 @@ class CollectionViewController: UIViewController {
             print("cellframe \(gesture.location(in: collectionView))")
             
             let firstIndex = IndexPath(item: 0, section: 0)
-            let reusableCell = collectionView.supplementaryView(forElementKind: suplementatryViewKind.header, at: firstIndex) as! CustomReusableView
+            guard let reusableCell = collectionView.supplementaryView(forElementKind: suplementatryViewKind.header, at: firstIndex) as? CustomReusableView else {return}
             let endPointInResuableCollectionView = gesture.location(in: reusableCell.collectionView)
             if let folderToBeSent = reusableCell.getFolderForPoint(point:endPointInResuableCollectionView){
                 //we need to save it to a different folder

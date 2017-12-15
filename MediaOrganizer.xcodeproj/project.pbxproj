@@ -30,6 +30,7 @@
 		CA7D76D71FCB763C00640AD2 /* CreateEditFolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7D76D61FCB763C00640AD2 /* CreateEditFolderViewController.swift */; };
 		CA901B581FDD061F00034035 /* ResuableCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CA901B571FDD061F00034035 /* ResuableCollectionViewCell.xib */; };
 		CA901B5A1FDD07C800034035 /* ReusableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA901B591FDD07C800034035 /* ReusableCollectionViewCell.swift */; };
+		CA901B5C1FE062D300034035 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA901B5B1FE062D300034035 /* GradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		CA7D76D61FCB763C00640AD2 /* CreateEditFolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEditFolderViewController.swift; sourceTree = "<group>"; };
 		CA901B571FDD061F00034035 /* ResuableCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResuableCollectionViewCell.xib; sourceTree = "<group>"; };
 		CA901B591FDD07C800034035 /* ReusableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableCollectionViewCell.swift; sourceTree = "<group>"; };
+		CA901B5B1FE062D300034035 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 				CA02AC821FB7EA750017CE37 /* FolderCellTableViewCell.swift */,
 				CA4322F61FBD489F0000970C /* CustomReusableView.swift */,
 				CA901B591FDD07C800034035 /* ReusableCollectionViewCell.swift */,
+				CA901B5B1FE062D300034035 /* GradientView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA901B5C1FE062D300034035 /* GradientView.swift in Sources */,
 				CA449A301FD9FEF900890E1B /* ImportAlbumsTableViewController.swift in Sources */,
 				CA7D76D71FCB763C00640AD2 /* CreateEditFolderViewController.swift in Sources */,
 				CA02AC831FB7EA750017CE37 /* FolderCellTableViewCell.swift in Sources */,
