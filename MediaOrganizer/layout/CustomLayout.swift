@@ -85,7 +85,7 @@ class CustomLayout: UICollectionViewLayout {
                 let insetFrame = frame.insetBy(dx: padding, dy: padding)
                 layoutAttributes.frame = insetFrame
                 cached.append(layoutAttributes)
-                contentHeight = max(yOffset(item:item + 3, yshift: photoHeaderHeight ), contentHeight)
+                contentHeight = max(yOffset(item:item + 3, yshift: photoHeaderHeight ), contentHeight) + 22//the las 50 is for the space of the toolbar
             }
             
             let indexPath = IndexPath(item:0, section:0)

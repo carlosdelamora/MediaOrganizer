@@ -34,8 +34,8 @@ class CreateEditFolderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //insertgradient in the back
-        let gradient = GradientView(frame: view.frame)
-        view.insertSubview(gradient, at: 0)
+        //let gradient = GradientView(frame: view.frame)
+        //view.insertSubview(gradient, at: 0)
         
         //set the delegates of the text fields
         titleTextField.delegate = self

@@ -35,7 +35,10 @@ class ImportAlbumsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
         let assetCollection = getAssetCollectionForIndexPath(indexPath: indexPath)
-        cell.textLabel?.text = assetCollection.localizedTitle
+        guard let title = assetCollection.localizedTitle else{return cell}
+        var attributes:[NSAttributedStringKey: Any] = Constants.fontAttributes.americanTypewriter
+        attributes[NSAttributedStringKey.foregroundColor] = Constants.colors.purpleGray
+        cell.textLabel?.attributedText = NSAttributedString(string: title, attributes: attributes)
         return cell
     }
     
