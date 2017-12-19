@@ -36,7 +36,10 @@ class CollectionViewController: UIViewController {
     
     //core data
     var context: NSManagedObjectContext? = nil
-    
+    //height of the navigation bar
+    var navigationBarHeight: CGFloat {
+        return (navigationController?.navigationBar.frame.maxY)!
+    }
     //Outlets
     @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var notesTextView: UITextView!
@@ -80,6 +83,8 @@ class CollectionViewController: UIViewController {
         //set the autoriesize of the collectionView
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleBottomMargin]
         
+        
+        
         //register the reusable cell
         let nib = UINib(nibName: "Reusable", bundle: nil)
         //collectionView.register(nib, forCellWithReuseIdentifier: reusableViewId)
@@ -117,7 +122,8 @@ class CollectionViewController: UIViewController {
         }
         collectionView.reloadData()
         collectionView.layoutIfNeeded()
-        
+        //set the height of the collectionView
+        collectionView.frame.origin.y = navigationBarHeight
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -131,10 +137,9 @@ class CollectionViewController: UIViewController {
     @IBAction func notesBarButtonAction(_ sender: Any) {
         var newHeight: CGFloat
         var newY:CGFloat
-        
-        if collectionView.frame.origin.y > 64 {
-            newY = 64
-            newHeight = view.frame.height - 64
+        if collectionView.frame.origin.y > navigationBarHeight {
+            newY = navigationBarHeight
+            newHeight = view.frame.height - navigationBarHeight
             notesTextView.isHidden = true
         }else{
             newY = notesTextView.frame.maxY
@@ -294,7 +299,7 @@ class CollectionViewController: UIViewController {
         }else{
             print("portrait\(size)")
             navigationController?.navigationBar.isHidden = false
-            collectionView.frame.origin.y = 64
+            collectionView.frame.origin.y = navigationBarHeight
             layout.cached = [UICollectionViewLayoutAttributes]()
             collectionView.reloadData()
         }
