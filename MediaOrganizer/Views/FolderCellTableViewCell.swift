@@ -27,15 +27,17 @@ class FolderCellTableViewCell: UITableViewCell {
     
     func configure(for folder: CoreFolder){
         //the first image in the folder
+        cellUIImageView.layer.cornerRadius = cellUIImageView.frame.height*0.1
+        cellUIImageView.clipsToBounds = true
         if folder.folderToMedia.count > 0{
             
             if let media = folder.mediaArray().first{
                 cellUIImageView.placeSquareImageFromMedia(media: media)
             }
         }else{
-            cellUIImageView.backgroundColor = .red
+            cellUIImageView.image = UIImage(named:"logo")
         }
-        titileLabel.text = folder.title
+        titileLabel.text = folder.title.uppercased()
         descriptionLabel.text = folder.folderDescription
     }
     
