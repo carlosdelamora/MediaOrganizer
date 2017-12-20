@@ -36,6 +36,11 @@ class CreateEditFolderViewController: UIViewController {
         //insertgradient in the back
         //let gradient = GradientView(frame: view.frame)
         //view.insertSubview(gradient, at: 0)
+        //style the buttons
+        createFolderButton.layer.cornerRadius = 5
+        createFolderButton.clipsToBounds = true
+        deleteButton.layer.cornerRadius = 5
+        deleteButton.clipsToBounds = true 
         
         //set the delegates of the text fields
         titleTextField.delegate = self

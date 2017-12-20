@@ -90,7 +90,7 @@ extension UIImageView{
                         print("there was an error presenting the image from core Media")
                     }
                 }else{
-                    print("there was an error with the phAsset image \(info?.description)")
+                    print("there was an error with the phAsset image \(info?.description ?? "")")
                     
                 }
             })
