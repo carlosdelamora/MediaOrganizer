@@ -211,6 +211,45 @@ extension FoldersTableViewController: UITableViewDelegate{
         return 100
     }
     
+    /*func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        return [UITableViewRowAction]()
+    }*/
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
+            let folder = matchingFolders[indexPath.row]
+            //we first erase the data save in the url in documents directory they we erase the folder
+            DispatchQueue.global().async {
+                let fileManager = FileManager.default
+                folder.mediaArray().forEach{ media in
+                    if !media.isPhAsset{
+                        do{
+                            try fileManager.removeItem(at: media.getURL())
+                        }catch{
+                            print("there was an error deleting \(error.localizedDescription)")
+                        }
+                    }
+                }
+                
+                self.context?.perform {
+                    self.context?.delete(folder)
+                }
+                
+                DispatchQueue.main.async {
+                    self.matchingFolders.remove(at: indexPath.row)
+                    self.foldersTableView.deleteRows(at: [indexPath], with: .fade)
+                    if let index = self.arrayOfFolders.index(of: folder){
+                        self.arrayOfFolders.remove(at: index)//we need to erase also in array of folders so we do not get an empty folder when we unsequre the data
+                    }
+                }
+            }
+        }
+    }
+    
 }
 
 extension FoldersTableViewController: UITableViewDataSource{
