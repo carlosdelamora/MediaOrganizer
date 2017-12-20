@@ -25,7 +25,8 @@ class CollectionViewController: UIViewController {
     let reusableViewId = "ReusableView"
     var longGesture: UILongPressGestureRecognizer!
     var navigationItemEdition: UIBarButtonItem!
-    var initalIndexPath = IndexPath()//the indexPath when we initate interactive movement
+    var initialIndexPath = IndexPath()//the indexPath when we initate interactive movement
+    var initialMedia: CoreMedia?
     var layout:CustomLayout!
     
     enum status:String{
@@ -254,7 +255,8 @@ class CollectionViewController: UIViewController {
             }
             
             collectionView.beginInteractiveMovementForItem(at: indexPath)
-            initalIndexPath = indexPath
+            initialIndexPath = indexPath
+            initialMedia = mediaArray[initialIndexPath.row]
         case .changed:
             collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: collectionView))
         case .ended:
@@ -268,16 +270,20 @@ class CollectionViewController: UIViewController {
             if let folderToBeSent = reusableCell.getFolderForPoint(point:endPointInResuableCollectionView){
                 //we need to save it to a different folder
                 if folder != folderToBeSent{
-                    let media = mediaArray[initalIndexPath.row]
-                    //we save media to the new folder
-                    folderToBeSent.addToFolderToMedia(media)
-                    folder.removeFromFolderToMedia(media)
-                    mediaArray.remove(at: initalIndexPath.row)
+                    guard let initialMedia = initialMedia else{return}
+                    collectionView.cancelInteractiveMovement()
+                    //we save initialMedia to the new folder
+                    folderToBeSent.addToFolderToMedia(initialMedia)
+                    folder.removeFromFolderToMedia(initialMedia)
+                    guard let index = mediaArray.index(of: initialMedia) else{return}
+                    let indexPathToDelete = IndexPath(item: index, section: 0)
+                    mediaArray.remove(at: index)
                     reassignIndices()
                     //we make the change in source Data and remove it from collection view
                     layout.cached = [UICollectionViewLayoutAttributes]()
-                    collectionView.deleteItems(at: [initalIndexPath])
+                    collectionView.deleteItems(at: [indexPathToDelete])
                     layout.invalidateLayout()
+                    
                 }
             }
             
