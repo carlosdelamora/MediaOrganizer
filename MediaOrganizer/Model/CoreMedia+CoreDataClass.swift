@@ -52,8 +52,11 @@ public class CoreMedia: NSManagedObject {
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         fetchOptions.predicate = NSPredicate(format: "mediaType == %d || mediaType == %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
         let phAssets = PHAsset.fetchAssets(withLocalIdentifiers: [uuidString], options: fetchOptions)
-        return phAssets[0]
-        
+        if phAssets.count > 0{
+            return phAssets[0]
+        }else{
+            return nil
+        }
     }
     
 }
