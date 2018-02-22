@@ -430,7 +430,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
             //if the image is not nil we save it to the folder
             if let originalImage = originalImage{
                 print(originalImage.imageOrientation)
-                guard let photoData = UIImageJPEGRepresentation(originalImage, 1) else { return }
+                guard let photoData = UIImageJPEGRepresentation(originalImage, 0.8) else { return }
                 let stringMediaType = Constants.mediaType.photo
                 createCoreMediaWithData(stringMediaType: stringMediaType, uuidString: uuidString, index: index, data: photoData)
             }
@@ -452,13 +452,16 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
         }
        
        
-        DispatchQueue.main.async {
-            self.dismiss(animated: true, completion:{
-            //we need to invalidate layout and set the cached to empty to recalculate everything again
-            self.layout.cached = [UICollectionViewLayoutAttributes]()
-            self.collectionView.reloadData()
-            })
-        }
+       
+        dismiss(animated: true, completion:{
+        //we need to invalidate layout and set the cached to empty to recalculate everything again
+            
+        self.layout.cached = [UICollectionViewLayoutAttributes]()
+            DispatchQueue.main.async {
+               self.collectionView.reloadData()
+            }
+        })
+       
         
     }
     
