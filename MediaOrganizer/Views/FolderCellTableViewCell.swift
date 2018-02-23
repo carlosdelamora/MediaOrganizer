@@ -32,7 +32,7 @@ class FolderCellTableViewCell: UITableViewCell {
         if folder.folderToMedia.count > 0{
             
             if let media = folder.mediaArray().first{
-                cellUIImageView.placeSquareImageFromMedia(media: media)
+                cellUIImageView.placeSquareImageFromMedia(media: media, detail: false)
             }
         }else{
             cellUIImageView.image = UIImage(named:"logo")

@@ -22,7 +22,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
     }
     
     func configureForMedia(media:CoreMedia){
-        imageView.placeSquareImageFromMedia(media: media)
+        imageView.placeSquareImageFromMedia(media: media,detail: false)
     }
     //we made the image nil 
     override func prepareForReuse() {
@@ -42,7 +42,7 @@ class MediaCollectionViewCell: UICollectionViewCell {
 
 extension UIImageView{
     
-    func placeSquareImageFromMedia(media: CoreMedia){
+    func placeSquareImageFromMedia(media: CoreMedia, detail: Bool){
         var auxiliaryImageView: UIImageView? = nil
         let frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         auxiliaryImageView = UIImageView(frame: frame)
@@ -52,7 +52,7 @@ extension UIImageView{
         }
         
         if !media.isPhAsset{
-            placeImageForNotPhAssetMedia(media: media, auxiliaryImageView: auxiliaryImageView)
+            placeImageForNotPhAssetMedia(media: media, auxiliaryImageView: auxiliaryImageView, detail: detail)
         }else{
             placeImageForPhAssetMedia(media: media, auxiliaryImageView: auxiliaryImageView)
         }
@@ -99,13 +99,23 @@ extension UIImageView{
     
     
     
-    func placeImageForNotPhAssetMedia(media: CoreMedia, auxiliaryImageView: UIImageView?){
+    func placeImageForNotPhAssetMedia(media: CoreMedia, auxiliaryImageView: UIImageView?, detail: Bool){
         let url = media.getURL()
         switch media.stringMediaType{
         case Constants.mediaType.photo:
             if let photoData = try? Data(contentsOf: url), let photo = UIImage(data:photoData){
-                self.image = squareImage(image: photo)
-                auxiliaryImageView?.image = nil
+                if detail{
+                    DispatchQueue.main.async {
+                        self.image = self.squareImage(image: photo)
+                    }
+                }else{
+                    DispatchQueue.main.async {
+                        self.image = photo
+                        self.contentMode = .scaleAspectFill
+                        auxiliaryImageView?.image = nil
+                    }
+                }
+                
             }
         case Constants.mediaType.video:
             //we place a video image in top of the thumbnail

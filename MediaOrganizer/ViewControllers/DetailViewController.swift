@@ -29,7 +29,7 @@ class DetailViewController: UIViewController{
         shareMedia = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(presentActionController))
         navigationItem.rightBarButtonItem = shareMedia
         
-        imageView.placeSquareImageFromMedia(media: media)
+        imageView.placeSquareImageFromMedia(media: media,detail: true)
         switch media.stringMediaType{
         case Constants.mediaType.photo:
             scrollView.delegate = self
