@@ -423,7 +423,7 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
         //we get the unique string id for the media
         let uuidString = UUID().uuidString
         //we set the index of the media to be the last element
-        let index = Int64(folder.folderToMedia.count - 1)
+        let index = Int64(folder.folderToMedia.count)
         // we did not set the allow editions so we are saving the original movie
         if mediaType == kUTTypeImage{
             let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
