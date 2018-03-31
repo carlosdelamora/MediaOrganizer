@@ -227,13 +227,16 @@ extension PHAsset {
         cachingManager.allowsCachingHighQualityImages = true
         cachingManager.requestImage(for: self, targetSize: CGSize(width:100,height:100), contentMode: .aspectFit, options: requestOptions, resultHandler:{ thumbnail, info in
             
-            if let _ = thumbnail{
-                
-                completion(true)
-            }else{
-                print("there was an error with the phAsset image erase media)")
-                completion(false)
+            DispatchQueue.main.async {
+                if let _ = thumbnail{
+                    
+                    completion(true)
+                }else{
+                    print("there was an error with the phAsset image erase media)")
+                    completion(false)
+                }
             }
+            
         })
         
     }

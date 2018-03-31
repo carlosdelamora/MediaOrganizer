@@ -212,7 +212,7 @@ class CollectionViewController: UIViewController {
         }
     }
     
-  
+    
     
     //this function presents the imagePicker Controller to record video or take a photo
     fileprivate func presentImagePicker(source: UIImagePickerControllerSourceType) {
@@ -220,6 +220,7 @@ class CollectionViewController: UIViewController {
             let pickerViewController = UIImagePickerController()
             pickerViewController.sourceType = source
             pickerViewController.delegate = self
+            
             if let mediaTypes = UIImagePickerController.availableMediaTypes(for: source){
                 pickerViewController.mediaTypes = mediaTypes
             }
@@ -461,8 +462,6 @@ extension CollectionViewController: UIImagePickerControllerDelegate, UINavigatio
                self.collectionView.reloadData()
             }
         })
-       
-        
     }
     
     func createCoreMediaWithData(stringMediaType: String, uuidString: String, index: Int64, data: Data){

@@ -77,14 +77,19 @@ extension UIImageView{
                     switch media.stringMediaType{
                     case Constants.mediaType.photo:
                         if let strongSelf = self {
-                            strongSelf.image = strongSelf.squareImage(image: photo)
-                            auxiliaryImageView?.image = nil
+                            DispatchQueue.main.async {
+                                strongSelf.image = strongSelf.squareImage(image: photo)
+                                auxiliaryImageView?.image = nil
+                            }
+                            
                         }
                     case Constants.mediaType.video:
                         //we place a video image in top of the thumbnail
                         if let strongSelf = self {
-                            let squarePhoto = strongSelf.squareImage(image: photo)
-                            strongSelf.placeAuxiliaryImageInThumbnail(auxiliaryImageView: auxiliaryImageView, thumbnail: squarePhoto)
+                            DispatchQueue.main.async {
+                                let squarePhoto = strongSelf.squareImage(image: photo)
+                                strongSelf.placeAuxiliaryImageInThumbnail(auxiliaryImageView: auxiliaryImageView, thumbnail: squarePhoto)
+                            }
                         }
                     default:
                         print("there was an error presenting the image from core Media")
