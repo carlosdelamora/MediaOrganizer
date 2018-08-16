@@ -29,7 +29,8 @@ class FolderCellTableViewCell: UITableViewCell {
         //the first image in the folder
         cellUIImageView.layer.cornerRadius = cellUIImageView.frame.height*0.1
         cellUIImageView.clipsToBounds = true
-        if folder.folderToMedia.count > 0{
+      
+       if folder.folderToMedia.count > 0{
             
             if let media = folder.mediaArray().first{
                 cellUIImageView.placeSquareImageFromMedia(media: media, detail: false)
